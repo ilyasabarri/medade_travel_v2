@@ -356,6 +356,33 @@ body.rtl-mode .lang-option-badge {
   }
 }
 
+@media (max-width: 480px) {
+  .site-header {
+    padding: 10px 0;
+  }
+  .navbar-wrapper {
+    padding: 0 12px;
+  }
+  .navbar-brand {
+    gap: 8px;
+  }
+  .brand-emblem {
+    width: 36px;
+    height: 36px;
+  }
+  .brand-name {
+    font-size: 1.12rem;
+  }
+  .brand-sub {
+    font-size: 8px;
+    letter-spacing: 0.1em;
+  }
+  .lang-trigger-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}
+
 /* ==========================================================================
    MOBILE FULLSCREEN DRAWER OVERLAY
    ========================================================================== */

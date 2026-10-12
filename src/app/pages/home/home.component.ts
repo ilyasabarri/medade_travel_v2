@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.syncFormDefaults();
-    this.startSliderAutoplay();
   }
 
   ngOnDestroy() {
@@ -156,18 +155,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  // =========================================================================
-  // ACTIVITIES 3D SLIDER LOGIC
+  // ACTIVITIES 3D SLIDER LOGIC (Manual navigation only)
   // =========================================================================
   startSliderAutoplay() {
+    // Disabled per user requirement: manual navigation only
     this.stopSliderAutoplay();
-    if (typeof window !== 'undefined') {
-      this.autoPlayTimer = setInterval(() => {
-        if (!this.isPaused) {
-          this.nextActivity();
-        }
-      }, 5500);
-    }
   }
 
   stopSliderAutoplay() {
