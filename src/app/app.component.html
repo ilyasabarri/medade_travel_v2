@@ -1,100 +1,157 @@
 <!-- ==========================================================================
-     GLOBAL HEADER & NAVIGATION (SINGLE PAGE EXPERIENCE - MULTILINGUAL)
+     GLOBAL LUXURY NAVBAR (LE BÉDOUIN AGAFAY STYLE - FLOATING & FROSTED)
      ========================================================================== -->
-<header class="navbar" [class.scrolled]="isScrolled">
-  <div class="navbar-container">
-    <!-- Brand Logo & Identity -->
-    <a href="#hero" class="navbar-logo" (click)="scrollToSection('hero', $event)">
-      <img src="assets/logo-round.jpg" alt="Medade Travel Logo" class="custom-logo">
-      <div class="navbar-logo-text">
-        MEDADE TRAVEL
-        <span>{{ langService.ui.brandTag }}</span>
+<header class="luxury-navbar" [class.scrolled]="isScrolled">
+  <div class="navbar-wrapper">
+    
+    <!-- Left: Menu Trigger & Quick Pill -->
+    <div class="navbar-left">
+      <button class="menu-trigger-btn" (click)="toggleMobileMenu()" aria-label="Menu Principal">
+        <span class="menu-burger-bars">
+          <span></span>
+          <span></span>
+        </span>
+        <span class="menu-text">{{ langService.ui.menuLabel }}</span>
+      </button>
+
+      <a href="#circuits" class="btn-nav-pill desktop-only" (click)="scrollToSection('circuits', $event)">
+        {{ langService.ui.btnBookActivities }}
+      </a>
+    </div>
+
+    <!-- Center: Luxury Brand Monogram & Title -->
+    <a href="#hero" class="navbar-brand" (click)="scrollToSection('hero', $event)">
+      <img src="assets/logo-round.jpg" alt="Medade Travel" class="brand-emblem">
+      <div class="brand-text">
+        <span class="brand-name">MEDADE TRAVEL</span>
+        <span class="brand-sub">{{ langService.ui.brandTag }}</span>
       </div>
     </a>
 
-    <!-- Desktop Navigation Links (Anchor links for single-page) -->
-    <nav class="nav-links" aria-label="Main Navigation">
+    <!-- Right: Language Dropdown & Quote CTA -->
+    <div class="navbar-right">
+      
+      <!-- 8-Language Selector Dropdown -->
+      <div class="lang-selector-wrapper">
+        <button class="lang-trigger-btn" (click)="toggleLangDropdown($event)" aria-haspopup="true" [attr.aria-expanded]="langDropdownOpen">
+          <span class="lang-flag">{{ currentMeta.flag }}</span>
+          <span class="lang-code">{{ currentMeta.short }}</span>
+          <svg class="chevron-icon" [class.rotate]="langDropdownOpen" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="lang-dropdown-menu" *ngIf="langDropdownOpen">
+          <button *ngFor="let l of languages" 
+                  class="lang-option-item" 
+                  [class.active]="l.code === currentMeta.code"
+                  (click)="selectLanguage(l.code)">
+            <span class="lang-option-flag">{{ l.flag }}</span>
+            <span class="lang-option-name">{{ l.name }}</span>
+            <span class="lang-option-badge">{{ l.short }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Direct Phone (Desktop) -->
+      <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="nav-phone-pill desktop-only">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>{{ primaryPhone }}</span>
+      </a>
+
+      <!-- Primary Devis CTA (Le Bédouin "Book Room" style) -->
+      <button class="btn btn--primary nav-cta-btn desktop-only" (click)="scrollToSection('booking', $event)">
+        {{ langService.ui.btnBookRoom }}
+      </button>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-burger" (click)="toggleMobileMenu()" aria-label="Ouvrir le menu">
+        <span class="line"></span>
+        <span class="line"></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ==========================================================================
+     MOBILE FULLSCREEN DRAWER (LUXURY OVERLAY & 8-LANGUAGE GRID)
+     ========================================================================== -->
+<div class="mobile-drawer-overlay" [class.open]="mobileMenuOpen">
+  <div class="mobile-drawer-inner">
+    
+    <!-- Top Header in Drawer -->
+    <div class="mobile-drawer-top">
+      <div class="drawer-brand">
+        <img src="assets/logo-round.jpg" alt="Medade Travel" class="drawer-logo">
+        <span class="drawer-brand-name">MEDADE TRAVEL</span>
+      </div>
+      <button class="drawer-close-btn" (click)="closeMobileMenu()" aria-label="Fermer le menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- 8 Languages Selector Grid -->
+    <div class="mobile-languages-section">
+      <span class="mobile-section-label">Langue / Language / اللغة :</span>
+      <div class="mobile-languages-grid">
+        <button *ngFor="let l of languages"
+                class="mobile-lang-chip"
+                [class.active]="l.code === currentMeta.code"
+                (click)="selectLanguage(l.code)">
+          <span class="chip-flag">{{ l.flag }}</span>
+          <span class="chip-name">{{ l.name }}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Nav Links in Serif -->
+    <nav class="mobile-drawer-nav">
+      <a href="#hero" (click)="scrollToSection('hero', $event)">{{ langService.ui.navHome }}</a>
       <a href="#circuits" (click)="scrollToSection('circuits', $event)">{{ langService.ui.navCircuits }}</a>
+      <a href="#experiences" (click)="scrollToSection('experiences', $event)">{{ langService.ui.navExperiences }}</a>
       <a href="#transport" (click)="scrollToSection('transport', $event)">{{ langService.ui.navTransport }}</a>
       <a href="#booking" (click)="scrollToSection('booking', $event)">{{ langService.ui.navBooking }}</a>
     </nav>
 
-    <!-- Header Actions (Language Switcher, Direct Phone & WhatsApp CTA) -->
-    <div class="nav-actions">
-      <!-- Language Cycle Button (Changes to next language on click) -->
-      <button class="lang-cycle-btn" (click)="cycleLanguage()" [title]="nextLangLabel" [attr.aria-label]="nextLangLabel">
-        <svg class="lang-globe-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    <!-- Mobile Drawer Actions -->
+    <div class="mobile-drawer-footer">
+      <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="mobile-tel-button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
         </svg>
-        <span class="lang-badge">{{ currentLang.toUpperCase() }}</span>
-      </button>
-
-      <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="nav-phone-link">
-        <span class="phone-number">{{ primaryPhone }}</span>
+        <span>{{ primaryPhone }}</span>
       </a>
 
-      <button class="btn btn--primary nav-cta desktop-only-cta" (click)="scrollToSection('booking', $event)">
-        <span>{{ langService.ui.btnWhatsApp }}</span>
-      </button>
-
-      <!-- Mobile Hamburger Toggle -->
-      <button class="navbar-mobile-toggle" (click)="toggleMobileMenu()" aria-label="Menu Mobile" [class.open]="mobileMenuOpen">
-        <span class="hamburger"></span>
+      <button class="btn btn--primary w-full" (click)="scrollToSection('booking', $event)">
+        {{ langService.ui.btnBookRoom }}
       </button>
     </div>
-  </div>
-</header>
 
-<!-- Mobile Drawer Menu -->
-<div class="mobile-nav-overlay" [class.open]="mobileMenuOpen">
-  <!-- Dedicated Mobile Language Cycle Button -->
-  <div class="mobile-lang-card">
-    <button class="mobile-lang-cycle-btn" (click)="cycleLanguage()" [title]="nextLangLabel" [attr.aria-label]="nextLangLabel">
-      <div class="mobile-lang-left">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="2" y1="12" x2="22" y2="12"></line>
-          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-        </svg>
-        <span class="mobile-lang-label">{{ currentLangName }} ({{ currentLang.toUpperCase() }})</span>
-      </div>
-      <span class="mobile-lang-action">
-        {{ nextLangHint }}
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </span>
-    </button>
-  </div>
-
-  <a href="#hero" (click)="scrollToSection('hero', $event)">{{ langService.ui.navHome }}</a>
-  <a href="#circuits" (click)="scrollToSection('circuits', $event)">{{ langService.ui.navCircuits }}</a>
-  <a href="#transport" (click)="scrollToSection('transport', $event)">{{ langService.ui.navTransport }}</a>
-  <a href="#booking" (click)="scrollToSection('booking', $event)">{{ langService.ui.navBooking }}</a>
-  
-  <div class="mobile-contact-block">
-    <p class="mobile-tel-row">{{ langService.ui.btnCallDirect }} : <strong>{{ primaryPhone }}</strong></p>
-    <button class="btn btn--primary nav-cta w-full" (click)="scrollToSection('booking', $event)">
-      {{ langService.ui.btnDiscussWhatsApp }}
-    </button>
   </div>
 </div>
 
-<!-- Main App Content -->
+<!-- ==========================================================================
+     MAIN CONTENT
+     ========================================================================== -->
 <main class="site-main">
   <router-outlet></router-outlet>
 </main>
 
 <!-- ==========================================================================
-     GLOBAL FOOTER (MINIMALIST & ESSENTIAL - NO TEXT CLUTTER)
+     GLOBAL FOOTER (LE BÉDOUIN MINIMALIST LUXURY - NO EMAILS)
      ========================================================================== -->
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
-      <!-- Col 1: Brand & Identity -->
-      <div class="footer-col">
+      
+      <!-- Col 1: Brand & Tagline -->
+      <div class="footer-col brand-col">
         <div class="footer-brand">
           <img src="assets/logo-round.jpg" alt="Medade Travel" class="footer-logo">
           <div>
@@ -102,55 +159,60 @@
             <div class="footer-brand-tag">{{ langService.ui.brandTag }}</div>
           </div>
         </div>
-        <p class="footer-desc-compact">
-          <span *ngIf="currentLang === 'fr'">Agence locale au Maroc • Les 3 circuits phares & transport direct au départ de Marrakech.</span>
-          <span *ngIf="currentLang === 'en'">Local Moroccan travel agency • 3 signature tours & direct transport departing from Marrakech.</span>
-          <span *ngIf="currentLang === 'ar'">وكالة محلية بالمغرب • الجولات الثلاث الرئيسية والنقل المباشر انطلاقاً من مراكش.</span>
+        <p class="footer-desc">
+          {{ langService.ui.footerDesc }}
         </p>
       </div>
 
       <!-- Col 2: Navigation Links -->
       <div class="footer-col">
-        <h4 class="footer-heading">{{ currentLang === 'ar' ? 'روابط سريعة' : (currentLang === 'en' ? 'Quick Links' : 'Navigation') }}</h4>
-        <ul class="footer-links-list">
+        <h4 class="footer-heading">{{ langService.ui.menuLabel }}</h4>
+        <ul class="footer-links">
           <li><a href="#hero" (click)="scrollToSection('hero', $event)">{{ langService.ui.navHome }}</a></li>
           <li><a href="#circuits" (click)="scrollToSection('circuits', $event)">{{ langService.ui.navCircuits }}</a></li>
+          <li><a href="#experiences" (click)="scrollToSection('experiences', $event)">{{ langService.ui.navExperiences }}</a></li>
           <li><a href="#transport" (click)="scrollToSection('transport', $event)">{{ langService.ui.navTransport }}</a></li>
           <li><a href="#booking" (click)="scrollToSection('booking', $event)">{{ langService.ui.navBooking }}</a></li>
         </ul>
       </div>
 
-      <!-- Col 3: Essential Direct Contact -->
+      <!-- Col 3: Direct Contact (Strictly Phone & WhatsApp, No Emails) -->
       <div class="footer-col">
-        <h4 class="footer-heading">{{ langService.ui.footerHeadingReservations }}</h4>
-        <div class="footer-contact-details">
-          <p class="footer-info-item">
-            <span>WhatsApp / Tél : <strong>{{ primaryPhone }}</strong></span>
+        <h4 class="footer-heading">{{ langService.ui.footerHeadingContact }}</h4>
+        <div class="footer-contact-info">
+          <p class="contact-row">
+            <span class="contact-label">{{ langService.ui.footerPhoneLabel }}</span>
+            <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="contact-value">{{ primaryPhone }}</a>
           </p>
-          <p class="footer-info-item">
-            <span>{{ langService.ui.footerAssistanceLabel }} <strong>{{ secondaryPhone }}</strong></span>
+          <p class="contact-row">
+            <span class="contact-label">{{ langService.ui.footerAssistanceLabel }}</span>
+            <a [href]="'tel:' + secondaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="contact-value">{{ secondaryPhone }}</a>
           </p>
-          <p class="footer-info-item">
-            <span>Marrakech, Maroc</span>
+          <p class="contact-row">
+            <span class="contact-label">WhatsApp :</span>
+            <span class="contact-value">{{ langService.ui.footerWaAvailability }}</span>
+          </p>
+          <p class="contact-row">
+            <span class="contact-label">Marrakech, Maroc</span>
           </p>
         </div>
       </div>
+
     </div>
 
-    <!-- Bottom Legal Bar -->
-    <div class="footer-bottom">
-      <div class="copyright">
-        © 2026 Medade Travel. Tous droits réservés. • Marrakech, Maroc
+    <!-- Bottom Copyright -->
+    <div class="footer-bottom-bar">
+      <div class="copyright-text">
+        {{ langService.ui.footerCopyright }}
       </div>
     </div>
   </div>
 </footer>
 
-<!-- Floating WhatsApp Action Button (NO EMOJIS) -->
-<button class="floating-wa" (click)="openWhatsAppDirect()" aria-label="WhatsApp Direct">
-  <span class="floating-wa-pulse"></span>
-  <svg class="floating-wa-svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 18.06c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.29c0-4.52 3.68-8.2 8.2-8.2 2.19 0 4.25.85 5.8 2.4 1.55 1.55 2.4 3.61 2.4 5.8 0 4.52-3.68 8.2-8.16 8.2zm4.49-6.13c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.41 1.02 2.58.12.17 1.75 2.67 4.24 3.75.59.26 1.05.41 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29z"/>
+<!-- Floating WhatsApp Contact -->
+<button class="floating-wa-btn" (click)="openWhatsAppDirect()" aria-label="WhatsApp Direct">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.353.101.173.449.741.964 1.2.662.591 1.221.774 1.394.861.173.086.275.072.376-.044.101-.116.433-.506.549-.679.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/>
   </svg>
-  <span class="floating-wa-text">{{ langService.ui.floatingWhatsApp }}</span>
+  <span>{{ langService.ui.floatingWhatsApp }}</span>
 </button>

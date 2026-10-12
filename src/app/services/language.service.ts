@@ -1,65 +1,59 @@
-import { Injectable, signal } from '@angular/core';
-import {
-  CIRCUITS_PAGE_DATA,
-  DESTINATIONS_PAGE_DATA,
-  CONTACT_PAGE_DATA,
-  HOME_PAGE_DATA,
-  CircuitsPageData,
-  DestinationsPageData,
-  ContactPageData,
-  HomePageData
-} from './language-pages.data';
+import { Injectable, signal, computed } from '@angular/core';
+import { CIRCUITS_PAGE_DATA, DESTINATIONS_PAGE_DATA, CONTACT_PAGE_DATA } from './language-pages.data';
 
-export type Language = 'fr' | 'en' | 'ar';
+export type Language = 'fr' | 'en' | 'ar' | 'es' | 'it' | 'de' | 'pt' | 'nl';
+export type CircuitTranslation = Circuit;
+export type DestinationTranslation = any;
 
-export interface CircuitDayTranslation {
+export interface LanguageMeta {
+  code: Language;
+  name: string;
+  flag: string;
+  short: string;
+  dir: 'ltr' | 'rtl';
+}
+
+export const SUPPORTED_LANGUAGES: LanguageMeta[] = [
+  { code: 'fr', name: 'Français', flag: '🇫🇷', short: 'FR', dir: 'ltr' },
+  { code: 'en', name: 'English', flag: '🇬🇧', short: 'EN', dir: 'ltr' },
+  { code: 'ar', name: 'العربية', flag: '🇲🇦', short: 'AR', dir: 'rtl' },
+  { code: 'es', name: 'Español', flag: '🇪🇸', short: 'ES', dir: 'ltr' },
+  { code: 'it', name: 'Italiano', flag: '🇮🇹', short: 'IT', dir: 'ltr' },
+  { code: 'de', name: 'Deutsch', flag: '🇩🇪', short: 'DE', dir: 'ltr' },
+  { code: 'pt', name: 'Português', flag: '🇵🇹', short: 'PT', dir: 'ltr' },
+  { code: 'nl', name: 'Nederlands', flag: '🇳🇱', short: 'NL', dir: 'ltr' },
+];
+
+export interface CircuitDay {
   dayNumber: number;
   title: string;
   description: string;
   stops: string[];
 }
 
-export interface CircuitTranslation {
+export interface Circuit {
   id: string;
   name: string;
   duration: string;
   pace: string;
   badge: string;
+  priceNote: string;
   summary: string;
   transportOffer: string;
   imageUrl: string;
   inclusions: string[];
-  days: CircuitDayTranslation[];
+  days: CircuitDay[];
 }
 
-export interface DestinationTranslation {
+export interface ExperienceStory {
   id: string;
-  name: string;
-  tagline: string;
-  tag: string;
-  description: string;
-  highlights: string[];
-  idealFor: string;
-  bestTime: string;
-  imageUrl: string;
-}
-
-export interface TourTranslation {
-  id: string;
-  category: 'sahara' | 'agafay' | 'prive' | 'all';
   badge: string;
-  badgeType?: 'bestseller' | 'shared' | 'luxury' | 'daytrip';
   title: string;
-  duration: string;
-  location: string;
-  priceNote: string;
-  priceAmount: string;
   description: string;
-  highlights: string[];
-  rating: number;
-  reviewsCount: number;
+  perks: string[];
   imageUrl: string;
-  link: string;
+  ctaText: string;
+  ctaLink: string;
 }
 
 @Injectable({
@@ -68,10 +62,33 @@ export interface TourTranslation {
 export class LanguageService {
   currentLang = signal<Language>('fr');
 
+  // Computed active language metadata
+  currentMeta = computed(() => {
+    return SUPPORTED_LANGUAGES.find(l => l.code === this.currentLang()) || SUPPORTED_LANGUAGES[0];
+  });
+
+  isRtl = computed(() => this.currentLang() === 'ar');
+
+  get circuitsPage(): any {
+    return CIRCUITS_PAGE_DATA[this.currentLang()] || CIRCUITS_PAGE_DATA['fr'];
+  }
+
+  get destinationsPage(): any {
+    return DESTINATIONS_PAGE_DATA[this.currentLang()] || DESTINATIONS_PAGE_DATA['fr'];
+  }
+
+  get contactPage(): any {
+    return CONTACT_PAGE_DATA[this.currentLang()] || CONTACT_PAGE_DATA['fr'];
+  }
+
+  get destinations(): any[] {
+    return [];
+  }
+
   constructor() {
     if (typeof window !== 'undefined' && window.localStorage) {
-      const saved = localStorage.getItem('medade_lang') as Language;
-      if (saved && (saved === 'fr' || saved === 'en' || saved === 'ar')) {
+      const saved = localStorage.getItem('medade_lang_v2') as Language;
+      if (saved && SUPPORTED_LANGUAGES.some(l => l.code === saved)) {
         this.setLanguage(saved);
         return;
       }
@@ -82,7 +99,7 @@ export class LanguageService {
   setLanguage(lang: Language) {
     this.currentLang.set(lang);
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('medade_lang', lang);
+      localStorage.setItem('medade_lang_v2', lang);
     }
     this.applyLanguage(lang);
   }
@@ -101,949 +118,1857 @@ export class LanguageService {
     }
   }
 
-  isRtl(): boolean {
-    return this.currentLang() === 'ar';
-  }
-
-  // --- GENERAL UI LABELS ---
+  // UI dictionary for 8 languages
   get ui() {
     const lang = this.currentLang();
-    const dict = {
+    const d: Record<Language, any> = {
       fr: {
-        brandTag: 'AGENCE LOCALE • CIRCUITS MARRAKECH',
+        brandTag: 'AGENCE LOCALE • MARRAKECH & DÉSERT',
+        menuLabel: 'MENU',
         navHome: 'Accueil',
-        navCircuits: 'Les 3 Circuits',
-        navTransport: 'Transport',
-        navBooking: 'Réservation',
-        navDestinations: 'Destinations',
-        navContact: 'Contact & Devis',
+        navCircuits: 'Circuits Phares',
+        navExperiences: 'Expériences',
+        navTransport: 'Transport VIP',
+        navBooking: 'Devis & Contact',
+        btnBookRoom: 'DEMANDER UN DEVIS',
+        btnBookActivities: 'CIRCUITS & AVENTURES',
         btnWhatsApp: 'WhatsApp Direct',
         btnCallDirect: 'Appel Direct',
         btnDiscussWhatsApp: 'Discuter sur WhatsApp 24/7',
-        floatingWhatsApp: 'Réserver sur WhatsApp',
-        footerDesc: 'Votre spécialiste des circuits et transports au Maroc au départ de Marrakech. Bivouacs nomades, montagnes de l\'Atlas, océan atlantique et tarifs garantis sans intermédiaire.',
-        footerTrustLocal: '100% Local',
-        footerTrustDirect: 'Sans Intermédiaire',
-        footerTrustRating: 'Note 4.9/5',
-        footerHeadingCircuits: 'Les 3 Circuits',
-        footerHeadingDestinations: 'Destinations & Régions',
-        footerHeadingReservations: 'Réservations Directes',
-        footerAddressLabel: 'Adresse : Marrakech & Circuits Maroc',
+        floatingWhatsApp: 'Devis WhatsApp 24/7',
+        footerDesc: 'Spécialiste marocain des circuits privés dans le désert et du transport touristique haut de gamme au départ de Marrakech.',
+        footerHeadingCircuits: 'Circuits Populaires',
+        footerHeadingContact: 'Réservations & Devis',
         footerPhoneLabel: 'Téléphone :',
-        footerAssistanceLabel: 'Assistance :',
-        footerWaAvailability: 'WhatsApp : 24/7 Disponible',
-        footerBtnWa: 'Contacter sur WhatsApp',
-        footerCopyright: '© 2026 Medade Travel. Tous droits réservés. Agence locale immatriculée au Maroc.',
-        seeAssociatedCircuits: 'Voir les circuits associés',
-        // Common CTAs
-        btnFreeQuoteWa: 'Devis Gratuit via WhatsApp',
-        btnCustomizeRoute: 'Personnaliser mon itinéraire',
-        btnBookCircuitWa: 'Réserver ce Circuit sur WhatsApp',
-        clickDayHint: 'Cliquez sur un jour pour ouvrir les détails de l\'étape',
-        keyStopsLabel: 'Étapes Clés & Temps Forts :',
-        inclusionsTitle: 'Inclus dans ce programme :'
+        footerAssistanceLabel: 'Assistance 24/7 :',
+        footerWaAvailability: 'WhatsApp direct sans intermédiaire',
+        footerCopyright: '© 2026 Medade Travel. Tous droits réservés. Marrakech, Maroc.'
       },
       en: {
-        brandTag: 'LOCAL AGENCY • MOROCCO TOURS & EXPEDITIONS',
+        brandTag: 'LOCAL AGENCY • MARRAKECH & SAHARA',
+        menuLabel: 'MENU',
         navHome: 'Home',
-        navCircuits: 'The 3 Tours',
-        navTransport: 'Transport',
-        navBooking: 'Book Now',
-        navDestinations: 'Destinations',
-        navContact: 'Contact & Quote',
+        navCircuits: 'Signature Tours',
+        navExperiences: 'Experiences',
+        navTransport: 'VIP Transport',
+        navBooking: 'Quote & Contact',
+        btnBookRoom: 'REQUEST A QUOTE',
+        btnBookActivities: 'TOURS & ADVENTURES',
         btnWhatsApp: 'Direct WhatsApp',
         btnCallDirect: 'Direct Call',
         btnDiscussWhatsApp: 'Chat on WhatsApp 24/7',
-        floatingWhatsApp: 'Book on WhatsApp',
-        footerDesc: 'Your local Morocco travel specialist departing from Marrakech. Authentic Sahara camps, Atlas mountain escapes, Atlantic coastline, and fair direct prices without middlemen.',
-        footerTrustLocal: '100% Local',
-        footerTrustDirect: 'Direct Fair Price',
-        footerTrustRating: 'Rated 4.9/5',
-        footerHeadingCircuits: 'The 3 Tours',
-        footerHeadingDestinations: 'Destinations & Regions',
-        footerHeadingReservations: 'Direct Bookings',
-        footerAddressLabel: 'Address: Marrakech & Morocco Wide',
+        floatingWhatsApp: 'Instant WhatsApp Quote',
+        footerDesc: 'Morocco luxury desert tour operator and private VIP transportation departing from Marrakech with direct fair pricing.',
+        footerHeadingCircuits: 'Popular Tours',
+        footerHeadingContact: 'Bookings & Enquiries',
         footerPhoneLabel: 'Phone:',
-        footerAssistanceLabel: 'Support:',
-        footerWaAvailability: 'WhatsApp: 24/7 Available',
-        footerBtnWa: 'Chat with Us on WhatsApp',
-        footerCopyright: '© 2026 Medade Travel. All rights reserved. Registered Moroccan Travel Agency.',
-        seeAssociatedCircuits: 'View associated tours',
-        // Common CTAs
-        btnFreeQuoteWa: 'Free Quote via WhatsApp',
-        btnCustomizeRoute: 'Customize my itinerary',
-        btnBookCircuitWa: 'Book This Tour on WhatsApp',
-        clickDayHint: 'Click on any day to expand itinerary details',
-        keyStopsLabel: 'Key Highlights & Stops:',
-        inclusionsTitle: 'Included in this package:'
+        footerAssistanceLabel: '24/7 Support:',
+        footerWaAvailability: 'Direct WhatsApp with local team',
+        footerCopyright: '© 2026 Medade Travel. All rights reserved. Marrakech, Morocco.'
       },
       ar: {
-        brandTag: 'وكالة محلية • جولات ورحلات المغرب',
+        brandTag: 'وكالة محلية • مراكش والصحراء المغربية',
+        menuLabel: 'القائمة',
         navHome: 'الرئيسية',
-        navCircuits: 'الجولات الثلاث',
-        navTransport: 'خدمات النقل',
-        navBooking: 'الحجز المباشر',
-        navDestinations: 'الوجهات',
-        navContact: 'اتصل بنا والطلب',
+        navCircuits: 'الجولات الرئيسية',
+        navExperiences: 'تجارب السفر',
+        navTransport: 'النقل السياحي',
+        navBooking: 'طلب حجز واستفسار',
+        btnBookRoom: 'طلب عرض سعر',
+        btnBookActivities: 'الجولات والمغامرات',
         btnWhatsApp: 'واتساب مباشر',
         btnCallDirect: 'اتصال مباشر',
-        btnDiscussWhatsApp: 'تواصل عبر واتساب 24/7',
-        floatingWhatsApp: 'احجز عبر واتساب',
-        footerDesc: 'وكالتكم المغربية المتخصصة في الرحلات الصحراوية، الجبلية والساحلية انطلاقاً من مراكش. مخيمات فاخرة، نقل مريح وأفضل الأسعار المباشرة بدون وسيط.',
-        footerTrustLocal: '100% محلية',
-        footerTrustDirect: 'بدون وسيط',
-        footerTrustRating: 'تقييم 4.9/5',
-        footerHeadingCircuits: 'الجولات الثلاث',
-        footerHeadingDestinations: 'الوجهات والمناطق',
-        footerHeadingReservations: 'الحجز المباشر',
-        footerAddressLabel: 'العنوان: مراكش وكافة مدن المغرب',
+        btnDiscussWhatsApp: 'محادثة واتساب 24/7',
+        floatingWhatsApp: 'حجز فوري عبر واتساب',
+        footerDesc: 'وكالتكم المغربية المتخصصة في جولات الصحراء الفاخرة والنقل السياحي الراقي انطلاقاً من مراكش بأفضل الأسعار المباشرة.',
+        footerHeadingCircuits: 'الجولات الأكثر طلباً',
+        footerHeadingContact: 'الحجوزات والتواصل',
         footerPhoneLabel: 'الهاتف:',
-        footerAssistanceLabel: 'المساعدة:',
-        footerWaAvailability: 'واتساب: متاح 24/7',
-        footerBtnWa: 'تواصل معنا عبر واتساب',
-        footerCopyright: '© 2026 مداد ترافيل. جميع الحقوق محفوظة. وكالة أسفار محلية مرخصة بالمغرب.',
-        seeAssociatedCircuits: 'استكشف الجولات المرتبطة',
-        // Common CTAs
-        btnFreeQuoteWa: 'طلب عرض سعر مجاني عبر واتساب',
-        btnCustomizeRoute: 'تخصيص مسار الرحلة',
-        btnBookCircuitWa: 'احجز هذه الجولة عبر واتساب',
-        clickDayHint: 'اضغط على أي يوم لعرض تفاصيل المرحلة والأنشطة',
-        keyStopsLabel: 'المحطات والأنشطة الرئيسية:',
-        inclusionsTitle: 'الخدمات المشمولة في هذا البرنامج:'
+        footerAssistanceLabel: 'دعم على مدار الساعة:',
+        footerWaAvailability: 'خدمة واتساب مباشرة بدون وسيط',
+        footerCopyright: '© 2026 ميداد ترافل. جميع الحقوق محفوظة. مراكش، المغرب.'
+      },
+      es: {
+        brandTag: 'AGENCIA LOCAL • MARRAKECH Y DESIERTO',
+        menuLabel: 'MENÚ',
+        navHome: 'Inicio',
+        navCircuits: 'Circuitos Destacados',
+        navExperiences: 'Experiencias',
+        navTransport: 'Transporte VIP',
+        navBooking: 'Presupuesto y Contacto',
+        btnBookRoom: 'SOLICITAR PRESUPUESTO',
+        btnBookActivities: 'CIRCUITOS Y AVENTURAS',
+        btnWhatsApp: 'WhatsApp Directo',
+        btnCallDirect: 'Llamada Directa',
+        btnDiscussWhatsApp: 'Chatear por WhatsApp 24/7',
+        floatingWhatsApp: 'Presupuesto Rápido WhatsApp',
+        footerDesc: 'Especialista local marroquí en circuitos por el desierto y transporte turístico privado desde Marrakech sin intermediarios.',
+        footerHeadingCircuits: 'Circuitos Populares',
+        footerHeadingContact: 'Reservas y Contacto',
+        footerPhoneLabel: 'Teléfono:',
+        footerAssistanceLabel: 'Asistencia 24/7:',
+        footerWaAvailability: 'WhatsApp directo con el equipo local',
+        footerCopyright: '© 2026 Medade Travel. Todos los derechos reservados. Marrakech, Marruecos.'
+      },
+      it: {
+        brandTag: 'AGENZIA LOCALE • MARRAKECH E DESERTO',
+        menuLabel: 'MENU',
+        navHome: 'Home',
+        navCircuits: 'I Nostri Tour',
+        navExperiences: 'Esperienze',
+        navTransport: 'Trasporto VIP',
+        navBooking: 'Preventivo e Contatto',
+        btnBookRoom: 'RICHIEDI UN PREVENTIVO',
+        btnBookActivities: 'TOUR & AVVENTURE',
+        btnWhatsApp: 'WhatsApp Diretto',
+        btnCallDirect: 'Chiamata Diretta',
+        btnDiscussWhatsApp: 'Chatta su WhatsApp 24/7',
+        floatingWhatsApp: 'Preventivo WhatsApp Immediato',
+        footerDesc: 'Specialista locale marocchino in tour nel deserto e trasporto turistico privato da Marrakech a prezzi diretti.',
+        footerHeadingCircuits: 'Tour Principali',
+        footerHeadingContact: 'Prenotazioni e Info',
+        footerPhoneLabel: 'Telefono:',
+        footerAssistanceLabel: 'Supporto 24/7:',
+        footerWaAvailability: 'WhatsApp diretto con il nostro team',
+        footerCopyright: '© 2026 Medade Travel. Tutti i diritti riservati. Marrakech, Marocco.'
+      },
+      de: {
+        brandTag: 'LOKALE AGENTUR • MARRAKESCH & SAHARA',
+        menuLabel: 'MENÜ',
+        navHome: 'Startseite',
+        navCircuits: 'Top-Rundreisen',
+        navExperiences: 'Erlebnisse',
+        navTransport: 'VIP-Transport',
+        navBooking: 'Angebot & Kontakt',
+        btnBookRoom: 'ANGEBOT ANFORDERN',
+        btnBookActivities: 'TOUREN & ABENTEUER',
+        btnWhatsApp: 'Direkt per WhatsApp',
+        btnCallDirect: 'Direktanruf',
+        btnDiscussWhatsApp: 'WhatsApp-Chat 24/7',
+        floatingWhatsApp: 'Schnelles WhatsApp-Angebot',
+        footerDesc: 'Ihr lokaler marokkanischer Reiseveranstalter für Wüstentouren und erstklassigen VIP-Transport ab Marrakesch ohne Zwischenhändler.',
+        footerHeadingCircuits: 'Beliebte Rundreisen',
+        footerHeadingContact: 'Buchungen & Kontakt',
+        footerPhoneLabel: 'Telefon:',
+        footerAssistanceLabel: '24/7 Kundendienst:',
+        footerWaAvailability: 'Direkter WhatsApp-Service vor Ort',
+        footerCopyright: '© 2026 Medade Travel. Alle Rechte vorbehalten. Marrakesch, Marokko.'
+      },
+      pt: {
+        brandTag: 'AGÊNCIA LOCAL • MARRAQUEXE E DESERTO',
+        menuLabel: 'MENU',
+        navHome: 'Início',
+        navCircuits: 'Circuitos Exclusivos',
+        navExperiences: 'Experiências',
+        navTransport: 'Transporte VIP',
+        navBooking: 'Orçamento e Contacto',
+        btnBookRoom: 'PEDIR ORÇAMENTO',
+        btnBookActivities: 'CIRCUITOS E AVENTURAS',
+        btnWhatsApp: 'WhatsApp Direto',
+        btnCallDirect: 'Chamada Direta',
+        btnDiscussWhatsApp: 'Falar no WhatsApp 24/7',
+        floatingWhatsApp: 'Orçamento Imediato no WhatsApp',
+        footerDesc: 'Especialista local em excursões pelo deserto marroquino e transporte turístico privado a partir de Marraquexe.',
+        footerHeadingCircuits: 'Circuitos Populares',
+        footerHeadingContact: 'Reservas e Contacto',
+        footerPhoneLabel: 'Telefone:',
+        footerAssistanceLabel: 'Apoio 24/7:',
+        footerWaAvailability: 'WhatsApp direto sem intermediários',
+        footerCopyright: '© 2026 Medade Travel. Todos os direitos reservados. Marraquexe, Marrocos.'
+      },
+      nl: {
+        brandTag: 'LOKALE REISORGANISATIE • MARRAKECH & WOESTIJN',
+        menuLabel: 'MENU',
+        navHome: 'Home',
+        navCircuits: 'Populaire Rondreizen',
+        navExperiences: 'Ervaringen',
+        navTransport: 'VIP Vervoer',
+        navBooking: 'Offerte & Contact',
+        btnBookRoom: 'OFFERTE AANVRAGEN',
+        btnBookActivities: 'TOURS & AVONTUUR',
+        btnWhatsApp: 'Direct WhatsApp',
+        btnCallDirect: 'Direct Bellen',
+        btnDiscussWhatsApp: 'Chat via WhatsApp 24/7',
+        floatingWhatsApp: 'Direct WhatsApp Offerte',
+        footerDesc: 'Lokale Marokkaanse specialist in woestijnrondreizen en comfortabel privévervoer vanuit Marrakech tegen eerlijke directe tarieven.',
+        footerHeadingCircuits: 'Populaire Reizen',
+        footerHeadingContact: 'Boekingen & Contact',
+        footerPhoneLabel: 'Telefoon:',
+        footerAssistanceLabel: '24/7 Assistentie:',
+        footerWaAvailability: 'Rechtstreeks contact via WhatsApp',
+        footerCopyright: '© 2026 Medade Travel. Alle rechten voorbehouden. Marrakech, Marokko.'
       }
     };
-    return dict[lang];
+    return d[lang] || d['fr'];
   }
 
-  // --- CIRCUITS DATA ---
-  get circuits(): CircuitTranslation[] {
+  // Philosophy quote section (Le Bédouin inspired)
+  get philosophy() {
     const lang = this.currentLang();
-    if (lang === 'en') {
-      return [
+    const d: Record<Language, any> = {
+      fr: {
+        quote: '« DÉCOUVRIR LE MAROC D’UNE AUTRE MANIÈRE »',
+        lead: 'Vivez une immersion authentique au départ de Marrakech, entre les dunes dorées du Sahara, les sommets majestueux de l’Atlas et l’air marin d’Essaouira.',
+        text: 'Medade Travel vous accompagne avec des circuits privatifs sur-mesure, des bivouacs de charme sous les étoiles et une flotte de véhicules récents avec chauffeurs dédiés. Sans intermédiaire, nous vous garantissons des tarifs justes et une hospitalité marocaine d’exception.',
+        btnText: 'EN SAVOIR PLUS SUR NOS CIRCUITS'
+      },
+      en: {
+        quote: '"DISCOVER MOROCCO IN A DIFFERENT WAY"',
+        lead: 'Experience genuine Moroccan immersion departing from Marrakech, amidst the golden Sahara dunes, majestic High Atlas peaks, and the Atlantic breeze of Essaouira.',
+        text: 'Medade Travel offers bespoke private journeys, charming luxury desert camps under starlit skies, and a modern fleet of vehicles with dedicated local chauffeurs. With zero middleman fees, we provide honest rates and exceptional hospitality.',
+        btnText: 'DISCOVER OUR SIGNATURE TOURS'
+      },
+      ar: {
+        quote: '« اكتشفوا سحر المغرب برؤية أصيلة ومختلفة »',
+        lead: 'عيشوا تجربة سفر فريدة انطلاقاً من مراكش بين كثبان رمال الصحراء الذهبية، قمم جبال الأطلس الشامخة، وسواحل الصويرة الأطلسية الساحرة.',
+        text: 'ميداد ترافل ترافقكم بجولات خاصة ومصممة حسب رغبتكم، مخيمات صحراوية ساحرة تحت أضواء النجوم، وأسطول سيارات حديثة مع سائقين محترفين. نضمن لكم أسعاراً مباشرة دون وسيط مع كرم الضيافة المغربية الأصيلة.',
+        btnText: 'استكشفوا برامجنا السياحية'
+      },
+      es: {
+        quote: '« DESCUBRIR MARRUECOS DE UNA FORMA DIFERENTE »',
+        lead: 'Viva una inmersión auténtica desde Marrakech, entre las dunas doradas del Sahara, las cumbres del Atlas y la brisa atlántica de Essaouira.',
+        text: 'Medade Travel le ofrece circuitos privados a medida, campamentos bereberes bajo las estrellas y una flota moderna con chóferes dedicados. Sin intermediarios, con precios directos y la más cálida hospitalidad marroquí.',
+        btnText: 'MÁS INFORMACIÓN SOBRE NUESTROS CIRCUITOS'
+      },
+      it: {
+        quote: '« SCOPRI IL MAROCCO IN UN MODO DIVERSO »',
+        lead: 'Vivi un’immersione autentica con partenza da Marrakech, tra le dune dorate del Sahara, le vette dell’Atlante e la brezza oceanica di Essaouira.',
+        text: 'Medade Travel offre tour privati su misura, bivacchi di charme sotto le stelle e veicoli moderni con autisti esperti. Senza intermediari, garantiamo prezzi equi e un’ospitalità impeccabile.',
+        btnText: 'SCOPRI I NOSTRI TOUR'
+      },
+      de: {
+        quote: '„MAROKKO AUF EINE NEUE WEISE ERLEBEN“',
+        lead: 'Erleben Sie eine unvergessliche Reise ab Marrakesch, zwischen den goldenen Dünen der Sahara, den Gipfeln des Atlasgebirges und der Atlantikküste von Essaouira.',
+        text: 'Medade Travel begleitet Sie mit maßgeschneiderten privaten Rundreisen, stimmungsvollen Wüstencamps unter dem Sternenhimmel und einer modernen Fahrzeugflotte mit erfahrenen Fahrern. Direkt ohne Zwischenhändler.',
+        btnText: 'MEHR ÜBER UNSERE RUNDREISEN'
+      },
+      pt: {
+        quote: '« DESCOBRIR MARROCOS DE UMA FORMA DIFERENTE »',
+        lead: 'Viva uma imersão autêntica com partida de Marraquexe, entre as dunas do Saara, os cumes do Atlas e a brisa marinha de Essaouira.',
+        text: 'A Medade Travel organiza circuitos privados à medida, acampamentos de charme sob as estrelas e viaturas recentes com motoristas experientes, com preços diretos e hospitalidade exemplar.',
+        btnText: 'CONHECER OS NOSSOS CIRCUITOS'
+      },
+      nl: {
+        quote: '„ONTDEK MAROKKO OP EEN ANDERE MANIER“',
+        lead: 'Beleef een authentieke droomreis vanuit Marrakech, tussen de gouden duinen van de Sahara, het Hoge Atlasgebergte en de Atlantische kust van Essaouira.',
+        text: 'Medade Travel verzorgt op maat gemaakte privérondreizen, sfeervolle woestijnkampen onder de sterrenhemel en moderne voertuigen met privéchauffeur tegen directe, eerlijke tarieven.',
+        btnText: 'BEKIJK ONZE RONDREIZEN'
+      }
+    };
+    return d[lang] || d['fr'];
+  }
+
+  // The 3 Signature Tours in Le Bédouin card showcase style
+  get circuits(): Circuit[] {
+    const lang = this.currentLang();
+    
+    // Circuit 1: Merzouga 3 Days / 2 Nights
+    // Circuit 2: Agafay & Atlas Day / Overnight
+    // Circuit 3: Essaouira & Mogador 1 Day
+    const map: Record<Language, Circuit[]> = {
+      fr: [
         {
-          id: 'circuit-1',
-          name: 'Tour 1: Ouzoud Waterfalls, Ayachi Mountain & Merzouga Dunes',
-          duration: '4 Days / 3 Nights',
-          pace: 'Untamed Nature, High Atlas & Sahara Desert',
-          badge: 'Tour 1 • Best-Seller',
-          summary: 'A majestic expedition through hidden Morocco. From the towering Ouzoud Waterfalls and a mountain picnic in the Ayachi range, to the golden dunes of Merzouga with a night in a Berber desert tent. Return via the Todra Gorges and Ouarzazate film studios.',
-          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
-          transportOffer: 'Transport of your choice: From 450 MAD / day self-drive OR with a dedicated private chauffeur.',
+          id: 'circuit-merzouga',
+          name: 'Circuit Sud & Dunes de Merzouga',
+          duration: '3 Jours / 2 Nuits',
+          pace: 'Rythme Équilibré',
+          badge: 'Bestseller Sahara',
+          priceNote: 'À partir de 1 200 DH / pers.',
+          summary: 'La traversée mythique du Haut Atlas, les kasbahs du sud, les gorges du Dadès et une nuit magique en bivouac au cœur des grandes dunes de Merzouga avec dromadaires au coucher du soleil.',
+          transportOffer: 'Véhicule tout-confort climatisé avec chauffeur privé ou formule location sans chauffeur dès 450 DH/jour.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
           inclusions: [
-            'Flexible transport: Modern air-conditioned vehicle with dedicated private driver OR self-drive from 450 MAD/day',
-            'Direct pick-up and return in Marrakech',
-            'Traditional lunch at the foot of the magnificent Ouzoud Waterfalls',
-            '2 Nights in a charming Midelt hotel with breakfast and dinner',
-            'Outdoor scenic picnic day at the foot of Mount Ayachi (High Atlas)',
-            '1 Unforgettable night in Merzouga desert under an authentic Berber tent',
-            'Camel trek and sunset over Erg Chebbi golden dunes',
-            'Lunch in the heart of the towering Todra Gorges (Tinghir)',
-            'Visit to the world-famous cinema studios in Ouarzazate',
-            'Final night in Marrakech for a smooth end to your journey'
+            'Traversée du col Tizi n\'Tichka (2 260m) et Kasbah d\'Aït Ben Haddou',
+            'Nuit en maison d\'hôtes dans la Vallée du Dadès / Todra',
+            'Balade à dos de dromadaire au coucher du soleil à Merzouga',
+            'Nuitée en bivouac saharien tout-confort avec dîner nomade et musique'
           ],
           days: [
             {
               dayNumber: 1,
-              title: 'Departure from Marrakech → Ouzoud Waterfalls (Lunch) → Night in Midelt',
-              description: 'Morning departure from Marrakech towards Midelt via the spectacular Ouzoud Waterfalls. Enjoy a traditional Berber lunch facing the falls. Continue through Middle Atlas scenery to arrive in Midelt in the late afternoon. Dinner and overnight in Midelt.',
-              stops: ['Marrakech departure', 'Ouzoud Waterfalls', 'Lunch at the falls', 'Middle Atlas', 'Overnight in Midelt']
+              title: 'Marrakech → Haut Atlas → Aït Ben Haddou → Vallée du Dadès',
+              description: 'Départ matinal de Marrakech en direction du col de Tizi n\'Tichka. Visite guidée de la célèbre Kasbah d\'Aït Ben Haddou (patrimoine UNESCO). Poursuite vers Ouarzazate et la magnifique Vallée des Roses jusqu’aux gorges du Dadès.',
+              stops: ['Col du Tichka (2 260m)', 'Kasbah Aït Ben Haddou', 'Studio Cinéma Ouarzazate', 'Gorges du Dadès']
             },
             {
               dayNumber: 2,
-              title: 'Breakfast → Scenic Picnic Excursion at Mount Ayachi → Midelt',
-              description: 'After a hearty breakfast, set out for a mountain getaway with a scenic picnic at the foot of Mount Ayachi (Jbel Ayachi). Spend the day in the fresh mountain air surrounded by untouched landscapes. Return to Midelt for dinner and overnight.',
-              stops: ['Hotel breakfast', 'Jbel Ayachi picnic excursion', 'Full day in high mountains', 'Preserved landscapes', 'Overnight in Midelt']
+              title: 'Gorges du Dadès → Gorges du Todra → Dunes de Merzouga',
+              description: 'Route vers les spectaculaires gorges du Todra et leurs parois rocheuses de 300 mètres. Traversée de Tinjdad et Erfoud pour atteindre les spectaculaires dunes dorées de Merzouga (Erg Chebbi). Caravane de dromadaires pour rejoindre votre campement sous les étoiles.',
+              stops: ['Palmeraie de Tinghir', 'Gorges du Todra', 'Ateliers de fossiles à Erfoud', 'Bivouac Merzouga Erg Chebbi']
             },
             {
               dayNumber: 3,
-              title: 'Midelt → Merzouga Desert: Sunset Camel Ride & Berber Tent',
-              description: 'Breakfast in Midelt, then head south towards the Sahara desert of Merzouga along the dramatic Ziz Gorges and palm oasis valleys. Arrive at Erg Chebbi dunes for a sunset camel caravan. Enjoy nomadic fireside music and sleep under a Berber tent.',
-              stops: ['Ziz Valley & palm groves', 'Merzouga desert', 'Sunset camel ride', 'Night under Berber tent']
-            },
-            {
-              dayNumber: 4,
-              title: 'Merzouga → Todra Gorges (Lunch) → Ouarzazate Film Studios → Marrakech',
-              description: 'Desert breakfast, then depart towards Marrakech. Stop and lunch inside the vertical Todra Gorges in Tinghir. Continue to Ouarzazate to tour famous Hollywood movie studios. Cross Tizi n\'Tichka pass and arrive in Marrakech. Have a wonderful stay!',
-              stops: ['Todra Gorges (Tinghir)', 'Lunch at the gorges', 'Ouarzazate Cinema Studios', 'Tichka Pass', 'Overnight in Marrakech']
+              title: 'Merzouga → Rissani → Vallée du Drâa → Marrakech',
+              description: 'Réveil aux premières lueurs pour admirer le lever de soleil sur les dunes. Passage par le marché traditionnel de Rissani, puis traversée de la splendide Vallée du Drâa et retour serein vers Marrakech en soirée.',
+              stops: ['Lever de soleil saharien', 'Souk de Rissani', 'Palmeraie du Drâa', 'Arrivée Marrakech']
             }
           ]
         },
         {
-          id: 'circuit-2',
-          name: 'Tour 2: "Pure Pleasure": Marrakech, Asni Mountains & VIP Night in Agafay',
+          id: 'circuit-agafay',
+          name: 'Échappée Désert d’Agafay & Massif de l’Atlas',
+          duration: '1 Jour ou 2 Jours / 1 Nuit',
+          pace: 'Détente & Sensations',
+          badge: 'Expérience Oasis',
+          priceNote: 'À partir de 450 DH / pers.',
+          summary: 'Aux portes de Marrakech, explorez le désert de pierre d\'Agafay : piscine panoramique, balade en quad ou dromadaire au coucher du soleil, et dîner spectacle sous les tentes berbères.',
+          transportOffer: 'Transfert aller-retour privé depuis votre riad ou hôtel à Marrakech en Mercedes ou 4x4.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          inclusions: [
+            'Accès piscine panoramique face aux collines d\'Agafay',
+            'Déjeuner ou dîner gastronomique marocain sous pergola ombragée',
+            'Option Quad, Buggy ou balade à dos de dromadaire au coucher de soleil',
+            'Soirée spectacle avec musique gnaoua, danse orientale et cracheurs de feu'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Villages berbères de l’Atlas → Camp Agafay',
+              description: 'Prise en charge à Marrakech à l’heure de votre choix. Traversée des premiers contreforts de l’Atlas avec pause thé dans un village authentique, puis arrivée dans l’oasis minérale d’Agafay.',
+              stops: ['Plateau du Kik', 'Village d\'Asni', 'Piscine & Détente Agafay', 'Coucher de soleil sur les collines']
+            },
+            {
+              dayNumber: 2,
+              title: 'Nuit sous la tente de luxe & Matinée de sérénité (Formule 2J)',
+              description: 'Pour la formule avec nuitée : réveil paisible dans le silence absolu du désert, petit-déjeuner traditionnel face aux sommets enneigés de l\'Atlas, puis retour en douceur à Marrakech.',
+              stops: ['Petit-déjeuner nomade', 'Session Quad ou Buggy matinale', 'Retour Marrakech riad']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Cités & Océan : Essaouira & Mogador',
+          duration: '1 Journée d’Excursion',
+          pace: 'Balade & Brise Marine',
+          badge: 'Côte Atlantique',
+          priceNote: 'À partir de 350 DH / pers.',
+          summary: 'Une escapade rafraîchissante sur la côte atlantique : remparts historiques de Mogador, ruelles blanches et bleues de la médina, port de pêche animé et dégustation de poissons frais.',
+          transportOffer: 'Chauffeur privé climatisé ou véhicule sans chauffeur avec kilomètres illimités.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Traversée de la forêt d’arganiers et visite d\'une coopérative féminine d’huile d’argan',
+            'Visite libre des remparts portugais de la Skala et des ateliers de marqueterie',
+            'Déjeuner dégustation de poissons frais face à l’océan (en option)',
+            'Temps libre sur la grande plage de sable fin d’Essaouira'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Forêt d’Arganiers → Médina & Port d’Essaouira → Retour',
+              description: 'Départ à 8h30 de Marrakech. Arrêt sur la route des arganiers. Arrivée à Essaouira pour une journée de liberté totale : port de pêche, souks d\'artisanat, remparts de la Skala et balade sur la plage avant le retour vers 19h.',
+              stops: ['Arganeraie & Coopérative', 'Remparts de la Skala', 'Port de pêche traditionnel', 'Médina UNESCO Essaouira']
+            }
+          ]
+        }
+      ],
+      en: [
+        {
+          id: 'circuit-merzouga',
+          name: 'South Morocco & Merzouga Dunes Expedition',
           duration: '3 Days / 2 Nights',
-          pace: 'Relaxation, Wellness, Desert Fun & Celebration',
-          badge: 'Tour 2 • "Pure Pleasure"',
-          summary: 'An enchanting escape designed for pure relaxation and celebration. Experience the peace of the Atlas Mountains in Asni, an exciting day in the Agafay Desert (pool access, lunch, 1-hour activity of your choice: camel, quad or buggy, sunset, and grand dinner with belly dancer and fire eater under luxury tent), then a historic Marrakech riad with traditional hammam and massage.',
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          transportOffer: 'Transport of your choice: From 450 MAD / day self-drive OR with dedicated private chauffeur.',
+          pace: 'Balanced & Scenic',
+          badge: 'Sahara Signature',
+          priceNote: 'From 1,200 MAD / person',
+          summary: 'Cross the High Atlas passes, explore ancient kasbahs, walk Todra Gorge, and spend an unforgettable starlit night in a luxury desert camp in the Merzouga dunes with sunset camel trekking.',
+          transportOffer: 'Modern air-conditioned vehicle with dedicated private driver or self-drive rental from 450 MAD/day.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
           inclusions: [
-            'Private air-conditioned transport with chauffeur at disposal OR self-drive from 450 MAD/day',
-            '1 Peaceful night in the High Atlas Mountains in Asni',
-            'Pool day pass in the desert of Agafay & delicious lunch',
-            '1-Hour activity of choice: Camel trek, Quad safari, or Buggy SSV',
-            'Magical sunset overlooking Agafay stone canyons',
-            'Grand evening spectacle: Oriental belly dancer, fire breather & live music',
-            '1 Night under luxury glamping tents in the Agafay Desert',
-            'Sunrise view and gourmet nomad breakfast',
-            'Accommodation in a charming traditional riad in central Marrakech',
-            'Free day with relaxing traditional Moroccan Hammam & Argan oil massage'
+            'High Atlas crossing via Tizi n\'Tichka Pass (2,260m) & Aït Ben Haddou Kasbah',
+            'Overnight in a charming valley guesthouse in Dadès / Todra Gorge',
+            'Sunset camel ride across the golden dunes of Merzouga (Erg Chebbi)',
+            'Luxury desert camp stay with traditional dinner, campfire & Berber drums'
           ],
           days: [
             {
               dayNumber: 1,
-              title: 'Marrakech Center / Morning Departure → Moulay Brahim → Asni Mountains',
-              description: 'Morning departure from Marrakech towards Moulay Brahim foothills. Enter the green valley of Asni under Mount Toubkal peaks. Enjoy traditional dinner and sleep surrounded by mountain serenity.',
-              stops: ['Marrakech center', 'Moulay Brahim', 'High Atlas foothills', 'Overnight in Asni mountain']
+              title: 'Marrakech → High Atlas → Aït Ben Haddou → Dadès Valley',
+              description: 'Morning departure from Marrakech over the High Atlas mountains. Guided tour of the UNESCO World Heritage Kasbah of Aït Ben Haddou. Continue past Ouarzazate to Dadès Valley.',
+              stops: ['Tizi n\'Tichka Pass', 'Aït Ben Haddou Kasbah', 'Ouarzazate Cinema Studios', 'Dadès Gorges']
             },
             {
               dayNumber: 2,
-              title: 'Asni → Agafay Desert: Pool, Activity (Camel/Quad/Buggy), Dinner Show & Luxury Tent',
-              description: 'Breakfast facing mountain peaks then depart to Agafay desert. Relax by the desert pool and enjoy a delicious lunch. In the late afternoon, enjoy 1 hour of your chosen activity (camel, quad, or buggy) during sunset. Gourmet dinner with belly dancing and fire show. Night under luxury desert tents.',
-              stops: ['Agafay desert pool', 'Desert lunch', '1h Activity (Camel, Quad or Buggy)', 'Sunset', 'Fire show & belly dancer', 'Luxury tent overnight']
+              title: 'Dadès Valley → Todra Gorges → Merzouga Sahara Camp',
+              description: 'Scenic drive to the soaring 300m cliffs of Todra Gorge. Continue via Erfoud to reach the breathtaking Erg Chebbi dunes. Mount camels at golden hour for your trek into camp.',
+              stops: ['Tinghir Oasis', 'Todra Gorges', 'Erfoud Fossil Workshops', 'Merzouga Desert Camp']
             },
             {
               dayNumber: 3,
-              title: 'Agafay Sunrise → Marrakech Riad: Free Day, Hammam & Relaxing Massage',
-              description: 'Watch the golden sunrise over Agafay canyons, enjoy breakfast and depart. Arrive at central Marrakech riad. Free day with full wellness ritual: authentic Moroccan hammam and relaxing massage. Enjoy your stay!',
-              stops: ['Desert sunrise & breakfast', 'Marrakech center', 'Charming Riad', 'Hammam & Massage', 'Free relaxing day']
+              title: 'Merzouga → Rissani Souks → Drâa Valley → Marrakech',
+              description: 'Sunrise wake-up over the dunes. Explore Rissani’s traditional market, then travel through the lush Drâa Valley palm groves back to Marrakech by evening.',
+              stops: ['Sahara Sunrise', 'Rissani Market', 'Drâa Palm Oasis', 'Marrakech Return']
             }
           ]
         },
         {
-          id: 'circuit-3',
-          name: 'Tour 3: "Sea & Sand": Essaouira, Taghazout, Agadir & Ouarzazate Kasbahs',
-          duration: '4 Days / 3 Nights',
-          pace: 'Ocean Breeze, Solidarity Culture & Historic Kasbahs',
-          badge: 'Tour 3 • Sea & Sand',
-          summary: 'The perfect harmony between Atlantic ocean waves and the mystical South. Discover Essaouira with sunset horseback riding on the beach, Taghazout surf culture, a solidarity day visiting argan cooperatives and craft show in Agadir, then Hollywood film studios and the Glaoui Kasbah in Ouarzazate.',
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          transportOffer: 'Transport of your choice: From 450 MAD / day self-drive OR with dedicated private chauffeur.',
+          id: 'circuit-agafay',
+          name: 'Agafay Desert Escape & Atlas Mountains',
+          duration: '1 Day or 2 Days / 1 Night',
+          pace: 'Relaxation & Adventure',
+          badge: 'Oasis Retreat',
+          priceNote: 'From 450 MAD / person',
+          summary: 'Located 40 minutes from Marrakech, explore the stone desert of Agafay: panoramic swimming pool, sunset quad or camel ride, and magical dinner show in luxury nomadic tents.',
+          transportOffer: 'Private round-trip hotel transfer in air-conditioned Mercedes van or 4x4.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
           inclusions: [
-            'Transport of your choice: with dedicated chauffeur OR self-drive from 450 MAD/day',
-            'Historical tour of Essaouira: Old Jewish quarters (Mellah) & ramparts',
-            'Fresh seafood lunch and sunset horseback riding along the beach',
-            '1 Charming night in Essaouira',
-            'Oceanfront lunch in Taghazout surf village',
-            'Solidarity day: Visiting local argan & cosmetics cooperatives with live craft show',
-            '1 Comfortable night in Agadir',
-            'Guided visit of international cinema studios in Ouarzazate',
-            'Discovery of the historical Kasbah of Glaoui',
-            '1 Night in Ouarzazate',
-            'Return across the High Atlas to Marrakech with free leisure time'
+            'Panoramic desert swimming pool access with sunbeds',
+            'Gourmet Moroccan lunch or candlelit dinner under shaded pergola',
+            'Optional Quad, Buggy or camel ride at golden sunset hour',
+            'Evening entertainment with Gnawa musicians, oriental dancers and fire show'
           ],
           days: [
             {
               dayNumber: 1,
-              title: 'Marrakech → Essaouira: Jewish Quarter, Seaside Lunch & Sunset Horseback Ride',
-              description: 'Morning drive to Atlantic gem Essaouira (Mogador). Visit the historic Mellah and fortress ramparts. Fresh fish lunch at the harbor. Gallop or stroll on horseback on the beach as the sun sets over the ocean. Overnight in Essaouira.',
-              stops: ['Marrakech departure', 'Essaouira Medina', 'Old Jewish Mellah', 'Port lunch', 'Beach horseback riding', 'Ocean sunset', 'Overnight in Essaouira']
+              title: 'Marrakech → Atlas Foothills → Agafay Desert Camp',
+              description: 'Pick-up at your accommodation. Scenic drive through the Atlas foothills with tea in a Berber village, arriving at the serene mineral retreat of Agafay.',
+              stops: ['Kik Plateau', 'Asni Berber Village', 'Agafay Pool & Lounge', 'Sunset over stone hills']
             },
             {
               dayNumber: 2,
-              title: 'Essaouira → Taghazout (Lunch) → Agadir: Argan Solidarity Day & Show',
-              description: 'Breakfast and scenic coastal drive to Taghazout. Relaxing lunch overlooking world-class surf breaks. Continue to Agadir for a solidarity day: visit women\'s argan and cosmetic cooperatives and participate in traditional craft demonstrations. Overnight in Agadir.',
-              stops: ['Atlantic coast drive', 'Taghazout lunch', 'Solidarity day', 'Argan & cosmetic cooperatives', 'Craft show', 'Overnight in Agadir']
-            },
+              title: 'Luxury Tent Overnight & Morning Desert Tranquility (2-Day Option)',
+              description: 'For overnight guests: wake up to the peaceful silence of the desert, enjoy breakfast with views of the snow-capped Atlas, and gentle transfer back to Marrakech.',
+              stops: ['Nomad Breakfast', 'Morning Quad or Buggy ride', 'Return to Marrakech Riad']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Coast & Citadel: Essaouira & Mogador',
+          duration: '1 Day Excursion',
+          pace: 'Leisurely & Sea Breeze',
+          badge: 'Atlantic Coast',
+          priceNote: 'From 350 MAD / person',
+          summary: 'A refreshing escape to the Atlantic coast: historic ramparts of Mogador, whitewashed medina alleyways, artisan workshops, lively fishing harbor, and fresh seafood.',
+          transportOffer: 'Air-conditioned private vehicle with driver or self-drive car with unlimited mileage.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Scenic drive across argan tree groves and local women\'s argan cooperative',
+            'Self-guided exploration of the Skala fortress and thuya wood workshops',
+            'Fresh ocean seafood lunch by the port (optional)',
+            'Free time along the wide sandy beach of Essaouira'
+          ],
+          days: [
             {
-              dayNumber: 3,
-              title: 'Agadir → Ouarzazate: Cinema Studios & Ancient Glaoui Kasbah',
-              description: 'Breakfast and depart through the Souss valley to Hollywood of Morocco, Ouarzazate. Visit renowned film studios where international blockbusters were created. Tour the grand historic Glaoui Kasbah. Dinner and overnight in Ouarzazate.',
-              stops: ['Drive to Ouarzazate', 'International film studios', 'Ancient Glaoui Kasbah', 'Overnight in Ouarzazate']
-            },
-            {
-              dayNumber: 4,
-              title: 'Ouarzazate → Marrakech: High Atlas Crossing & Free Leisure Time',
-              description: 'Breakfast then cross High Atlas peaks through Tizi n\'Tichka pass towards Marrakech. Arrive in Marrakech for a free leisure day with optional programs and shopping in the souks. Have a wonderful stay!',
-              stops: ['Tizi n\'Tichka pass', 'Marrakech arrival', 'Free leisure day', 'Optional activities']
+              dayNumber: 1,
+              title: 'Marrakech → Argan Country → Essaouira Medina & Port → Return',
+              description: 'Depart Marrakech at 8:30 AM. Visit an organic argan cooperative. Arrive in Essaouira for a full free day exploring the fortress, fish market, and coastline before evening return.',
+              stops: ['Argan Cooperative', 'Skala Ramparts', 'Artisan Medina UNESCO', 'Essaouira Beach']
             }
           ]
         }
-      ];
-    }
-
-    if (lang === 'ar') {
-      return [
+      ],
+      ar: [
         {
-          id: 'circuit-1',
-          name: 'الرحلة 1: شلالات أوزود، جبل العياشي وكثبان مرزوكة',
-          duration: '4 أيام / 3 ليالٍ',
-          pace: 'طبيعة عذراء، جبال الأطلس والصحراء الكبرى',
-          badge: 'الرحلة 1 • الأكثر طلباً',
-          summary: 'ملحمة أصيلة عبر سحر المغرب الخفي. من شلالات أوزود الشاهقة إلى جبل العياشي مع نزهة جبلية ساحرة، وصولاً إلى كثبان مرزوكة الذهبية وليلة تحت الخيام البربرية. العودة عبر مضايق تودغى واستوديوهات السينما بورزازات.',
-          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
-          transportOffer: 'النقل حسب اختياركم: ابتداءً من 450 درهم / اليوم بدون سائق أو مع سائق خاص رهن إشارتكم.',
-          inclusions: [
-            'نقل سياحي مريح ومكيف مع سائق خاص أو خيار كراء سيارة بدون سائق ابتداءً من 450 درهم/اليوم',
-            'انطلاق مباشر من مراكش وعودة مريحة',
-            'وجبة غداء تقليدية أمام شلالات أوزود الرائعة',
-            'مبيتان في فندق مميز بمدينة ميدلت مع الإفطار والعشاء',
-            'خرجة ونزهة غداء كاملة في قلب جبل العياشي (الأطلس الكبير)',
-            'ليلة استثنائية في صحراء مرزوكة تحت الخيام البربرية التقليدية',
-            'جولة على ظهور الجمال لمشاهدة غروب الشمس الذهبي فوق الكثبان',
-            'غداء في مضايق تودغى المهيبة بتنغير',
-            'توقف وزيارة استوديوهات السينما العالمية في ورزازات',
-            'ليلة ختامية بمدينة مراكش لنهاية رحلة مريحة وممتعة'
-          ],
-          days: [
-            {
-              dayNumber: 1,
-              title: 'الانطلاق من مراكش ← شلالات أوزود (غداء) ← المبيت بميدلت',
-              description: 'انطلاق صباحي من مراكش باتجاه ميدلت عبر شلالات أوزود الرائعة. غداء أمازيغي أمام الشلالات، ثم مواصلة الطريق عبر مناظر الأطلس المتوسط وصولاً إلى ميدلت. عشاء ومبيت بميدلت.',
-              stops: ['الانطلاق من مراكش', 'شلالات أوزود', 'غداء أمام الشلالات', 'الأطلس المتوسط', 'المبيت بميدلت']
-            },
-            {
-              dayNumber: 2,
-              title: 'إفطار الصباح ← نزهة غداء بجبل العياشي (الأطلس الكبير) ← ميدلت',
-              description: 'بعد إفطار الصباح، انطلاق في يوم استجمام في الطبيعة مع نزهة غداء عند سفح جبل العياشي الشامخ. قضاء يوم كامل في الهواء النقي وسط الطبيعة العذراء. عودة مساءً والمبيت بميدلت.',
-              stops: ['إفطار بالفندق', 'نزهة جبل العياشي', 'يوم كامل في الجبل', 'طبيعة الأطلس العذراء', 'المبيت بميدلت']
-            },
-            {
-              dayNumber: 3,
-              title: 'ميدلت ← صحراء مرزوكة: غروب الشمس على ظهور الجمال والخيمة البربرية',
-              description: 'إفطار بميدلت ثم التوجه إلى صحراء مرزوكة مروراً بوادي زيز وواحات تافيلالت. ركوب الجمال لمشاهدة الغروب الأسطوري فوق كثبان عرق الشبي. عشاء تقليدي وموسيقى صحراوية ومبيت تحت الخيمة البربرية.',
-              stops: ['وادي زيز والواحات', 'صحراء مرزوكة', 'غروب الشمس على الجمال', 'المبيت بالخيمة البربرية']
-            },
-            {
-              dayNumber: 4,
-              title: 'مرزوكة ← مضايق تودغى (غداء) ← استوديوهات ورزازات ← مراكش',
-              description: 'إفطار في الصحراء ثم الانطلاق نحو مراكش. توقف وغداء في قلب مضايق تودغى الشاهقة بتنغير. التوقف بورزازات وزيارة استوديوهات السينما العالمية. عبور ممر تيشكا والوصول مساءً إلى مراكش للمبيت. إقامة سعيدة!',
-              stops: ['مضايق تودغى بتنغير', 'غداء بالمضايق', 'استوديوهات ورزازات', 'ممر تيشكا', 'المبيت بمراكش']
-            }
-          ]
-        },
-        {
-          id: 'circuit-2',
-          name: 'الرحلة 2: "متعة لا تنتهي": مراكش، جبال أسني وليلة ساحرة بأغفاي',
+          id: 'circuit-merzouga',
+          name: 'جولة الجنوب الكبير وكثبان مرزوكة',
           duration: '3 أيام / ليلتان',
-          pace: 'استجمام، رفاهية، أنشطة وسهرة فنية',
-          badge: 'الرحلة 2 • "متعة لا تنتهي"',
-          summary: 'رحلة مصممة للراحة والانتعاش. تبدأ بهدوء جبال الأطلس في أسني، تليها تجربة مميزة بصحراء أغفاي (مسبح بإطلالة بانورامية، غداء، ساعة كاملة من الأنشطة حسب اختياركم: جمال، كواد أو باغي، غروب الشمس وسهرة عشاء مع راقصة شرقية ونافخ النار تحت خيمة فاخرة)، ثم إقامة برياض أصيل بمراكش مع حمام ومساج.',
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          transportOffer: 'النقل حسب اختياركم: ابتداءً من 450 درهم / اليوم بدون سائق أو مع سائق خاص رهن إشارتكم.',
+          pace: 'برنامج متوازن',
+          badge: 'الأكثر طلباً بالصحراء',
+          priceNote: 'ابتداءً من 1,200 درهم / للشخص',
+          summary: 'عبور ممر تيشكا بجبال الأطلس، زيارة قصبة آيت بن حدو التاريخية، مضايق تودغى الرائعة، وليلة خيالية في مخيم صحراوي بمرزوكة مع ركوب الجمال عند الغروب.',
+          transportOffer: 'سيارة مكيفة ومريحة مع سائق خاص أو كراء سيارة بدون سائق ابتداءً من 450 درهم/اليوم.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
           inclusions: [
-            'نقل خاص ومكيف مع سائق رهن إشارتكم أو كراء سيارة بدون سائق ابتداءً من 450 درهم/اليوم',
-            'ليلة مريحة في قلب جبال الأطلس بمنطقة أسني',
-            'دخول مسبح بانورامي بصحراء أغفاي ووجبة غداء لذيذة',
-            'ساعة من الأنشطة باختياركم: جولة جمال، سفاري كواد أو باغي',
-            'مشاهدة غروب الشمس الخلاب فوق تلال أغفاي الصحراوية',
-            'سهرة عشاء فاخرة مع برنامج فني: راقصة شرقية، استعراض النار وموسيقى',
-            'مبيت مميز تحت الخيام الفاخرة المجهزة بصحراء أغفاي',
-            'مشاهدة شروق الشمس وإفطار صباحي لذيذ',
-            'إقامة برياض مغربي تقليدي فاخر بقلب مراكش',
-            'يوم حر مع جلسة استرخاء متكاملة: حمام مغربي تقليدي ومساج بالزيوت العطرية'
+            'عبور جبال الأطلس الكبير وقصبة آيت بن حدو المسجلة باليونسكو',
+            'إقامة ليلة في دار ضيافة ساحرة بمضايق دادس / تودغى',
+            'جولة على ظهور الجمال عند غروب الشمس فوق كثبان مرزوكة',
+            'مخيم صحراوي راقٍ ومجهز بالكامل مع عشاء تقليدي وموسيقى كناوة'
           ],
           days: [
             {
               dayNumber: 1,
-              title: 'وسط مراكش / انطلاق صباحي ← مولاي إبراهيم ← جبال أسني',
-              description: 'إقامة بمراكش. الانطلاق صباحاً بعد الإفطار نحو ضريح ومرتفعات مولاي إبراهيم ووادي أسني الأخضر. عشاء محلي ومبيت هادئ في جبال الأطلس بأسني.',
-              stops: ['وسط مراكش', 'مولاي إبراهيم', 'جبال الأطلس', 'المبيت بأسني في الجبل']
+              title: 'مراكش ← جبال الأطلس الكبير ← آيت بن حدو ← مضايق دادس',
+              description: 'انطلاق صباحي من مراكش عبر قمة تيشكا. جولة استكشافية لقصبة آيت بن حدو التاريخية، ثم التوجه عبر ورزازات وواد الورد نحو مضايق دادس.',
+              stops: ['ممر تيشكا (2260م)', 'قصبة آيت بن حدو', 'استوديوهات ورزازات', 'مضايق دادس']
             },
             {
               dayNumber: 2,
-              title: 'أسني ← صحراء أغفاي: مسبح، أنشطة الغروب، عشاء فني وخيمة فاخرة',
-              description: 'بعد الإفطار، الانطلاق نحو صحراء أغفاي. الاستمتاع بالمسبح والغداء وسط الصحراء. بعد الظهر، ساعة نشاط باختياركم (جمال أو كواد أو باغي) لمشاهدة الغروب. سهرة عشاء مع راقصة شرقية ونافخ النار، ومبيت تحت الخيام الفاخرة.',
-              stops: ['مسبح صحراء أغفاي', 'غداء بالصحراء', 'ساعة نشاط (جمال/كواد/باغي)', 'غروب الشمس', 'سهرة العشاء والنار', 'المبيت بخيمة فاخرة']
+              title: 'مضايق دادس ← واحة ومضايق تودغى ← كثبان مرزوكة',
+              description: 'زيارة مضايق تودغى الشاهقة بارتفاع 300 متر. المرور بأرفود والوصول إلى كثبان مرزوكة الذهبية، ثم ركوب الجمال نحو المخيم الصحراوي.',
+              stops: ['واحة تنغير', 'مضايق تودغى', 'أوراش المستحثات بأرفود', 'مخيم مرزوكة الصحراوي']
             },
             {
               dayNumber: 3,
-              title: 'أغفاي (شروق الشمس) ← رياض بمراكش: يوم حر، حمام ومساج',
-              description: 'مشاهدة شروق الشمس فوق الكثبان، إفطار صباحي والعودة إلى مراكش. النزول برياض ساحر في المدينة العتيقة. يوم حر للاسترخاء مع حمام مغربي أصيل ومساج بزيت الأركان. إقامة سعيدة!',
-              stops: ['شروق الشمس والإفطار', 'وسط مراكش', 'رياض فاخر', 'حمام مغربي ومساج', 'يوم استرخاء حر']
+              title: 'مرزوكة ← سوق ريصاني ← وادي درعة ← مراكش',
+              description: 'الاستيقاظ لمشاهدة شروق الشمس الساحر فوق الكثبان. زيارة سوق ريصاني العريق، ثم العودة عبر بساتين وادي درعة إلى مراكش مساءً.',
+              stops: ['شروق الشمس الصحراوي', 'سوق ريصاني التاريخي', 'واحات وادي درعة', 'الوصول إلى مراكش']
             }
           ]
         },
         {
-          id: 'circuit-3',
-          name: 'الرحلة 3: "بين البحر والبر": الصويرة، تغازوت، أكادير وقصبات ورزازات',
-          duration: '4 أيام / 3 ليالٍ',
-          pace: 'نسيم المحيط، تضامن إنساني وقلاع سينمائية',
-          badge: 'الرحلة 3 • بين البحر والبر',
-          summary: 'التوازن المثالي بين أمواج الأطلسي الشامخة وأسرار الجنوب المغربي. اكتشفوا مدينة الصويرة وركوب الخيل على شاطئ البحر وقت الغروب، وأجواء ركوب الأمواج بتغازوت، ويوم تضامني لزيارة تعاونيات الأركان بأكادير وحضور العرض، ثم عبور الجبال نحو استوديوهات السينما وقصبة الكلاوي بورزازات.',
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          transportOffer: 'النقل حسب اختياركم: ابتداءً من 450 درهم / اليوم بدون سائق أو مع سائق خاص رهن إشارتكم.',
+          id: 'circuit-agafay',
+          name: 'استراحة صحراء أكافاي وجبال الأطلس',
+          duration: 'يوم واحد أو يومان / ليلة واحدة',
+          pace: 'استرخاء ومغامرة',
+          badge: 'واحة الهدوء',
+          priceNote: 'ابتداءً من 450 درهم / للشخص',
+          summary: 'على بعد 40 دقيقة فقط من مراكش، استمتعوا بسحر صحراء أكافاي الصخرية: مسبح بإطلالة بانورامية، جولة كواد أو جمال عند الغروب، وعشاء فاخر في خيام بدوية.',
+          transportOffer: 'نقل ذهاب وإياب خاص ومباشر من رياضكم أو فندقكم بمراكش بسيارات مرسيدس أو دفع رباعي.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
           inclusions: [
-            'نقل مريح مع سائق محترف أو خيار كراء سيارة بدون سائق ابتداءً من 450 درهم/اليوم',
-            'زيارة تاريخية لمدينة الصويرة: الملاح القديم والأسوار التاريخية',
-            'غداء سمك طازج وجولة خيل على رمال الشاطئ عند غروب الشمس',
-            'مبيت مريح في الصويرة',
-            'غداء مطل على المحيط في تغازوت',
-            'يوم تضامني: زيارة جمعيات وتعاونيات الأركان والتجميل وحضور العرض الحرفي',
-            'مبيت بأكادير',
-            'زيارة استوديوهات السينما العالمية في ورزازات',
-            'زيارة قصبة الكلاوي العريقة ذات الطراز المعماري الفريد',
-            'مبيت بورزازات',
-            'عودة عبر الأطلس إلى مراكش مع يوم حر وبرامج اختيارية'
+            'ولوج للمسبح البانورامي المطل على تلال أكافاي الرائعة',
+            'غداء أو عشاء مغربي راقٍ في أجواء هادئة ومميزة',
+            'إمكانية جولة كواد، باجي أو ركوب الجمال عند وقت الغروب',
+            'أمسية ترفيهية مع موسيقى كناوة وعروض النار ورقص شرقي'
           ],
           days: [
             {
               dayNumber: 1,
-              title: 'مراكش ← الصويرة: الأحياء التاريخية، غداء بحري وركوب الخيل عند الغروب',
-              description: 'الانطلاق من مراكش نحو مدينة الصويرة (موغادور). زيارة حي الملاح التاريخي والأسوار البرتغالية. غداء سمك طازج، ثم جولة على ظهر الخيل على شاطئ المحيط لمشاهدة غروب الشمس الساحر. المبيت بالصويرة.',
-              stops: ['الانطلاق من مراكش', 'مدينة الصويرة', 'حي الملاح التاريخي', 'غداء بالميناء', 'ركوب الخيل بالشاطئ', 'غروب المحيط', 'المبيت بالصويرة']
+              title: 'مراكش ← قرى الأطلس البربرية ← مخيم أكافاي الفاخر',
+              description: 'الانطلاق من مكان إقامتكم بمراكش. جولة في سفوح الأطلس مع شاي مغربي أصيل، ثم الوصول إلى مخيم أكافاي للاسترخاء بجانب المسبح.',
+              stops: ['هضبة الكيك', 'قرية أسني', 'مسبح أكافاي البانورامي', 'غروب الشمس الساحر']
             },
             {
               dayNumber: 2,
-              title: 'الصويرة ← تغازوت (غداء) ← أكادير: يوم تضامني مع تعاونيات الأركان',
-              description: 'إفطار ثم انطلاق عبر الطريق الساحلي. غداء بتغازوت أمام أشهر شواطئ ركوب الأمواج. مواصلة الطريق إلى أكادير ليوم تضامني مميز: زيارة تعاونيات الأركان ومستحضرات التجميل والمشاركة في العرض الحرفي. المبيت بأكادير.',
-              stops: ['طريق الساحل الأطلسي', 'غداء بتغازوت', 'يوم تضامني', 'تعاونيات الأركان', 'المشاركة بالعرض', 'المبيت بأكادير']
-            },
+              title: 'مبيت في الخيمة الفاخرة وصباح الصحراء الهادئ (خيار المبيت)',
+              description: 'لخيار الإقامة ليلة: استيقاظ في هدوء الصحراء التام وتناول إفطار تقليدي شهي أمام جبال الأطلس ثم العودة المريحة إلى مراكش.',
+              stops: ['فطور صحراوي تقليدي', 'جولة صباحية كواد أو باجي', 'العودة إلى رياض مراكش']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'سحر المحيط : الصويرة وموكادور',
+          duration: 'رحلة يوم كامل',
+          pace: 'نسيم المحيط واسترخاء',
+          badge: 'الساحل الأطلسي',
+          priceNote: 'ابتداءً من 350 درهم / للشخص',
+          summary: 'يوم منعش على الساحل الأطلسي: أسوار موكادور التاريخية، أزقة المدينة العتيقة البيضاء والزرقاء، ميناء الصيد التقليدي وأشهى المأكولات البحرية الطازجة.',
+          transportOffer: 'سيارة سياحية خاصة مكيفة مع سائق أو سيارة كراء بكيلومترات غير محدودة.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'المرور عبر غابات الأركان وزيارة تعاونية نسوية لإنتاج زيت الأركان',
+            'جولة حرة في أسوار الصقالة البرتغالية ومحلات خشب العرعار الشهيرة',
+            'وجبة غداء من الأسماك الطازجة بجوار الميناء (اختياري)',
+            'وقت حر للاسترخاء والمشي على شاطئ الصويرة الذهبي'
+          ],
+          days: [
             {
-              dayNumber: 3,
-              title: 'أكادير ← ورزازات: استوديوهات السينما وقصبة الكلاوي العريقة',
-              description: 'إفطار ثم السفر نحو عاصمة السينما العالمية ورزازات. زيارة استوديوهات التصوير الشهيرة واستكشاف قصبة الكلاوي التاريخية الرائعة. عشاء ومبيت بورزازات.',
-              stops: ['الطريق نحو ورزازات', 'استوديوهات السينما', 'قصبة الكلاوي العريقة', 'المبيت بورزازات']
-            },
-            {
-              dayNumber: 4,
-              title: 'ورزازات ← مراكش: ممر تيشكا ويوم حر للأنشطة الاختيارية',
-              description: 'إفطار ثم العودة إلى مراكش عبر المناظر الخلابة لممر تيزي نتيشكا بالأطلس الكبير. الوصول إلى مراكش لقضاء يوم حر مع أنشطة وبرامج اختيارية حسب رغبتكم. إقامة سعيدة!',
-              stops: ['ممر تيزي نتيشكا', 'الوصول لمراكش', 'يوم حر للتسوق والراحة', 'أنشطة اختيارية']
+              dayNumber: 1,
+              title: 'مراكش ← غابات الأركان ← المدينة العتيقة والميناء ← عودة لمراكش',
+              description: 'انطلاق من مراكش في الساعة 8:30 صباحاً. التوقف عند تعاونية الأركان. يوم كامل بالصويرة لاكتشاف المعالم والأسواق التاريخية والشاطئ ثم العودة مساءً.',
+              stops: ['تعاونية الأركان', 'أسوار الصقالة البحرية', 'المدينة العتيقة لليونسكو', 'شاطئ الصويرة']
             }
           ]
         }
-      ];
-    }
+      ],
+      es: [
+        {
+          id: 'circuit-merzouga',
+          name: 'Expedición Sur de Marruecos y Merzouga',
+          duration: '3 Días / 2 Noches',
+          pace: 'Ritmo Equilibrado',
+          badge: 'Bestseller Sahara',
+          priceNote: 'Desde 1.200 MAD / persona',
+          summary: 'Cruce el Alto Atlas, explore kasbahs centenarias, camine por las gargantas del Todra y viva una noche inolvidable en un campamento de lujo en las dunas de Merzouga.',
+          transportOffer: 'Vehículo climatizado con chófer privado o alquiler sin chófer desde 450 MAD/día.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          inclusions: [
+            'Paso de Tizi n\'Tichka (2.260 m) y Kasbah de Aït Ben Haddou (UNESCO)',
+            'Noche en riad con encanto en las Gargantas del Dadès o Todra',
+            'Paseo en dromedario al atardecer por las dunas de Merzouga',
+            'Campamento de jaimas con cena típica y tambores bereberes'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Alto Atlas → Aït Ben Haddou → Gargantas del Dadès',
+              description: 'Salida de Marrakech cruzando el Alto Atlas. Visita guiada a la emblemática Kasbah de Aït Ben Haddou. Continuación hacia Ouarzazate y el valle del Dadès.',
+              stops: ['Puerto de Tichka', 'Aït Ben Haddou', 'Estudios de Cine', 'Gargantas del Dadès']
+            },
+            {
+              dayNumber: 2,
+              title: 'Gargantas del Dadès → Todra → Campamento en Merzouga',
+              description: 'Recorrido por las impresionantes gargantas del Todra y llegada a las dunas de Erg Chebbi. Caravana de dromedarios hacia el campamento.',
+              stops: ['Palmeral de Tinghir', 'Gargantas del Todra', 'Fósiles de Erfoud', 'Dunas de Merzouga']
+            },
+            {
+              dayNumber: 3,
+              title: 'Merzouga → Rissani → Valle del Drâa → Marrakech',
+              description: 'Amanecer sobre las dunas. Visita al mercado de Rissani y regreso panorámico por el Valle del Drâa hasta Marrakech.',
+              stops: ['Amanecer en el Sahara', 'Zoco de Rissani', 'Valle del Drâa', 'Regreso a Marrakech']
+            }
+          ]
+        },
+        {
+          id: 'circuit-agafay',
+          name: 'Escapada al Desierto de Agafay y el Atlas',
+          duration: '1 Día o 2 Días / 1 Noche',
+          pace: 'Relax y Aventura',
+          badge: 'Oasis Exclusivo',
+          priceNote: 'Desde 450 MAD / persona',
+          summary: 'A solo 40 minutos de Marrakech, disfrute del desierto rocoso de Agafay: piscina panorámica, paseo en quad o dromedario al atardecer y cena espectáculo bereber.',
+          transportOffer: 'Traslados privados ida y vuelta desde su hotel en Marrakech.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          inclusions: [
+            'Acceso a piscina panorámica con vistas a las colinas de Agafay',
+            'Almuerzo o cena gastronómica marroquí bajo pérgola',
+            'Opción de quad, buggy o dromedario al atardecer',
+            'Noche con espectáculo de música gnawa, danza oriental y fuego'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Pueblos del Atlas → Campamento Agafay',
+              description: 'Recogida privada y ruta panorámica por las estribaciones del Atlas con té bereber tradicional antes de llegar al campamento de Agafay.',
+              stops: ['Meseta de Kik', 'Pueblo de Asni', 'Piscina Agafay', 'Atardecer en las colinas']
+            },
+            {
+              dayNumber: 2,
+              title: 'Noche en jaima de lujo y serenidad matutina (Opción 2 Días)',
+              description: 'Despierte en el silencio total del desierto, disfrute de un desayuno completo frente al Atlas y regreso tranquilo a Marrakech.',
+              stops: ['Desayuno nómada', 'Actividad matutina', 'Regreso a Marrakech']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Costa y Ciudadela: Essaouira y Mogador',
+          duration: 'Excursión de 1 Día',
+          pace: 'Tranquilo y Marinero',
+          badge: 'Costa Atlántica',
+          priceNote: 'Desde 350 MAD / persona',
+          summary: 'Una escapada refrescante al Atlántico: murallas históricas de Mogador, callejones blancos y azules, puerto pesquero y pescado fresco.',
+          transportOffer: 'Vehículo privado climatizado con chófer o alquiler sin conductor.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Visita a cooperativa femenina de aceite de argán en el camino',
+            'Paseo libre por las murallas de la Skala y talleres artesanos',
+            'Almuerzo marinero de pescado fresco junto al puerto (opcional)',
+            'Tiempo libre en la playa de arena dorada de Essaouira'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Bosques de Argán → Medina y Puerto de Essaouira',
+              description: 'Salida a las 8:30 de Marrakech. Día libre en Essaouira para disfrutar de la medina protegida por la UNESCO, el puerto y la brisa marina.',
+              stops: ['Cooperativa de Argán', 'Murallas de la Skala', 'Medina UNESCO', 'Playa de Essaouira']
+            }
+          ]
+        }
+      ],
+      it: [
+        {
+          id: 'circuit-merzouga',
+          name: 'Tour del Sud e Dune di Merzouga',
+          duration: '3 Giorni / 2 Notti',
+          pace: 'Equilibrato & Panoramico',
+          badge: 'Bestseller Sahara',
+          priceNote: 'Da 1.200 MAD / persona',
+          summary: 'Attraversamento dell\'Alto Atlante, visita a kasbah storiche, gole del Todra e notte magica in accampamento di lusso tra le dune dorate di Merzouga con cammellata al tramonto.',
+          transportOffer: 'Veicolo moderno climatizzato con autista privato o noleggio auto da 450 MAD/giorno.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          inclusions: [
+            'Passo Tizi n\'Tichka (2.260 m) e Kasbah di Aït Ben Haddou (UNESCO)',
+            'Notte in riad nelle Gole del Dadès o del Todra',
+            'Passeggiata a dorso di dromedario al tramonto a Merzouga',
+            'Bivacco sahariano di lusso con cena tipica e musica berbera'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Alto Atlante → Aït Ben Haddou → Valle del Dadès',
+              description: 'Partenza da Marrakech attraverso l\'Alto Atlante. Visita alla celebre Kasbah di Aït Ben Haddou e arrivo nella suggestiva Valle del Dadès.',
+              stops: ['Passo Tizi n\'Tichka', 'Aït Ben Haddou', 'Studi Cinema Ouarzazate', 'Gole del Dadès']
+            },
+            {
+              dayNumber: 2,
+              title: 'Valle del Dadès → Gole del Todra → Campo nel Sahara Merzouga',
+              description: 'Spettacolare tragitto verso le imponenti falesie del Todra. Arrivo alle dune di Erg Chebbi a Merzouga e cammellata verso il campo.',
+              stops: ['Palmeto di Tinghir', 'Gole del Todra', 'Laboratori di Erfoud', 'Dune di Merzouga']
+            },
+            {
+              dayNumber: 3,
+              title: 'Merzouga → Mercato di Rissani → Valle del Drâa → Marrakech',
+              description: 'Alba magica sulle dune. Sosta al tradizionale mercato di Rissani e rientro a Marrakech attraverso la Valle del Drâa.',
+              stops: ['Alba nel deserto', 'Mercato di Rissani', 'Palmeti del Drâa', 'Rientro a Marrakech']
+            }
+          ]
+        },
+        {
+          id: 'circuit-agafay',
+          name: 'Fuga nel Deserto di Agafay e Monti dell’Atlante',
+          duration: '1 Giorno o 2 Giorni / 1 Notte',
+          pace: 'Relax e Avventura',
+          badge: 'Oasi Esclusiva',
+          priceNote: 'Da 450 MAD / persona',
+          summary: 'A soli 40 minuti da Marrakech, scoprite il deserto di pietra di Agafay: piscina panoramica, giro in quad o dromedario al tramonto e cena sotto le tende.',
+          transportOffer: 'Transfer privato a/r dal vostro riad o hotel a Marrakech.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          inclusions: [
+            'Accesso alla piscina panoramica con vista sulle colline di Agafay',
+            'Pranzo o cena gastronomica marocchina sotto pergola',
+            'Attività opzionale in quad, buggy o dromedario al tramonto',
+            'Serata con musica gnaoua, danzatrice del ventre e spettacolo di fuoco'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Villaggi dell’Atlante → Campo Agafay',
+              description: 'Partenza da Marrakech con sosta per il tè in un villaggio berbero dell’Atlante, arrivo nel suggestivo paesaggio lunare di Agafay.',
+              stops: ['Altopiano del Kik', 'Villaggio di Asni', 'Piscina Agafay', 'Tramonto sulle colline']
+            },
+            {
+              dayNumber: 2,
+              title: 'Notte in tenda di lusso & Risveglio nel silenzio (Opzione 2 Giorni)',
+              description: 'Risveglio nella pace assoluta del deserto, colazione con vista sulle cime innevate e rientro rilassante a Marrakech.',
+              stops: ['Colazione nomade', 'Attività mattutina', 'Rientro a Marrakech']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Costa e Cittadella: Essaouira e Mogador',
+          duration: 'Escursione di 1 Giorno',
+          pace: 'Brezza Marina & Relax',
+          badge: 'Costa Atlantica',
+          priceNote: 'Da 350 MAD / persona',
+          summary: 'Una fuga rinfrescante sulla costa atlantica: bastioni storici di Mogador, vicoli bianchi e blu della medina, porto dei pescatori e pesce fresco.',
+          transportOffer: 'Veicolo privato con autista o auto a noleggio con km illimitati.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Sosta lungo la strada dell’argan presso una cooperativa femminile',
+            'Passeggiata libera sui bastioni della Skala e botteghe di legno di tuia',
+            'Pranzo di pesce fresco sul lungomare (opzionale)',
+            'Tempo libero sulla spiaggia dorata di Essaouira'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Foresta di Argan → Medina e Porto di Essaouira',
+              description: 'Partenza alle 8:30 da Marrakech. Giornata libera a Essaouira per ammirare la medina UNESCO, il porto animato e la spiaggia prima del rientro.',
+              stops: ['Cooperativa Argan', 'Bastioni della Skala', 'Medina UNESCO', 'Spiaggia di Essaouira']
+            }
+          ]
+        }
+      ],
+      de: [
+        {
+          id: 'circuit-merzouga',
+          name: 'Südmarokko & Merzouga Dünen-Expedition',
+          duration: '3 Tage / 2 Nächte',
+          pace: 'Ausgewogen & Beeindruckend',
+          badge: 'Sahara Bestseller',
+          priceNote: 'Ab 1.200 MAD / Person',
+          summary: 'Überqueren Sie den Hohen Atlas, erkunden Sie historische Kasbahs, durchwandern Sie die Todra-Schlucht und übernachten Sie in einem Luxuscamp in den Dünen von Merzouga.',
+          transportOffer: 'Klimatisiertes Fahrzeug mit privatem Fahrer oder Mietwagen ab 450 MAD/Tag.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          inclusions: [
+            'Hoher Atlas über den Tizi n\'Tichka-Pass (2.260m) & Kasbah Aït Ben Haddou',
+            'Übernachtung im charmanten Riad in den Dadès- oder Todra-Schluchten',
+            'Kamelritt zum Sonnenuntergang in den goldenen Dünen von Merzouga',
+            'Wüstencamp mit traditionellem Abendessen und Berbermusik am Lagerfeuer'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakesch → Hoher Atlas → Aït Ben Haddou → Dadès-Schlucht',
+              description: 'Fahrt über den spektakulären Tizi n\'Tichka-Pass. Besichtigung der UNESCO-Kasbah Aït Ben Haddou. Weiterreise über Ouarzazate ins Dadès-Tal.',
+              stops: ['Tichka-Pass', 'Aït Ben Haddou', 'Filmstudios Ouarzazate', 'Dadès-Schluchten']
+            },
+            {
+              dayNumber: 2,
+              title: 'Dadès-Schlucht → Todra-Schlucht → Wüstencamp Merzouga',
+              description: 'Fahrt zu den 300 Meter hohen Todra-Felswänden und weiter nach Merzouga (Erg Chebbi). Kamelritt ins Wüstencamp zum Sonnenuntergang.',
+              stops: ['Oase Tinghir', 'Todra-Schlucht', 'Fossilienwerkstätten Erfoud', 'Merzouga Dünen']
+            },
+            {
+              dayNumber: 3,
+              title: 'Merzouga → Markt von Rissani → Drâa-Tal → Marrakesch',
+              description: 'Sonnenaufgang über den Dünen. Besuch des traditionellen Marktes von Rissani und Rückfahrt durch das Drâa-Tal nach Marrakesch.',
+              stops: ['Sahara-Sonnenaufgang', 'Basar in Rissani', 'Drâa-Palmenoase', 'Rückkehr Marrakesch']
+            }
+          ]
+        },
+        {
+          id: 'circuit-agafay',
+          name: 'Agafay-Wüstenausflug & Atlasgebirge',
+          duration: '1 Tag oder 2 Tage / 1 Nacht',
+          pace: 'Entspannung & Abenteuer',
+          badge: 'Oasen-Erlebnis',
+          priceNote: 'Ab 450 MAD / Person',
+          summary: 'Nur 40 Minuten von Marrakesch entfernt erwartet Sie die Steinwüste von Agafay: Panoramapool, Quad- oder Kameltour zum Sonnenuntergang und Abendessen im Nomadenzelt.',
+          transportOffer: 'Privater Hoteltransfer ab/bis Marrakesch im klimatisierten Fahrzeug.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          inclusions: [
+            'Zugang zum Panoramapool mit Blick auf die Agafay-Hügel',
+            'Marokkanisches Feinschmecker-Mittag- oder Abendessen',
+            'Quad-, Buggy- oder Kameltour zum Sonnenuntergang (optional)',
+            'Abendprogramm mit Gnawa-Musik, Bauchtanz und Feuershow'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakesch → Atlas-Ausläufer → Agafay Wüstencamp',
+              description: 'Privatabholung in Marrakesch. Malerische Fahrt durch das Atlas-Vorgebirge mit Teepause im Berberdorf vor Ankunft in Agafay.',
+              stops: ['Kik-Hochebene', 'Dorf Asni', 'Agafay Pool & Lounge', 'Sonnenuntergang über den Hügeln']
+            },
+            {
+              dayNumber: 2,
+              title: 'Übernachtung im Luxuszelt & Morgendliche Wüstenstille (2-Tage-Option)',
+              description: 'Erwachen Sie in der friedlichen Stille der Wüste, genießen Sie ein traditionelles Frühstück mit Atlasblick und kehren Sie entspannt zurück.',
+              stops: ['Nomaden-Frühstück', 'Quad- oder Buggytour', 'Rückkehr nach Marrakesch']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Küste & Festung: Essaouira & Mogador',
+          duration: '1-Tages-Ausflug',
+          pace: 'Meeresbrise & Kultur',
+          badge: 'Atlantikküste',
+          priceNote: 'Ab 350 MAD / Person',
+          summary: 'Erfrischender Ausflug an den Atlantik: historische Festungsmauern von Mogador, weiß-blaue Medina-Gassen, Fischereihafen und frische Meeresfrüchte.',
+          transportOffer: 'Privatwagen mit Chauffeur oder Mietwagen mit unbegrenzten Kilometern.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Fahrt durch Arganbaumhaine & Besuch einer Frauenkooperative',
+            'Besichtigung der Skala-Festungsmauern und Kunsthandwerksläden',
+            'Frisches Fischessen direkt am Hafen (optional)',
+            'Freizeit am breiten Sandstrand von Essaouira'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakesch → Arganwälder → Medina & Hafen Essaouira → Rückfahrt',
+              description: 'Abfahrt um 8:30 Uhr in Marrakesch. Genießen Sie einen vollen Tag zur Erkundung der UNESCO-Medina, des Hafens und des Strandes.',
+              stops: ['Argan-Kooperative', 'Skala-Festung', 'UNESCO-Medina', 'Strand von Essaouira']
+            }
+          ]
+        }
+      ],
+      pt: [
+        {
+          id: 'circuit-merzouga',
+          name: 'Expedição Sul de Marrocos e Dunas de Merzouga',
+          duration: '3 Dias / 2 Noites',
+          pace: 'Equilibrado e Cénico',
+          badge: 'Bestseller Saara',
+          priceNote: 'A partir de 1.200 MAD / pessoa',
+          summary: 'Atravesse o Alto Atlas, conheça kasbahs milenares, caminhe pelas gargantas do Todra e desfrute de uma noite memorável num acampamento nas dunas de Merzouga.',
+          transportOffer: 'Viatura moderna com motorista privado ou aluguer sem motorista desde 450 MAD/dia.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          inclusions: [
+            'Passagem de Tizi n\'Tichka (2.260 m) e Kasbah de Aït Ben Haddou (UNESCO)',
+            'Noite em riad tradicional no Vale do Dadès ou Gargantas do Todra',
+            'Passeio de dromedário ao pôr do sol pelas dunas de Merzouga',
+            'Acampamento saariano de charme com jantar típico e música berbere'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marraquexe → Alto Atlas → Aït Ben Haddou → Gargantas do Dadès',
+              description: 'Partida de Marraquexe atravessando o Alto Atlas. Visita guiada a Aït Ben Haddou e continuação para o vale do Dadès.',
+              stops: ['Passo de Tichka', 'Aït Ben Haddou', 'Estúdios Ouarzazate', 'Gargantas do Dadès']
+            },
+            {
+              dayNumber: 2,
+              title: 'Gargantas do Dadès → Todra → Acampamento em Merzouga',
+              description: 'Passagem pelas magníficas gargantas do Todra e chegada às dunas de Erg Chebbi. Caravana de dromedários rumo ao acampamento.',
+              stops: ['Palmeiral de Tinghir', 'Gargantas do Todra', 'Oficinas de fósseis Erfoud', 'Dunas de Merzouga']
+            },
+            {
+              dayNumber: 3,
+              title: 'Merzouga → Mercado de Rissani → Vale do Drâa → Marraquexe',
+              description: 'Nascer do sol sobre as dunas. Paragem em Rissani e regresso panorâmico através do Vale do Drâa até Marraquexe.',
+              stops: ['Nascer do sol no Saara', 'Mercado de Rissani', 'Vale do Drâa', 'Regresso a Marraquexe']
+            }
+          ]
+        },
+        {
+          id: 'circuit-agafay',
+          name: 'Escapadela ao Deserto de Agafay e Montanhas do Atlas',
+          duration: '1 Dia ou 2 Dias / 1 Noite',
+          pace: 'Relaxamento e Aventura',
+          badge: 'Oásis Exclusivo',
+          priceNote: 'A partir de 450 MAD / pessoa',
+          summary: 'A apenas 40 minutos de Marraquexe, descubra o deserto rochoso de Agafay: piscina panorâmica, passeio de quad ou dromedário e jantar espetáculo.',
+          transportOffer: 'Transfer privado ida e volta a partir do seu hotel em Marraquexe.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          inclusions: [
+            'Acesso à piscina panorâmica com vista para as colinas de Agafay',
+            'Almoço ou jantar gastronómico marroquino sob pérgula sombreada',
+            'Opção de quad, buggy ou dromedário ao pôr do sol',
+            'Noite com música gnaoua, dança oriental e espetáculo de fogo'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marraquexe → Aldeias do Atlas → Acampamento Agafay',
+              description: 'Recolha privada em Marraquexe. Passeio pelas encostas do Atlas com chá numa aldeia berbere antes de chegar a Agafay.',
+              stops: ['Planalto do Kik', 'Aldeia de Asni', 'Piscina Agafay', 'Pôr do sol nas colinas']
+            },
+            {
+              dayNumber: 2,
+              title: 'Noite em tenda de luxo e serenidade matinal (Opção 2 Dias)',
+              description: 'Acorde no silêncio absoluto do deserto, tome o pequeno-almoço com vista para o Atlas e regresso suave a Marraquexe.',
+              stops: ['Pequeno-almoço nómada', 'Atividade matinal', 'Regresso a Marraquexe']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Costa e Fortaleza: Essaouira e Mogador',
+          duration: 'Excursão de 1 Dia',
+          pace: 'Brisa Marítima e Tranquilidade',
+          badge: 'Costa Atlântica',
+          priceNote: 'A partir de 350 MAD / pessoa',
+          summary: 'Uma pausa refrescante no Atlântico: muralhas de Mogador, ruelas brancas e azuis da medina, porto de pesca e peixe fresco.',
+          transportOffer: 'Viatura privada com motorista ou aluguer sem condutor com km ilimitados.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Visita a cooperativa de óleo de argão no percurso',
+            'Passeio livre pelas muralhas da Skala e oficinas de marchetaria',
+            'Almoço de peixe fresco à beira-mar (opcional)',
+            'Tempo livre na extensa praia de Essaouira'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marraquexe → Floresta de Argão → Medina e Porto de Essaouira',
+              description: 'Saída às 8h30 de Marraquexe. Dia inteiro em Essaouira para desfrutar da medina da UNESCO, do porto e da praia.',
+              stops: ['Cooperativa de Argão', 'Muralhas da Skala', 'Medina UNESCO', 'Praia de Essaouira']
+            }
+          ]
+        }
+      ],
+      nl: [
+        {
+          id: 'circuit-merzouga',
+          name: 'Zuid-Marokko & Merzouga Duinen Expeditie',
+          duration: '3 Dagen / 2 Nachten',
+          pace: 'Gebalanceerd & Indrukwekkend',
+          badge: 'Sahara Bestseller',
+          priceNote: 'Vanaf 1.200 MAD / persoon',
+          summary: 'Steek de Hoge Atlas over, ontdek eeuwenoude kasbahs, wandel door de Todra-kloof en overnacht in een luxe woestijnkamp in Merzouga met kamelentocht bij zonsondergang.',
+          transportOffer: 'Comfortabel voertuig met privéchauffeur of autohuur vanaf 450 MAD/dag.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          inclusions: [
+            'Hoge Atlas via de Tizi n\'Tichka-pas (2.260 m) & Aït Ben Haddou Kasbah',
+            'Overnachting in een sfeervol guesthouse in de Dadès- of Todra-vallei',
+            'Kamelentocht bij zonsondergang door de duinen van Merzouga',
+            'Luxe woestijnkamp met diner, kampvuur en traditionele muziek'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Hoge Atlas → Aït Ben Haddou → Dadès-vallei',
+              description: 'Ochtendvertrek over het Atlasgebergte. Bezoek aan UNESCO-kasbah Aït Ben Haddou en reis verder naar de Dadès-kloof.',
+              stops: ['Tichka-bergpas', 'Aït Ben Haddou', 'Filmstudio\'s Ouarzazate', 'Dadès-kloven']
+            },
+            {
+              dayNumber: 2,
+              title: 'Dadès-vallei → Todra-kloven → Woestijnkamp Merzouga',
+              description: 'Spectaculaire tocht langs de 300 meter hoge rotswanden van de Todra-kloof. Aankomst in Merzouga en kamelentocht naar het kamp.',
+              stops: ['Tinghir Oase', 'Todra-kloof', 'Fossielenateliers Erfoud', 'Merzouga Duinen']
+            },
+            {
+              dayNumber: 3,
+              title: 'Merzouga → Rissani Markt → Drâa-vallei → Marrakech',
+              description: 'Zonsopgang boven de duinen. Bezoek aan de souks van Rissani en panoramische terugreis door de Drâa-vallei naar Marrakech.',
+              stops: ['Sahara zonsopgang', 'Markt van Rissani', 'Drâa Palmvallei', 'Terugkeer Marrakech']
+            }
+          ]
+        },
+        {
+          id: 'circuit-agafay',
+          name: 'Agafay Woestijntrip & Atlasgebergte',
+          duration: '1 Dag of 2 Dagen / 1 Nacht',
+          pace: 'Ontspanning & Avontuur',
+          badge: 'Oase Beleving',
+          priceNote: 'Vanaf 450 MAD / persoon',
+          summary: 'Op slechts 40 minuten van Marrakech: ontdek de steenwoestijn van Agafay met panoramisch zwembad, quad of kamelen bij zonsondergang en diner onder de sterren.',
+          transportOffer: 'Privé transfer heen en terug vanaf uw hotel of riad in Marrakech.',
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          inclusions: [
+            'Toegang tot het panoramische zwembad met uitzicht over de heuvels',
+            'Marokkaanse gastronomische lunch of diner onder schaduwrijke pergola',
+            'Optionele quad-, buggy- of kamelentocht bij zonsondergang',
+            'Avondentertainment met Gnawa-muzikanten, buikdans en vuurshow'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Atlasdorpen → Agafay Woestijnkamp',
+              description: 'Privé ophaalservice in Marrakech. Rit door de uitlopers van het Atlasgebergte met theepauze in een Berberdorp voor aankomst in Agafay.',
+              stops: ['Kik-hoogvlakte', 'Dorp Asni', 'Agafay Zwembad & Lounge', 'Zonsondergang over de heuvels']
+            },
+            {
+              dayNumber: 2,
+              title: 'Overnachting in luxe tent & Ochtendrust in de woestijn (2-daagse optie)',
+              description: 'Ontwaak in de serene stilte van de woestijn, geniet van een traditioneel ontbijt met uitzicht op de Atlas en keer ontspannen terug.',
+              stops: ['Nomaden ontbijt', 'Ochtend quad- of buggyrit', 'Terugkeer naar Marrakech Riad']
+            }
+          ]
+        },
+        {
+          id: 'circuit-essaouira',
+          name: 'Kust & Vesting: Essaouira & Mogador',
+          duration: '1 Dag Excursie',
+          pace: 'Zeebries & Ontspanning',
+          badge: 'Atlantische Kust',
+          priceNote: 'Vanaf 350 MAD / persoon',
+          summary: 'Verfrissende dagtocht naar de Atlantische kust: historische stadsmuren van Mogador, wit-blauwe medina, vissershaven en verse vis.',
+          transportOffer: 'Privévoertuig met chauffeur of huurauto met onbeperkte kilometers.',
+          imageUrl: 'assets/essaouira-mogador.jpeg',
+          inclusions: [
+            'Rit langs arganbomen & bezoek aan een arganolie-coöperatie',
+            'Vrij bezoek aan de Skala-vesting en kunstnijverheidswinkels',
+            'Verse vislunch aan de haven (optioneel)',
+            'Vrije tijd op het uitgestrekte zandstrand van Essaouira'
+          ],
+          days: [
+            {
+              dayNumber: 1,
+              title: 'Marrakech → Arganbossen → Medina & Haven Essaouira → Terugkeer',
+              description: 'Vertrek om 8:30 uur uit Marrakech. Een hele vrije dag om de UNESCO-medina, haven en het strand te ontdekken voor vertrek terug.',
+              stops: ['Argan Coöperatie', 'Skala Vesting', 'UNESCO Medina', 'Strand van Essaouira']
+            }
+          ]
+        }
+      ]
+    };
 
-    // Default French
-    return [
-      {
-        id: 'circuit-1',
-        name: 'Circuit 1 : Cascades d\'Ouzoud, Montagne Ayachi & Dunes de Merzouga',
-        duration: '4 Jours / 3 Nuits',
-        pace: 'Nature Sauvage, Haut-Atlas & Grand Désert',
-        badge: 'Circuit 1 • Proposition N°1',
-        summary: 'Une grande odyssée authentique à travers le Maroc préservé. Des spectaculaires Cascades d\'Ouzoud au massif méconnu du Jbel Ayachi avec pique-nique en pleine montagne, jusqu\'à l\'immensité dorée des dunes de Merzouga avec nuit sous la tente berbère. Retour par les Gorges du Todra et les studios cinématographiques d\'Ouarzazate.',
-        imageUrl: 'assets/ouzoud-waterfalls.jpeg',
-        transportOffer: 'Transport au choix à partir de 450 DH / jour sans chauffeur ou avec chauffeur privé dédié.',
-        inclusions: [
-          'Transport au choix : Véhicule récent climatisé avec chauffeur privé dédié OU sans chauffeur dès 450 DH/jour',
-          'Prise en charge directe et retour à Marrakech',
-          'Déjeuner au pied des splendides Cascades d\'Ouzoud',
-          '2 Nuitées en hôtel de charme à Midelt avec petit-déjeuner',
-          'Excursion et grand pique-nique en pleine montagne du Jbel Ayachi (Haut-Atlas)',
-          '1 Nuitée inoubliable au désert de Merzouga sous la tente berbère traditionnelle',
-          'Balade chamelière et coucher de soleil à dos de dromadaire sur les dunes d\'Erg Chebbi',
-          'Déjeuner au cœur des impressionnantes Gorges de Todra à Tinghir',
-          'Arrêt et visite des célèbres studios cinématographiques internationaux à Ouarzazate',
-          'Dernière nuitée à Marrakech pour clôturer le séjour en toute sérénité'
-        ],
-        days: [
-          {
-            dayNumber: 1,
-            title: 'Départ de Marrakech → Cascades d\'Ouzoud (Déjeuner) → Nuitée à Midelt',
-            description: 'Départ matinal de Marrakech en direction de Midelt en passant par les grandioses cascades d\'Ouzoud. Déjeuner traditionnel berbère au pied des cascades avec vue panoramique rafraîchissante. Poursuite de la route à travers les paysages du Moyen-Atlas et arrivée à Midelt en fin d\'après-midi. Dîner et nuitée à Midelt.',
-            stops: ['Départ Marrakech', 'Cascades d\'Ouzoud', 'Déjeuner aux cascades', 'Moyen-Atlas', 'Passer la nuit à Midelt']
-          },
-          {
-            dayNumber: 2,
-            title: 'Petit-déjeuner → Départ en Pique-Nique à la Montagne Ayachi → Midelt',
-            description: 'Après un savoureux petit-déjeuner, départ pour une journée d\'évasion montagnarde avec un grand pique-nique au pied du majestueux Jbel Ayachi. Passez toute la journée en pleine montagne du Haut-Atlas au milieu de paysages pastoraux préservés et d\'un air pur revigorant. Retour en fin d\'après-midi pour dormir à Midelt.',
-            stops: ['Petit-déjeuner à l\'hôtel', 'Départ pique-nique Jbel Ayachi', 'Journée en pleine montagne', 'Haut-Atlas sauvage', 'Dormir à Midelt']
-          },
-          {
-            dayNumber: 3,
-            title: 'Midelt → Désert de Merzouga : Coucher de Soleil à Dromadaire & Tente Berbère',
-            description: 'Petit-déjeuner à Midelt puis départ en direction du désert saharien de Merzouga en longeant les magnifiques gorges et palmeraies du Ziz. Arrivée aux dunes majestueuses de l\'Erg Chebbi : caravane de dromadaires pour assister au magnifique coucher de soleil sur les crêtes dorées. Dîner traditionnel autour du feu et nuit féérique sous la tente berbère au désert.',
-            stops: ['Vallée du Ziz & palmeraies', 'Désert de Merzouga', 'Coucher de soleil à dos de dromadaire', 'Nuit sous la tente berbère']
-          },
-          {
-            dayNumber: 4,
-            title: 'Merzouga → Gorges de Todra Tinghir (Déjeuner) → Ouarzazate → Marrakech',
-            description: 'Petit-déjeuner au désert puis départ vers Marrakech. Déjeuner au cœur des vertigineuses Gorges de Todra à Tinghir. Arrêt à Ouarzazate avec visite des mythiques studios cinématographiques internationaux. Traversée du Haut-Atlas par le col du Tizi n\'Tichka et arrivée en soirée à Marrakech. Passer la nuit à Marrakech. Bon séjour !',
-            stops: ['Gorges de Todra (Tinghir)', 'Déjeuner aux gorges', 'Ouarzazate (Studios de cinéma)', 'Col du Tichka', 'Passer la nuit à Marrakech']
-          }
-        ]
-      },
-      {
-        id: 'circuit-2',
-        name: 'Circuit 2 : "Que du Plaisir" : Marrakech, Montagnes d\'Asni & Nuit VIP à Agafay',
-        duration: '3 Jours / 2 Nuits',
-        pace: 'Détente, Bien-Être, Activités & Fête',
-        badge: 'Circuit "Que du Plaisir"',
-        summary: 'Une parenthèse enchantée conçue pour se ressourcer et vibrer. Commencez par la quiétude des montagnes d\'Asni, poursuivez par une journée festive au désert d\'Agafay (piscine panoramique, déjeuner, 1h d\'activité au choix : dromadaire, quad ou buggy, coucher de soleil et grand dîner avec danseuse orientale et cracheur de feu sous tente luxueuse), puis terminez dans un riad au centre de Marrakech avec hammam et massage.',
-        imageUrl: 'assets/star-lit-nights.jpeg',
-        transportOffer: 'Transport au choix à partir de 450 DH / jour sans chauffeur ou avec nos chauffeurs privés à disposition.',
-        inclusions: [
-          'Transport privé climatisé avec chauffeur à disposition OU formule sans chauffeur dès 450 DH/jour',
-          '1 Nuitée ressourçante en pleine montagne d\'Atlas à Asni',
-          'Accès piscine en plein désert de Marrakech à Agafay & Déjeuner au camp',
-          '1 Heure d\'activité au choix : Randonnée Dromadaire, Safari Quad ou Buggy',
-          'Assister au coucher de soleil féérique sur les canyons d\'Agafay',
-          'Dîner avec grande animation : Danseuse orientale, Cracheur de feu & musique',
-          'Passer la nuit sous les tentes luxueuses au désert d\'Agafay',
-          'Assister au lever de soleil au désert & Petit-déjeuner gourmand',
-          'Hébergement dans un riad de charme au centre de Marrakech',
-          'Journée libre avec séance relaxante de Hammam traditionnel & Massage'
-        ],
-        days: [
-          {
-            dayNumber: 1,
-            title: 'Passant la Nuit à Marrakech / Départ Matin → Moulay Brahim → Montagnes d\'Asni',
-            description: 'Hébergement au centre de Marrakech. Le matin après le petit-déjeuner, départ en direction de Moulay Brahim et des contreforts de l\'Atlas. Poursuite vers la vallée d\'Asni. Dîner traditionnel savoureux et passer la nuit en pleine montagne d\'Atlas à Asni.',
-            stops: ['Centre de Marrakech', 'Moulay Brahim', 'Haut-Atlas', 'Nuitée en pleine montagne à Asni']
-          },
-          {
-            dayNumber: 2,
-            title: 'Asni → Agafay : Piscine, Activité (Dromadaire/Quad/Buggy), Dîner Spectacle & Tente de Luxe',
-            description: 'Après le petit-déjeuner, départ vers le désert minéral d\'Agafay. Profitez de la piscine en plein désert de Marrakech et d\'un excellent déjeuner. 1 heure d\'activité au choix : dromadaire, quad ou buggy pour assister au magnifique coucher de soleil. Dîner avec animation festive (danseuse orientale, cracheur de feu). Passer la nuit sous les tentes luxueuses au désert.',
-            stops: ['Piscine en plein désert d\'Agafay', 'Déjeuner au désert', '1h Activité (Dromadaire, Quad ou Buggy)', 'Coucher de soleil', 'Dîner spectacle feu & danseuse', 'Nuit sous les tentes luxueuses']
-          },
-          {
-            dayNumber: 3,
-            title: 'Agafay (Lever de Soleil) → Riad au Centre de Marrakech : Journée Libre, Hammam & Massage',
-            description: 'Assister au lever de soleil spectaculaire sur les canyons d\'Agafay, petit-déjeuner et départ. Arrivée au centre de Marrakech et hébergement dans un magnifique riad traditionnel. Journée libre avec rituel bien-être : séance de hammam traditionnel et massage relaxant. Bon séjour !',
-            stops: ['Lever de soleil & petit-déjeuner', 'Départ d\'Agafay', 'Arrivée centre de Marrakech', 'Hébergement en riad', 'Journée libre hammam & massage']
-          }
-        ]
-      },
-      {
-        id: 'circuit-3',
-        name: 'Circuit 3 : "Circuit Mer - Terre" : Essaouira, Taghazout, Agadir & Kasbahs de Ouarzazate',
-        duration: '4 Jours / 3 Nuits',
-        pace: 'Côte Océane, Culture Solidaire & Kasbahs',
-        badge: 'Circuit Mer - Terre',
-        summary: 'L\'équilibre parfait entre les vagues de l\'Atlantique et les mystères du Sud marocain. Découvrez Essaouira et sa balade à cheval au bord de la mer au coucher de soleil, l\'ambiance de Taghazout, une journée de solidarité au cœur des associations d\'argan à Agadir avec participation au show, puis franchissez les montagnes vers les célèbres studios de cinéma et l\'ancienne Kasbah du Glaoui à Ouarzazate.',
-        imageUrl: 'assets/taghazout-morocco.jpeg',
-        transportOffer: 'Transport au choix à partir de 450 DH / jour sans chauffeur ou avec chauffeur professionnel à disposition.',
-        inclusions: [
-          'Transport au choix : avec chauffeur dédié OU formule véhicule sans chauffeur dès 450 DH/jour',
-          'Visite d\'Essaouira : anciens quartiers juifs (Mellah) & monuments historiques',
-          'Déjeuner au port et balade à dos de cheval au bord de la mer au coucher de soleil',
-          'Passer la nuit de charme à Essaouira',
-          'Déjeuner les pieds dans l\'eau à Taghazout',
-          'Journée de solidarité : visite des associations d\'argan et cosmétique avec participation au show',
-          'Passer la nuit à Agadir',
-          'Visite des studios cinématographiques internationaux d\'Ouarzazate',
-          'Visite de l\'ancienne et prestigieuse Kasbah de Glaoui',
-          'Passer la nuit à Ouarzazate',
-          'Retour à Marrakech avec journée libre des programmes aux choix et facultatifs'
-        ],
-        days: [
-          {
-            dayNumber: 1,
-            title: 'Marrakech → Essaouira : Anciens Quartiers Juifs, Cheval au Coucher de Soleil & Nuit Océane',
-            description: 'Départ de Marrakech vers Essaouira. Arrivée à Essaouira : visite des anciens quartiers juifs (Mellah) et des monuments historiques. Déjeuner traditionnel. Balade à dos de cheval sur la plage et contemplation du coucher de soleil au bord de la mer. Passer la nuit à Essaouira.',
-            stops: ['Départ de Marrakech', 'Arrivée Essaouira', 'Visite anciens quartiers juifs & monuments', 'Déjeuner', 'Balade à dos de cheval', 'Coucher de soleil au bord de la mer', 'Passer la nuit à Essaouira']
-          },
-          {
-            dayNumber: 2,
-            title: 'Essaouira → Taghazout (Déjeuner) → Agadir : Journée Solidaire Argan & Show Cosmétique',
-            description: 'Petit-déjeuner puis départ par la route côtière vers Agadir. Déjeuner à Taghazout face aux spots de l\'océan. Poursuite vers Agadir pour une enrichissante journée de solidarité : visite des associations de femmes productrices d\'argan et produits cosmétiques avec participation au show de fabrication artisanale. Passer la nuit à Agadir.',
-            stops: ['Petit-déjeuner', 'Départ vers Agadir', 'Déjeuner à Taghazout', 'Journée de solidarité', 'Associations d\'argan & cosmétique', 'Participation au show', 'Passer la nuit à Agadir']
-          },
-          {
-            dayNumber: 3,
-            title: 'Agadir → Ouarzazate : Studios Cinématographiques & Ancienne Kasbah de Glaoui',
-            description: 'Petit-déjeuner puis départ vers Ouarzazate, la capitale du cinéma marocain. Visite des célèbres studios cinématographiques internationaux où ont été tournés les chefs-d\'œuvre du cinéma. Découverte de l\'impressionnante ancienne Kasbah de Glaoui. Passer la nuit à Ouarzazate.',
-            stops: ['Petit-déjeuner', 'Départ vers Ouarzazate', 'Visite des studios cinématographiques', 'Ancienne Kasbah de Glaoui', 'Passer la nuit à Ouarzazate']
-          },
-          {
-            dayNumber: 4,
-            title: 'Ouarzazate → Marrakech : Traversée du Haut-Atlas & Journée Libre aux Programmes au Choix',
-            description: 'Petit-déjeuner puis départ vers Marrakech à travers les majestueux paysages du col du Tizi n\'Tichka. Arrivée à Marrakech pour une agréable journée libre des programmes aux choix et facultatifs. Bon séjour !',
-            stops: ['Petit-déjeuner', 'Départ vers Marrakech', 'Traversée du Haut-Atlas', 'Journée libre & programmes aux choix facultatifs']
-          }
-        ]
-      }
-    ];
+    return map[lang] || map['fr'];
   }
 
-  // --- DESTINATIONS DATA ---
-  get destinations(): DestinationTranslation[] {
+  // Alternating Luxury Experience Stories (Le Bédouin style: Bivouacs, Fleet VIP, Activities)
+  get experiences(): ExperienceStory[] {
     const lang = this.currentLang();
-    if (lang === 'en') {
-      return [
+    const map: Record<Language, ExperienceStory[]> = {
+      fr: [
         {
-          id: 'agafay',
-          name: 'Agafay Desert',
-          tagline: 'Desert Escape Just 45 Minutes from Marrakech',
-          tag: 'Desert Glamping & Sunset',
-          description: 'Less than an hour from the bustling medina of Marrakech, the lunar Agafay Desert spreads its rolling hills and dramatic gullies. Enjoy thrilling quad or buggy safaris by day, relax by a cliffside pool, and dine beneath starry skies facing breathtaking live fire performances.',
-          highlights: [
-            'Only 45 minutes from Marrakech city center',
-            'Luxury desert camps and panoramic swimming pools',
-            'Perfect terrain for thrilling Quad & Buggy safaris',
-            'Dinner shows with bonfires and live Gnawa music'
-          ],
-          idealFor: 'Couples, friends, celebrations & express desert trips',
-          bestTime: 'All year round (superb in late afternoon & evening)',
-          imageUrl: 'assets/agafay-amanjena.jpeg'
+          id: 'bivouacs',
+          badge: 'IMMERSION SAHARIENNE',
+          title: 'Bivouacs Nomades & Nuits Étoilées',
+          description: 'Au cœur des dunes de Merzouga ou sur les collines minérales d’Agafay, nos campements allient authenticité berbère et confort absolu. Lits douillets, tentes privatives climatisées/chauffées, dîners raffinés aux chandelles et veillées musicales autour du feu de camp.',
+          perks: ['Tentes privatives avec salle de bain intégrée', 'Dîner traditionnel 3 plats sous les étoiles', 'Feu de camp et animation musicale gnaoua'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Découvrir nos bivouacs',
+          ctaLink: '#circuits'
         },
         {
-          id: 'merzouga',
-          name: 'Merzouga & Erg Chebbi Dunes',
-          tagline: 'Magical Immersion in the Heart of the Real Sahara',
-          tag: 'Grand Saharan Desert',
-          description: 'The ultimate Moroccan desert experience. The golden dunes of Erg Chebbi rise up to 150 meters high. Medade Travel takes you on private journeys to sleep in comfortable private camps, embrace infinite silence, and share Berber drumming around blazing campfires.',
-          highlights: [
-            'Vast golden sand dunes as far as the eye can see',
-            'Camel trekking at dusk and dawn',
-            'Comfortable nomad camps with private facilities',
-            'Traditional music from the Gnawa masters of Khamlia'
-          ],
-          idealFor: 'Honeymoons, nature lovers, photographers & adventurers',
-          bestTime: 'October to May (pleasant mild temperatures and crystal skies)',
-          imageUrl: 'assets/merzouga-dunes.jpeg'
+          id: 'flotte-vip',
+          badge: 'TRANSPORT & MOBILITÉ',
+          title: 'Chauffeurs Privés & Flotte de Prestige',
+          description: 'Voyagez à travers le Maroc avec sérénité grâce à notre flotte de Mercedes V-Class spacieux, SUV et 4x4 tout-terrain récents. Nos chauffeurs professionnels, courtois et multilingues, s’adaptent à vos horaires et vos envies d’arrêts photos spontanés.',
+          perks: ['Véhicules récents, climatisés et désinfectés', 'Chauffeurs agréés et bilingues à votre écoute', 'Formule location sans chauffeur dès 450 DH/jour'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'Voir nos options de transport',
+          ctaLink: '#transport'
         },
         {
-          id: 'atlas',
-          name: 'High Atlas & Berber Valleys',
-          tagline: 'Majestic Peaks & Legendary Hospitality',
-          tag: 'Nature & High Mountains',
-          description: 'Breathe crisp fresh mountain air in the High Atlas. From the green valleys to authentic Berber stone villages beneath Mount Toubkal (4,167 m), discover warm hospitality, refreshing rivers, and authentic tagines prepared with local love.',
-          highlights: [
-            'Guided scenic hikes adapted to all fitness levels',
-            'Fresh organic tagine prepared by local village families',
-            'Visiting traditional argan oil and carpet weaving workshops',
-            'Spectacular waterfalls of Ouzoud and Ourika'
-          ],
-          idealFor: 'Families, hikers, craft enthusiasts & summer cool retreat',
-          bestTime: 'Spring, summer (cool retreat) and autumn',
-          imageUrl: 'assets/atlas-mountains-villages.jpeg'
-        },
-        {
-          id: 'essaouira',
-          name: 'Essaouira Mogador',
-          tagline: 'Atlantic Ocean Breeze on Historic Ramparts',
-          tag: 'Coastal Beauty',
-          description: 'A historic fortress city caressed by ocean trade winds, Essaouira enchants with whitewashed houses, cobalt blue shutters, and vibrant fishing docks. Savor freshly grilled seafood, browse bohemian art galleries, and enjoy horseback riding along golden shores.',
-          highlights: [
-            'Easy day or multi-day trip 2.5 hours from Marrakech',
-            'UNESCO World Heritage pedestrian medina',
-            'Fresh harbor seafood dining by the ramparts',
-            'Unique thuya woodwork and leather craft ateliers'
-          ],
-          idealFor: 'Relaxing getaways, art lovers, seafood & ocean breezes',
-          bestTime: 'All year round (mild temperatures even in peak summer)',
-          imageUrl: 'assets/essaouira-mogador.jpeg'
+          id: 'activites',
+          badge: 'AVENTURE & DÉTENTE',
+          title: 'Activités & Sensations au Désert',
+          description: 'Donnez vie à vos envies d’évasion : escapades en quad ou buggy dans le désert d’Agafay, balades poétiques à dos de dromadaire au coucher du soleil, déjeuners au bord de piscines panoramiques et dîners spectacles enchanteurs.',
+          perks: ['Guides certifiés et matériel récent sécurisé', 'Formules adaptées aux familles et couples', 'Départs quotidiens avec navette privative'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Demander un devis activités',
+          ctaLink: '#booking'
         }
-      ];
-    }
-
-    if (lang === 'ar') {
-      return [
+      ],
+      en: [
         {
-          id: 'agafay',
-          name: 'صحراء أغفاي',
-          tagline: 'سحر الصحراء على بُعد 45 دقيقة فقط من مراكش',
-          tag: 'مخيمات فاخرة وغروب الشمس',
-          description: 'على بعد أقل من ساعة من صخب مدينة مراكش، تمتد صحراء أغفاي الصخرية بتلالها الفريدة وطبيعتها القمرية. المكان الأمثل لمغامرات الكواد والباغي نهاراً، والاسترخاء بجانب مسبح بانورامي، ثم تناول العشاء تحت النجوم مع استعراضات النار والموسيقى التراثية.',
-          highlights: [
-            'تبعد 45 دقيقة فقط عن قلب مدينة مراكش',
-            'مخيمات ضيافة فاخرة ومسابح بإطلالات بانورامية',
-            'مسارات مثالية لرحلات الكواد والباغي الصحراوي',
-            'سهرات عشاء ساحرة حول النار مع فرق كناوة الفلكلورية'
-          ],
-          idealFor: 'الأزواج، الأصدقاء، المناسبات والرحلات السريعة',
-          bestTime: 'طوال أيام السنة (رائعة وقت العصر والمساء)',
-          imageUrl: 'assets/agafay-amanjena.jpeg'
+          id: 'bivouacs',
+          badge: 'SAHARA IMMERSION',
+          title: 'Nomadic Luxury Camps & Starlit Nights',
+          description: 'In the heart of the Merzouga dunes or the rocky hills of Agafay, our desert camps blend Berber authenticity with supreme comfort. Plush beds, private en-suite tents, candlelit dinners, and fireside acoustic musical evenings.',
+          perks: ['Private luxury tents with en-suite bathrooms', '3-course traditional dinner under the stars', 'Campfire with live Gnawa musical performance'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Explore our desert camps',
+          ctaLink: '#circuits'
         },
         {
-          id: 'merzouga',
-          name: 'كثبان مرزوكة وعرق الشبي',
-          tagline: 'معايشة سحر الصحراء الكبرى الأسطورية',
-          tag: 'الصحراء الكبرى الشامخة',
-          description: 'التجربة الصحراوية الأرقى في المغرب. ترتفع كثبان عرق الشبي الذهبية حتى 150 متراً. تنقلكم مداد ترافيل في جولات مريحة للمبيت في مخيمات مجهزة ومريحة، وتأمل السكون المهيب ومشاركة الأهازيج الصحراوية حول نار المخيم.',
-          highlights: [
-            'كثبان رملية ذهبية تمتد على مد البصر',
-            'قوافل الجمال عند شروق الشمس وغروبها',
-            'خيام مجهزة بكافة سبل الراحة والمرافق الخاصة',
-            'موسيقى كناوة الأصيلة مع رواد فن كناوة بخملية'
-          ],
-          idealFor: 'رحلات شهر العسل، عشاق الطبيعة الخلابة وهواة التصوير',
-          bestTime: 'من أكتوبر إلى ماي (أجواء معتدلة وسماء صافية)',
-          imageUrl: 'assets/merzouga-dunes.jpeg'
+          id: 'flotte-vip',
+          badge: 'TRANSPORT & MOBILITY',
+          title: 'Private Chauffeurs & Modern Fleet',
+          description: 'Travel across Morocco with peace of mind in our spacious Mercedes V-Class vans, premium SUVs, and 4x4 vehicles. Our experienced, bilingual drivers cater entirely to your pace, comfort, and spontaneous photo stops.',
+          perks: ['Recent, fully air-conditioned vehicles', 'Certified bilingual professional drivers', 'Self-drive rental option from 450 MAD/day'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'View transport options',
+          ctaLink: '#transport'
         },
         {
-          id: 'atlas',
-          name: 'جبال الأطلس والقرى الأمازيغية',
-          tagline: 'القمم الشامخة والضيافة البربرية الكريمة',
-          tag: 'طبيعة وجبال شاهقة',
-          description: 'تنفسوا الهواء النقي في جبال الأطلس الكبير. من الوديان الخضراء وصولاً إلى القرى التراثية عند سفح قمة توبقال (4167 م)، استمتعوا بكرم الضيافة الأمازيغية، ومياه الجداول العذبة، وأشهى طواجن الطين التقليدية.',
-          highlights: [
-            'مسارات مشي جبلي برفقة مرشدين محليين محترفين',
-            'طاجين بلدي أصيل يتم إعداده من خيرات القرية',
-            'زيارة تعاونيات زيت الأركان وصناعة الزرابي اليدوية',
-            'شلالات أوزود وأوريكا المائية الرائعة'
-          ],
-          idealFor: 'العائلات، هواة المشي، عشاق الحرف التقليدية والانتعاش',
-          bestTime: 'الربيع، الصيف (ملاذ بارد من الحرارة) والخريف',
-          imageUrl: 'assets/atlas-mountains-villages.jpeg'
-        },
-        {
-          id: 'essaouira',
-          name: 'الصويرة موغادور',
-          tagline: 'نسيم المحيط العليل والأسوار البرتغالية التاريخية',
-          tag: 'جمال الساحل الأطلسي',
-          description: 'مدينة ساحلية عريقة تداعبها رياح الأطلسي، تسحر الصويرة زائريها بأزقتها البيضاء ونوافذها الزرقاء، وميناء الصيد الحيوي. تذوقوا أشهى الأسماك الطازجة المشوية، وتجولوا في معارض الفن، واستمتعوا بركوب الخيل على الشاطئ.',
-          highlights: [
-            'رحلة سهلة ومريحة على بُعد ساعتين ونصف من مراكش',
-            'مدينة عتيقة مخصصة للمشاة مصنفة تراثاً عالمياً لليونسكو',
-            'غداء أسماك طازجة أمام الميناء والأسوار التاريخية',
-            'ورشات نقش خشب العرعار النادر والمصنوعات الجلدية'
-          ],
-          idealFor: 'الاستجمام الهادئ، عشاق الفن، المأكولات البحرية وهواء البحر',
-          bestTime: 'طوال السنة (درجات حرارة لطيفة حتى في ذروة الصيف)',
-          imageUrl: 'assets/essaouira-mogador.jpeg'
+          id: 'activites',
+          badge: 'ADVENTURE & RECREATION',
+          title: 'Desert Adventures & Bespoke Activities',
+          description: 'Experience exhilarating quad and buggy safaris through the Agafay stone desert, sunset camel treks, relaxation by panoramic oasis swimming pools, and mesmerizing evening dinner shows.',
+          perks: ['Certified guides and modern safety gear', 'Options suitable for families and couples', 'Daily departures with private round-trip transfers'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Enquire about activities',
+          ctaLink: '#booking'
         }
-      ];
-    }
-
-    // Default French
-    return [
-      {
-        id: 'agafay',
-        name: 'Désert d\'Agafay',
-        tagline: 'L\'Échappée Désertique à 45 min de Marrakech',
-        tag: 'Cœur de Notre Activité',
-        description: 'À moins d\'une heure de la trépidante médina de Marrakech, le désert minéral d\'Agafay déploie ses collines arides et ses canyons sculptés par le vent. C\'est le théâtre idéal pour vivre l\'intensité du quad et du buggy le jour, se détendre au bord d\'une piscine turquoise panoramique, puis dîner sous la voûte étoilée devant un spectacle de cracheurs de feu.',
-        highlights: [
-          'Accessible en 45 minutes depuis le centre de Marrakech',
-          'Camps de tentes de luxe et piscines panoramiques',
-          'Pistes parfaites pour safaris Quad & Buggy',
-          'Dîners spectacles avec feux de camp et musiciens Gnawa'
-        ],
-        idealFor: 'Couples, groupes d\'amis, anniversaires & séjours express',
-        bestTime: 'Toute l\'année (splendide en fin d\'après-midi & soirée)',
-        imageUrl: 'assets/agafay-amanjena.jpeg'
-      },
-      {
-        id: 'merzouga',
-        name: 'Dunes de Merzouga & Erg Chebbi',
-        tagline: 'L\'Immersion Magique au Cœur du Sahara',
-        tag: 'Grand Désert Saharien',
-        description: 'L\'expérience ultime du désert marocain. Les dunes dorées d\'Erg Chebbi s\'élèvent jusqu\'à 150 mètres de haut. Medade Travel vous emmène en circuit privé pour dormir dans des bivouacs de luxe exclusifs, contempler le silence infini et partager les chants traditionnels autour d\'un grand feu sous des millions d\'étoiles.',
-        highlights: [
-          'Dunes de sable fin doré à perte de vue',
-          'Caravane chamelière au crépuscule et à l\'aube',
-          'Bivouacs tout confort avec sanitaires privés et lits royaux',
-          'Musique traditionnelle des maîtres Gnawa de Khamlia'
-        ],
-        idealFor: 'Voyages de noces, amoureux de nature sauvage, photographes',
-        bestTime: 'D\'octobre à mai (températures douces et ciel pur)',
-        imageUrl: 'assets/merzouga-dunes.jpeg'
-      },
-      {
-        id: 'atlas',
-        name: 'Haut-Atlas & Vallées Berbères',
-        tagline: 'Les Cimes Majestueuses & l\'Hospitalité Authentique',
-        tag: 'Nature & Montagnes',
-        description: 'Respirez l\'air pur des montagnes du Haut-Atlas. De la verdoyante vallée de l\'Ourika au village d\'Imlil au pied du mont Toubkal (4 167 m), découvrez la gentillesse légendaire des Berbères, les cascades rafraîchissantes et les déjeuners pieds dans l\'eau.',
-        highlights: [
-          'Randonnées adaptées à tous les niveaux accompagnées par nos guides locaux',
-          'Déjeuner tajine traditionnel préparé par les familles locales',
-          'Visite des coopératives d\'huile d\'argan et de tapis',
-          'Cascades spectaculaires d\'Ourika et d\'Ouzoud'
-        ],
-        idealFor: 'Familles, randonneurs, amateurs d\'artisanat et de fraîcheur',
-        bestTime: 'Printemps, été (refuge contre la chaleur) et automne',
-        imageUrl: 'assets/atlas-mountains-villages.jpeg'
-      },
-      {
-        id: 'essaouira',
-        name: 'Essaouira Mogador',
-        tagline: 'L\'Air du Large sur les Remparts Atlantiques',
-        tag: 'Côte Océane',
-        description: 'Ancienne forteresse portugaise balayée par les alizés, Essaouira séduit par sa médina blanchie à la chaux, ses volets bleus indigo et son port de pêche animé. Dégustez des poissons grillés à la criée, flânez dans les galeries d\'art et profitez d\'un rythme doux et apaisant.',
-        highlights: [
-          'Excursion journée facile à 2h30 de Marrakech en voiture privée',
-          'Médina piétonne classée au patrimoine mondial de l\'UNESCO',
-          'Déjeuner de fruits de mer frais face au port historique',
-          'Ateliers d\'ébénisterie en bois de thuya et cuir'
-        ],
-        idealFor: 'Journée détente, amateurs d\'art, de poisson frais et de brise marine',
-        bestTime: 'Toute l\'année (températures douces même en plein été)',
-        imageUrl: 'assets/essaouira-mogador.jpeg'
-      }
-    ];
+      ],
+      ar: [
+        {
+          id: 'bivouacs',
+          badge: 'سحر الصحراء',
+          title: 'مخيمات بدوية فاخرة وليالٍ تحت النجوم',
+          description: 'في قلب كثبان مرزوكة أو فوق تلال أكافاي الساحرة، تجمع مخيماتنا بين الأصالة المغربية والراحة الفندقية التامة. أسرّة مريحة، خيام مجهزة بحمامات خاصة، عشاء فاخر على ضوء الشموع، وسهرات موسيقية حول نار المخيم.',
+          perks: ['خيام خاصة فاخرة مجهزة بحمام مدمج', 'عشاء مغربي تقليدي 3 أطباق تحت النجوم', 'جلسات نار المخيم مع أنغام كناوة التراثية'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'اكتشفوا مخيماتنا الصحراوية',
+          ctaLink: '#circuits'
+        },
+        {
+          id: 'flotte-vip',
+          badge: 'النقل والراحة',
+          title: 'سائقون خاصون وأسطول سيارات حديث',
+          description: 'سافروا في أرجاء المغرب بكل راحة وأمان مع أسطول سيارات مرسيدس في-كلاس، وسيارات دفع رباعي 4x4 حديثة ومكيفة. سائقونا المحترفون والمطلعون على مسارات المغرب رهن إشارتكم في كل خطوة.',
+          perks: ['سيارات حديثة، نظيفة ومكيفة بالكامل', 'سائقون معتمدون وذوو خبرة واسعة', 'خيار كراء سيارة بدون سائق ابتداءً من 450 درهم/يوم'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'اطلعوا على خيارات النقل',
+          ctaLink: '#transport'
+        },
+        {
+          id: 'activites',
+          badge: 'مغامرات وأنشطة',
+          title: 'أنشطة ومغامرات استثنائية في الصحراء',
+          description: 'استمتعوا بجولات الكواد والباجي الممتعة في صحراء أكافاي، ركوب الجمال عند غروب الشمس، استرخاء بجانب المسابح البانورامية، وأمسيات عشاء ساحرة مع عروض الفلكلور المغربي.',
+          perks: ['مرشدون معتمدون ومعدات سلامة حديثة', 'برامج مناسبة للعائلات والأزواج', 'انطلاق يومي مع خدمة نقل خاص ومباشر'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'طلب حجز الأنشطة',
+          ctaLink: '#booking'
+        }
+      ],
+      es: [
+        {
+          id: 'bivouacs',
+          badge: 'INMERSIÓN EN EL SAHARA',
+          title: 'Campamentos Nómadas y Noches Estrelladas',
+          description: 'En el corazón de Merzouga o en las colinas de Agafay, nuestros campamentos combinan autenticidad bereber y confort absoluto. Jaimas con baño privado, cenas a la luz de las velas y música junto a la hoguera.',
+          perks: ['Jaimas privadas con baño completo', 'Cena tradicional de 3 platos bajo las estrellas', 'Hoguera con música tradicional gnawa'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Descubrir nuestros campamentos',
+          ctaLink: '#circuits'
+        },
+        {
+          id: 'flotte-vip',
+          badge: 'TRANSPORTE Y MOVILIDAD',
+          title: 'Chóferes Privados y Flota de Prestigio',
+          description: 'Viaje por Marruecos con total tranquilidad en nuestras furgonetas Mercedes V-Class y 4x4 modernos. Chóferes bilingües y experimentados que se adaptan a su ritmo.',
+          perks: ['Vehículos modernos y climatizados', 'Chóferes profesionales a su disposición', 'Alquiler sin chófer desde 450 MAD/día'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'Ver opciones de transporte',
+          ctaLink: '#transport'
+        },
+        {
+          id: 'activites',
+          badge: 'AVENTURA Y OCIO',
+          title: 'Aventuras y Actividades en el Desierto',
+          description: 'Disfrute de safaris en quad y buggy por Agafay, paseos en dromedario al atardecer, piscinas panorámicas y mágicas cenas espectáculo.',
+          perks: ['Guías certificados y equipo de seguridad', 'Ideal para familias y parejas', 'Salidas diarias con traslados privados'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Consultar actividades',
+          ctaLink: '#booking'
+        }
+      ],
+      it: [
+        {
+          id: 'bivouacs',
+          badge: 'IMMERSIONE NEL SAHARA',
+          title: 'Campi Nomadi di Lusso e Notti Stellate',
+          description: 'Tra le dune di Merzouga o le colline di Agafay, i nostri campi fondono l’autenticità berbera con il comfort moderno: tende con bagno privato, cene a lume di candela e musica attorno al fuoco.',
+          perks: ['Tende private di lusso con bagno interno', 'Cena tradizionale a 3 portate sotto le stelle', 'Falò serale con musica gnaoua'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Scopri i nostri campi',
+          ctaLink: '#circuits'
+        },
+        {
+          id: 'flotte-vip',
+          badge: 'TRASPORTO E MOBILITÀ',
+          title: 'Autisti Privati e Flotta di Pregio',
+          description: 'Esplorate il Marocco con la massima serenità a bordo di Mercedes V-Class e 4x4 recenti. Autisti professionisti bilingui sempre disponibili per il vostro comfort.',
+          perks: ['Veicoli recenti e climatizzati', 'Autisti esperti al vostro servizio', 'Noleggio auto senza conducente da 450 MAD/giorno'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'Vedi opzioni di trasporto',
+          ctaLink: '#transport'
+        },
+        {
+          id: 'activites',
+          badge: 'AVVENTURA E RELAX',
+          title: 'Avventure e Attività nel Deserto',
+          description: 'Giri emozionanti in quad e buggy ad Agafay, passeggiate in dromedario al tramonto, relax a bordo piscina panoramica e suggestive cene spettacolo.',
+          perks: ['Guide certificate e massima sicurezza', 'Formule perfette per coppie e famiglie', 'Partenze giornaliere con transfer privato'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Richiedi info attività',
+          ctaLink: '#booking'
+        }
+      ],
+      de: [
+        {
+          id: 'bivouacs',
+          badge: 'SAHARA-ERLEBNIS',
+          title: 'Nomadencamps & Nächte unter den Sternen',
+          description: 'Inmitten der Dünen von Merzouga oder den Hügeln von Agafay vereinen unsere Wüstencamps traditionelle Berberkultur mit höchstem Komfort: komfortable Betten, private Zelte mit eigenem Bad und stimmungsvolle Lagerfeuer.',
+          perks: ['Private Luxuszelte mit eigenem Bad', 'Traditionelles 3-Gänge-Menü unterm Sternenhimmel', 'Lagerfeuer mit traditioneller Gnawa-Musik'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Unsere Wüstencamps entdecken',
+          ctaLink: '#circuits'
+        },
+        {
+          id: 'flotte-vip',
+          badge: 'TRANSPORT & MOBILITÄT',
+          title: 'Private Chauffeure & Moderner Fuhrpark',
+          description: 'Reisen Sie entspannt durch Marokko in geräumigen Mercedes V-Klasse Vans und modernen 4x4 Geländewagen. Unsere erfahrenen Chauffeure richten sich ganz nach Ihren Wünschen.',
+          perks: ['Neueste klimatisierte Fahrzeuge', 'Erfahrene mehrsprachige Chauffeure', 'Mietwagen ohne Fahrer ab 450 MAD/Tag'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'Transportoptionen ansehen',
+          ctaLink: '#transport'
+        },
+        {
+          id: 'activites',
+          badge: 'ABENTEUER & ERHOLUNG',
+          title: 'Wüstenabenteuer & Maßgeschneiderte Aktivitäten',
+          description: 'Erleben Sie aufregende Quad- und Buggy-Touren durch die Steinwüste von Agafay, Kamelritte zum Sonnenuntergang, Panoramapools und bezaubernde Dinnershows.',
+          perks: ['Geprüfte Guides und moderne Ausrüstung', 'Ideal für Paare und Familien', 'Tägliche Abfahrten mit Privattransfer'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Aktivitäten anfragen',
+          ctaLink: '#booking'
+        }
+      ],
+      pt: [
+        {
+          id: 'bivouacs',
+          badge: 'IMERSÃO SAARIANA',
+          title: 'Acampamentos Nómadas & Noites Estreladas',
+          description: 'Nas dunas de Merzouga ou em Agafay, os nossos acampamentos combinam autenticidade e conforto: tendas privadas com casa de banho, jantares à luz de velas e música tradicional junto à fogueira.',
+          perks: ['Tendas privadas com casa de banho privativa', 'Jantar tradicional de 3 pratos sob as estrelas', 'Fogueira e música gnaoua ao vivo'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Conhecer os nossos acampamentos',
+          ctaLink: '#circuits'
+        },
+        {
+          id: 'flotte-vip',
+          badge: 'TRANSPORTE E MOBILIDADE',
+          title: 'Motoristas Privados & Frota de Prestígio',
+          description: 'Viaje por Marrocos com total conforto em carrinhas Mercedes V-Class e viaturas 4x4 recentes. Motoristas profissionais bilíngues inteiramente dedicados ao seu bem-estar.',
+          perks: ['Viaturas recentes e climatizadas', 'Motoristas qualificados e pontuais', 'Aluguer sem motorista desde 450 MAD/dia'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'Ver opções de transporte',
+          ctaLink: '#transport'
+        },
+        {
+          id: 'activites',
+          badge: 'AVENTURA E LAZER',
+          title: 'Aventuras e Atividades no Deserto',
+          description: 'Experimente passeios de moto-quatro e buggy em Agafay, passeios de dromedário ao pôr do sol, relaxamento junto à piscina e jantares espetáculo fascinantes.',
+          perks: ['Guias certificados e segurança total', 'Perfeito para casais e famílias', 'Saídas diárias com transfer privado'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Saber mais sobre atividades',
+          ctaLink: '#booking'
+        }
+      ],
+      nl: [
+        {
+          id: 'bivouacs',
+          badge: 'SAHARA BELEVING',
+          title: 'Nomadenkampen & Nachten onder de Sterrenhemel',
+          description: 'Tussen de zandduinen van Merzouga of de heuvels van Agafay combineren onze kampen Berberse gastvrijheid met modern comfort: luxe tenten met eigen badkamer, diners bij kaarslicht en muziek bij het kampvuur.',
+          perks: ['Privétenten met eigen badkamer', 'Traditioneel 3-gangendiner onder de sterren', 'Kampvuur met traditionele Gnawa-muziek'],
+          imageUrl: 'assets/star-lit-nights.jpeg',
+          ctaText: 'Ontdek onze woestijnkampen',
+          ctaLink: '#circuits'
+        },
+        {
+          id: 'flotte-vip',
+          badge: 'VERVOER & MOBILITEIT',
+          title: 'Privéchauffeurs & Luxe Wagenpark',
+          description: 'Reis zorgeloos door Marokko in onze ruime Mercedes V-Klasse busjes en moderne 4x4 terreinwagens met ervaren meertalige chauffeurs.',
+          perks: ['Moderne voertuigen met airconditioning', 'Gecertificeerde privéchauffeurs', 'Autohuur zonder chauffeur vanaf 450 MAD/dag'],
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          ctaText: 'Bekijk vervoersopties',
+          ctaLink: '#transport'
+        },
+        {
+          id: 'activites',
+          badge: 'AVONTUUR & ONTSPANNING',
+          title: 'Woestijnavonturen & Activiteiten op Maat',
+          description: 'Beleef spectaculaire quad- en buggytours door Agafay, kamelenritten bij zonsondergang, ontspanning aan panoramische zwembaden en betoverende dinnershows.',
+          perks: ['Gecertificeerde gidsen en veiligheidsuitrusting', 'Ideaal voor koppels en gezinnen', 'Dagelijkse transfers vanaf uw riad'],
+          imageUrl: 'assets/agafay-amanjena.jpeg',
+          ctaText: 'Activiteiten aanvragen',
+          ctaLink: '#booking'
+        }
+      ]
+    };
+    return map[lang] || map['fr'];
   }
 
-  // --- HOME TOURS CATALOG ---
-  get homeTours(): TourTranslation[] {
+  // Transport options
+  get transport() {
     const lang = this.currentLang();
-    if (lang === 'en') {
-      return [
-        {
-          id: 'circuit-1',
-          category: 'sahara',
-          badge: 'Tour 1 • Signature',
-          badgeType: 'bestseller',
-          title: 'Tour 1: Ouzoud Falls, Mount Ayachi & Merzouga Dunes',
-          duration: '4 Days / 3 Nights',
-          location: 'Ouzoud • Midelt • Ayachi Mountain • Merzouga • Ouarzazate',
-          priceNote: 'Transport & Camp Included',
-          priceAmount: 'Custom Quote',
-          description: 'The ultimate journey from the High Atlas to the Sahara: Ouzoud waterfalls, mountain picnic in Ayachi, night under a desert nomad tent, Todra Gorges, and Ouarzazate film studios.',
-          highlights: ['Picnic in high Ayachi mountain', 'Sunset camel ride & Berber tent', 'Todra Gorges & Ouarzazate Studios'],
-          rating: 5.0,
-          reviewsCount: 312,
-          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
-          link: '/circuits'
+    const d: Record<Language, any> = {
+      fr: {
+        tag: 'SERVICE TRANSPORT & MOBILITÉ',
+        title: 'Formules de Transport au Choix',
+        subtitle: 'Sillonnez le Maroc en toute liberté au volant d’un véhicule récent ou profitez de l’accompagnement sur-mesure d’un chauffeur dédié.',
+        card1: {
+          tag: 'Autonomie Complète',
+          from: 'À partir de',
+          price: '450',
+          unit: 'DH / Jour',
+          title: 'Location Sans Chauffeur',
+          desc: 'Flotte de citadines, berlines et SUV récents et parfaitement entretenus avec climatisation pour découvrir le Maroc à votre propre rythme.',
+          perks: ['Véhicules récents et climatisés', 'Prise en charge à l’aéroport ou à votre riad', 'Assistance locale 24/7 & kilométrage adapté', 'Contrat clair et sans frais cachés'],
+          btn: 'Réserver Sans Chauffeur'
         },
-        {
-          id: 'circuit-2',
-          category: 'agafay',
-          badge: 'Tour 2 • "Pure Pleasure"',
-          badgeType: 'luxury',
-          title: 'Tour 2: "Pure Pleasure" Asni, Agafay Luxury Camp & Marrakech Riad',
-          duration: '3 Days / 2 Nights',
-          location: 'Moulay Brahim • Asni • Agafay Desert • Marrakech Riad',
-          priceNote: 'Pool, Activities & Show',
-          priceAmount: 'VIP Package',
-          description: 'Guaranteed relaxation and celebration: mountain stay in Asni, pool & 1h activity (camel, quad or buggy) in Agafay, grand dinner show with belly dancer and fire eater, then riad with hammam & massage in Marrakech.',
-          highlights: ['1h Camel, Quad or Buggy at sunset', 'Dinner show with fire & oriental dancer', 'Luxury glamping tent + Hammam & Massage'],
-          rating: 4.9,
-          reviewsCount: 284,
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          link: '/circuits'
-        },
-        {
-          id: 'circuit-3',
-          category: 'prive',
-          badge: 'Tour 3 • Sea & Sand',
-          badgeType: 'bestseller',
-          title: 'Tour 3: "Sea & Sand" Essaouira, Taghazout, Agadir & Ouarzazate',
-          duration: '4 Days / 3 Nights',
-          location: 'Essaouira • Taghazout • Agadir • Ouarzazate Kasbahs',
-          priceNote: 'Transport from 450 MAD/d',
-          priceAmount: 'Custom Quote',
-          description: 'Ocean winds and southern treasures: horseback riding on Essaouira beach, surf vibes in Taghazout, argan solidarity day in Agadir, film studios and historic Glaoui Kasbah in Ouarzazate.',
-          highlights: ['Sunset beach horseback ride facing waves', 'Solidarity day at argan cooperatives & craft show', 'Movie studios & ancient Glaoui Kasbah'],
-          rating: 4.9,
-          reviewsCount: 198,
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          link: '/circuits'
+        card2: {
+          tag: 'Service VIP Recommandé',
+          from: 'Sérénité & Confort',
+          price: 'Sur Devis',
+          unit: 'Direct Local',
+          title: 'Véhicule avec Chauffeur Dédié',
+          desc: 'Mercedes V-Class ou 4x4 spacieux avec chauffeur professionnel bilingue à votre entière disposition pour vos transferts et circuits.',
+          perks: ['Chauffeurs courtois, ponctuels et expérimentés', 'Carburant, péages et assurance inclus', 'Arrêts photos, pauses thé et conseils locaux', 'Prise en charge directe à votre hébergement'],
+          btn: 'Demander un Chauffeur Dédié'
         }
-      ];
-    }
-
-    if (lang === 'ar') {
-      return [
-        {
-          id: 'circuit-1',
-          category: 'sahara',
-          badge: 'الرحلة 1 • مميزة',
-          badgeType: 'bestseller',
-          title: 'الرحلة 1: شلالات أوزود، جبل العياشي وكثبان مرزوكة',
-          duration: '4 أيام / 3 ليالٍ',
-          location: 'أوزود • ميدلت • جبل العياشي • مرزوكة • ورزازات',
-          priceNote: 'شامل النقل والمخيم',
-          priceAmount: 'حسب الطلب',
-          description: 'ملحمة ساحرة من قمم الأطلس إلى الصحراء الكبرى: شلالات أوزود، نزهة جبلية بالعياشي، مبيت بخيمة بربرية بمرزوكة، مضايق تودغى واستوديوهات السينما بورزازات.',
-          highlights: ['نزهة غداء بجبل العياشي الشامخ', 'غروب الشمس على الجمال والمبيت بالخيمة', 'مضايق تودغى واستوديوهات ورزازات'],
-          rating: 5.0,
-          reviewsCount: 312,
-          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
-          link: '/circuits'
+      },
+      en: {
+        tag: 'TRANSPORT & MOBILITY SOLUTIONS',
+        title: 'Morocco Transport Options of Your Choice',
+        subtitle: 'Explore Morocco with total independence behind the wheel or relax with our dedicated private bilingual chauffeur service.',
+        card1: {
+          tag: 'Total Independence',
+          from: 'Starting from',
+          price: '450',
+          unit: 'MAD / Day',
+          title: 'Self-Drive Vehicle Rental',
+          desc: 'Modern fleet of air-conditioned city cars and comfortable SUVs to explore Morocco at your personal pace.',
+          perks: ['Recent, fully air-conditioned vehicles', 'Airport or hotel/riad pick-up & return', '24/7 local assistance & flexible mileage', 'Transparent agreements with zero hidden fees'],
+          btn: 'Book Self-Drive Rental'
         },
-        {
-          id: 'circuit-2',
-          category: 'agafay',
-          badge: 'الرحلة 2 • "متعة لا تنتهي"',
-          badgeType: 'luxury',
-          title: 'الرحلة 2: "متعة لا تنتهي" أسني، مخيم أغفاي ورياض بمراكش',
-          duration: '3 أيام / ليلتان',
-          location: 'مولاي إبراهيم • أسني • صحراء أغفاي • رياض مراكش',
-          priceNote: 'مسبح، أنشطة وسهرة فنية',
-          priceAmount: 'باقة VIP',
-          description: 'متعة واسترخاء مضمونان: مبيت بأسني في الجبل، مسبح وساعة أنشطة (جمال، كواد أو باغي) بأغفاي، سهرة عشاء مع راقصة شرقية واستعراض النار، ثم رياض مع حمام ومساج بمراكش.',
-          highlights: ['ساعة أنشطة بالغروب (جمال/كواد/باغي)', 'سهرة عشاء مع رقص شرقي واستعراض النار', 'مبيت بخيمة فاخرة + حمام ومساج'],
-          rating: 4.9,
-          reviewsCount: 284,
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          link: '/circuits'
-        },
-        {
-          id: 'circuit-3',
-          category: 'prive',
-          badge: 'الرحلة 3 • بين البحر والبر',
-          badgeType: 'bestseller',
-          title: 'الرحلة 3: "بين البحر والبر" الصويرة، تغازوت، أكادير وورزازات',
-          duration: '4 أيام / 3 ليالٍ',
-          location: 'الصويرة • تغازوت • أكادير • قصبات ورزازات',
-          priceNote: 'النقل من 450 درهم/يوم',
-          priceAmount: 'حسب الطلب',
-          description: 'نسيم المحيط وكنوز الجنوب: ركوب الخيل على شاطئ الصويرة وقت الغروب، شواطئ تغازوت، يوم تضامني لتعاونيات الأركان بأكادير، استوديوهات السينما وقصبة الكلاوي بورزازات.',
-          highlights: ['جولة خيل بالشاطئ أمام الأمواج وقت الغروب', 'يوم تضامني لتعاونيات الأركان وحضور العرض', 'استوديوهات السينما وقصبة الكلاوي العريقة'],
-          rating: 4.9,
-          reviewsCount: 198,
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          link: '/circuits'
+        card2: {
+          tag: 'VIP Service Recommended',
+          from: 'Peace of Mind',
+          price: 'On Quote',
+          unit: 'Direct Local',
+          title: 'Dedicated Private Chauffeur',
+          desc: 'Spacious Mercedes V-Class or 4x4 with an experienced, bilingual professional driver entirely at your service for tours and transfers.',
+          perks: ['Courteous, punctual and licensed drivers', 'Fuel, tolls, and full passenger insurance included', 'Spontaneous photo stops and insider tips', 'Door-to-door pick-up at your lodging'],
+          btn: 'Request a Private Chauffeur'
         }
-      ];
-    }
-
-    // Default French
-    return [
-      {
-        id: 'circuit-1',
-        category: 'sahara',
-        badge: 'Circuit 1 • Signature',
-        badgeType: 'bestseller',
-        title: 'Circuit 1 : Cascades d\'Ouzoud, Montagne Ayachi & Merzouga',
-        duration: '4 Jours / 3 Nuits',
-        location: 'Ouzoud • Midelt • Massif Ayachi • Dunes Merzouga • Ouarzazate',
-        priceNote: 'Transport & Bivouac inclus',
-        priceAmount: 'Sur Devis',
-        description: 'L\'odyssée complète de l\'Atlas au Sahara : cascades d\'Ouzoud, journée pique-nique à la montagne Ayachi, nuit sous tente berbère à Merzouga, Gorges du Todra et studios de cinéma d\'Ouarzazate.',
-        highlights: ['Pique-nique en pleine montagne Ayachi', 'Coucher de soleil à dromadaire & tente berbère', 'Gorges du Todra & Studios Ouarzazate'],
-        rating: 5.0,
-        reviewsCount: 312,
-        imageUrl: 'assets/ouzoud-waterfalls.jpeg',
-        link: '/circuits'
       },
-      {
-        id: 'circuit-2',
-        category: 'agafay',
-        badge: 'Circuit "Que du Plaisir"',
-        badgeType: 'luxury',
-        title: 'Circuit 2 : "Que du Plaisir" Asni, Bivouac Agafay & Riad Marrakech',
-        duration: '3 Jours / 2 Nuits',
-        location: 'Moulay Brahim • Asni • Désert d\'Agafay • Riad Marrakech',
-        priceNote: 'Piscine, Activités & Spectacle',
-        priceAmount: 'Formule VIP',
-        description: 'Plaisir et détente garantis : nuitée en montagne à Asni, piscine & 1h activité (dromadaire, quad ou buggy) à Agafay, dîner spectacle avec danseuse orientale et cracheur de feu, puis riad & hammam massage à Marrakech.',
-        highlights: ['1h Dromadaire, Quad ou Buggy au coucher de soleil', 'Dîner spectacle feu & danseuse orientale', 'Nuit sous tente luxe + Hammam & Massage'],
-        rating: 4.9,
-        reviewsCount: 284,
-        imageUrl: 'assets/star-lit-nights.jpeg',
-        link: '/circuits'
+      ar: {
+        tag: 'خدمات النقل والراحة',
+        title: 'خيارات النقل السياحي بالمغرب',
+        subtitle: 'اكتشفوا المغرب بحرية تامة بقيادة سيارة حديثة أو تمتعوا بأعلى درجات الراحة مع سائق خاص ومحترف رهن إشارتكم.',
+        card1: {
+          tag: 'حرية واستقلالية',
+          from: 'ابتداءً من',
+          price: '450',
+          unit: 'درهم / اليوم',
+          title: 'كراء سيارة بدون سائق',
+          desc: 'أسطول سيارات سياحية وسيارات دفع رباعي حديثة ومكيفة تتيح لكم استكشاف المغرب حسب وتيرتكم الخاصة.',
+          perks: ['سيارات حديثة ومكيفة بالكامل', 'تسليم واستلام بالمطار أو بمكان الإقامة', 'مساعدة محلية 24/7 وكيلومترات مريحة', 'معاملات واضحة وشفافة بدون مصاريف مخفية'],
+          btn: 'حجز سيارة بدون سائق'
+        },
+        card2: {
+          tag: 'خدمة راقية موصى بها',
+          from: 'راحة واطمئنان',
+          price: 'حسب الطلب',
+          unit: 'سعر مباشر',
+          title: 'سيارة مع سائق خاص مخصص',
+          desc: 'سيارات مرسيدس في-كلاس فاخرة أو دفع رباعي مع سائق محترف ولبق يتحدث لغات متعددة لخدمتكم طيلة الرحلة.',
+          perks: ['سائقون محترفون وذوو أخلاق عالية ومرونة تامة', 'شامل المحروقات، رسوم الطرق والتأمين', 'توقف لالتقاط الصور واستراحات الشاي التراثي', 'نقل مباشر من وإلى باب مقر إقامتكم'],
+          btn: 'طلب سائق خاص'
+        }
       },
-      {
-        id: 'circuit-3',
-        category: 'prive',
-        badge: 'Circuit Mer - Terre',
-        badgeType: 'bestseller',
-        title: 'Circuit 3 : "Mer - Terre" Essaouira, Taghazout, Agadir & Ouarzazate',
-        duration: '4 Jours / 3 Nuits',
-        location: 'Essaouira • Taghazout • Agadir • Kasbahs Ouarzazate',
-        priceNote: 'Transport dès 450 DH/j',
-        priceAmount: 'Sur Devis',
-        description: 'L\'air de l\'océan et les trésors du Sud : balade à cheval sur la plage d\'Essaouira, vagues de Taghazout, journée solidaire argan à Agadir, studios de cinéma et Kasbah de Glaoui à Ouarzazate.',
-        highlights: ['Balade à cheval face aux vagues au coucher de soleil', 'Journée solidaire coopératives d\'argan & show', 'Studios de cinéma & ancienne Kasbah de Glaoui'],
-        rating: 4.9,
-        reviewsCount: 198,
-        imageUrl: 'assets/taghazout-morocco.jpeg',
-        link: '/circuits'
+      es: {
+        tag: 'TRANSPORTE Y MOVILIDAD',
+        title: 'Opciones de Transporte a su Elección',
+        subtitle: 'Recorra Marruecos con total libertad al volante o relájese con el acompañamiento de nuestros chóferes privados profesionales.',
+        card1: {
+          tag: 'Total Autonomía',
+          from: 'A partir de',
+          price: '450',
+          unit: 'MAD / Día',
+          title: 'Alquiler Sin Chófer',
+          desc: 'Flota de turismos y SUV modernos y climatizados para explorar Marruecos a su propio ritmo.',
+          perks: ['Vehículos modernos y climatizados', 'Entrega en el aeropuerto o su riad', 'Asistencia local 24/7', 'Tarifas claras sin gastos ocultos'],
+          btn: 'Reservar Sin Chófer'
+        },
+        card2: {
+          tag: 'Servicio VIP Recomendado',
+          from: 'Tranquilidad y Confort',
+          price: 'A Medida',
+          unit: 'Directo Local',
+          title: 'Vehículo con Chófer Dedicado',
+          desc: 'Mercedes V-Class o 4x4 espacioso con chófer profesional bilingüe a su completa disposición para circuitos y traslados.',
+          perks: ['Chóferes profesionales, amables y puntuales', 'Combustible, peajes y seguros incluidos', 'Paradas fotográficas y consejos locales', 'Recogida directa en la puerta de su alojamiento'],
+          btn: 'Solicitar Chófer Privado'
+        }
+      },
+      it: {
+        tag: 'TRASPORTO E MOBILITÀ',
+        title: 'Formule di Trasporto a Vostra Scelta',
+        subtitle: 'Viaggiate in libertà alla guida di un veicolo recente o affidatevi al servizio su misura di un autista dedicato.',
+        card1: {
+          tag: 'Autonomia Completa',
+          from: 'A partire da',
+          price: '450',
+          unit: 'MAD / Giorno',
+          title: 'Noleggio Senza Conducente',
+          desc: 'Flotta di berline e SUV recenti e climatizzati per visitare il Marocco secondo i vostri ritmi.',
+          perks: ['Veicoli recenti con aria condizionata', 'Ritiro in aeroporto o al vostro riad', 'Assistenza locale 24/7', 'Condizioni chiare e trasparenti'],
+          btn: 'Prenota Senza Conducente'
+        },
+        card2: {
+          tag: 'Servizio VIP Consigliato',
+          from: 'Comfort e Serenità',
+          price: 'Su Misura',
+          unit: 'Diretto Locale',
+          title: 'Veicolo con Autista Privato',
+          desc: 'Mercedes V-Class o 4x4 con autista esperto bilingue a vostra completa disposizione durante il soggiorno.',
+          perks: ['Autisti esperti, cordiali e puntuali', 'Carburante, pedaggi e assicurazione inclusi', 'Soste foto spontanee e consigli autentici', 'Pick-up direttamente presso la struttura'],
+          btn: 'Richiedi Autista Privato'
+        }
+      },
+      de: {
+        tag: 'TRANSPORT & MOBILITÄT',
+        title: 'Transportlösungen nach Maß',
+        subtitle: 'Reisen Sie völlig unabhängig im Mietwagen oder genießen Sie die Vorzüge eines privaten Chauffeurs.',
+        card1: {
+          tag: 'Volle Unabhängigkeit',
+          from: 'Ab',
+          price: '450',
+          unit: 'MAD / Tag',
+          title: 'Mietwagen ohne Fahrer',
+          desc: 'Moderne, klimatisierte Pkws und SUVs, um Marokko im eigenen Tempo zu entdecken.',
+          perks: ['Neueste Fahrzeuge mit Klimaanlage', 'Abholung am Flughafen oder Riad', '24/7 Pannenhilfe vor Ort', 'Transparente Verträge ohne Zusatzkosten'],
+          btn: 'Mietwagen Buchen'
+        },
+        card2: {
+          tag: 'Empfohlener VIP-Service',
+          from: 'Komfort & Ruhe',
+          price: 'Auf Anfrage',
+          unit: 'Direkt Vor Ort',
+          title: 'Fahrzeug mit Privatchauffeur',
+          desc: 'Großraum-Vans von Mercedes oder 4x4 Geländewagen mit erfahrenem Chauffeur für Touren und Transfers.',
+          perks: ['Professionelle, pünktliche Fahrer', 'Kraftstoff, Maut und Versicherung inklusive', 'Fotostopps und Geheimtipps', 'Direkte Abholung an Ihrer Unterkunft'],
+          btn: 'Privatchauffeur Anfragen'
+        }
+      },
+      pt: {
+        tag: 'TRANSPORTE E MOBILIDADE',
+        title: 'Opções de Transporte à sua Escolha',
+        subtitle: 'Viaje em autonomia ao volante de uma viatura recente ou relaxe com o acompanhamento de um motorista privado.',
+        card1: {
+          tag: 'Autonomia Total',
+          from: 'A partir de',
+          price: '450',
+          unit: 'MAD / Dia',
+          title: 'Aluguer Sem Motorista',
+          desc: 'Viaturas ligeiras e SUV climatizados para explorar Marrocos ao seu próprio ritmo.',
+          perks: ['Veículos recentes e climatizados', 'Recolha no aeroporto ou no seu riad', 'Assistência local 24/7', 'Contratos claros sem taxas ocultas'],
+          btn: 'Reservar Sem Motorista'
+        },
+        card2: {
+          tag: 'Serviço VIP Recomendado',
+          from: 'Conforto e Tranquilidade',
+          price: 'Sob Consulta',
+          unit: 'Direto Local',
+          title: 'Viatura com Motorista Privado',
+          desc: 'Mercedes V-Class ou 4x4 espaçoso com motorista profissional à sua disposição durante a estadia.',
+          perks: ['Motoristas educados e experientes', 'Combustível, portagens e seguros incluídos', 'Paragens fotográficas e dicas locais', 'Recolha direta no seu alojamento'],
+          btn: 'Pedir Motorista Privado'
+        }
+      },
+      nl: {
+        tag: 'VERVOER & MOBILITEIT',
+        title: 'Vervoersopties naar Wens',
+        subtitle: 'Ontdek Marokko in alle vrijheid achter het stuur of geniet van de service van een ervaren privéchauffeur.',
+        card1: {
+          tag: 'Volledige Vrijheid',
+          from: 'Vanaf',
+          price: '450',
+          unit: 'MAD / Dag',
+          title: 'Autohuur Zonder Chauffeur',
+          desc: 'Moderne vloot van stadsauto\'s en comfortabele SUV\'s om Marokko op eigen tempo te verkennen.',
+          perks: ['Recente auto\'s met airconditioning', 'Ophaalservice op vliegveld of bij riad', '24/7 pechhulp & flexibele kilometers', 'Heldere voorwaarden zonder verborgen kosten'],
+          btn: 'Huurauto Reserveren'
+        },
+        card2: {
+          tag: 'Aanbevolen VIP-Service',
+          from: 'Zorgeloos Comfort',
+          price: 'Op Offerte',
+          unit: 'Direct Lokaal',
+          title: 'Voertuig met Privéchauffeur',
+          desc: 'Ruime Mercedes V-Klasse of 4x4 met een meertalige privéchauffeur voor uw rondreizen en transfers.',
+          perks: ['Vriendelijke, stipte en ervaren chauffeurs', 'Brandstof, tol en verzekering inbegrepen', 'Fotostops en authentieke lokale tips', 'Rechtstreeks opgehaald bij uw verblijf'],
+          btn: 'Privéchauffeur Aanvragen'
+        }
       }
-    ];
+    };
+    return d[lang] || d['fr'];
   }
 
-  get circuitsPage(): CircuitsPageData {
-    return CIRCUITS_PAGE_DATA[this.currentLang()];
-  }
-
-  get destinationsPage(): DestinationsPageData {
-    return DESTINATIONS_PAGE_DATA[this.currentLang()];
-  }
-
-  get contactPage(): ContactPageData {
-    return CONTACT_PAGE_DATA[this.currentLang()];
-  }
-
-  get homePage(): HomePageData {
-    return HOME_PAGE_DATA[this.currentLang()];
+  // Fast booking & contact details (strictly 3 travel options, NO emails)
+  get contact() {
+    const lang = this.currentLang();
+    const d: Record<Language, any> = {
+      fr: {
+        tag: 'RÉSERVATION & DEVIS DIRECT',
+        title: 'Demande de Devis & Contact Direct',
+        subtitle: 'Remplissez le formulaire ci-dessous pour transmettre votre demande directement à notre équipe à Marrakech sur WhatsApp.',
+        formTitle: 'Votre Projet de Voyage',
+        formSubtitle: 'Réponse rapide et devis gratuit garanti sans intermédiaire.',
+        nameLabel: 'Nom & Prénom *',
+        namePlaceholder: 'ex: Sarah Dupont',
+        phoneLabel: 'Numéro WhatsApp *',
+        phonePlaceholder: '+33 ... ou +212 ...',
+        dateLabel: 'Date souhaitée',
+        guestsLabel: 'Nombre de personnes',
+        guestsOptions: [
+          { val: '1', label: '1 voyageur (Solo)' },
+          { val: '2', label: '2 voyageurs (Couple / Duo)' },
+          { val: '3-4', label: '3 à 4 voyageurs (Famille / Amis)' },
+          { val: '5-8', label: '5 à 8 voyageurs (Petit groupe)' },
+          { val: '8+', label: 'Plus de 8 personnes (Groupe / Événement)' }
+        ],
+        // The strictly required 3 options
+        travelChoiceLabel: 'Type de prestation souhaité *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Circuits organisés (Merzouga, Atlas, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Excursions d\'un jour (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Transport touristique privé (Navette, Chauffeur, Location)' }
+        ],
+        transportLabel: 'Formule de transport préférée',
+        transportOptions: [
+          { val: 'Avec chauffeur privé dédié (Service VIP)', label: 'Avec chauffeur privé dédié (Service VIP)' },
+          { val: 'Location sans chauffeur (dès 450 DH/jour)', label: 'Location sans chauffeur (dès 450 DH/jour)' }
+        ],
+        notesLabel: 'Précisions ou demandes particulières',
+        notesPlaceholder: 'ex: Nom de votre riad, enfants à bord, célébration particulière...',
+        btnSubmit: 'Envoyer ma demande sur WhatsApp',
+        directDeskTitle: 'Assistance Directe 24/7',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marrakech & Maroc entier',
+        reasonsTitle: 'Pourquoi Réserver avec Medade Travel ?',
+        reasons: [
+          { num: '01', title: 'Prix Direct Local', desc: 'Tarifs transparents sans les commissions des plateformes tierces.' },
+          { num: '02', title: 'Prise en Charge au Riad', desc: 'Votre chauffeur vient vous chercher directement à votre hébergement.' },
+          { num: '03', title: 'Flexibilité & Écoute', desc: 'Modification facile d\'itinéraire jusqu\'à 24h avant votre départ.' },
+          { num: '04', title: 'Assistance Réactive', desc: 'Notre équipe locale est joignable sur WhatsApp à tout moment.' }
+        ]
+      },
+      en: {
+        tag: 'DIRECT BOOKING & ENQUIRY',
+        title: 'Instant Quote & Direct Contact',
+        subtitle: 'Fill out the form below to forward your travel request directly to our Marrakech team via WhatsApp.',
+        formTitle: 'Your Travel Request',
+        formSubtitle: 'Fast response and free quotation with zero third-party commissions.',
+        nameLabel: 'Full Name *',
+        namePlaceholder: 'e.g. John Miller',
+        phoneLabel: 'WhatsApp Phone Number *',
+        phonePlaceholder: '+44 ... or +1 ... or +212 ...',
+        dateLabel: 'Desired travel date',
+        guestsLabel: 'Number of travellers',
+        guestsOptions: [
+          { val: '1', label: '1 traveller (Solo)' },
+          { val: '2', label: '2 travellers (Couple)' },
+          { val: '3-4', label: '3 to 4 travellers (Family / Friends)' },
+          { val: '5-8', label: '5 to 8 travellers (Small group)' },
+          { val: '8+', label: 'More than 8 travellers (Group / Event)' }
+        ],
+        travelChoiceLabel: 'Selected travel category *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Multi-day organized tours (Merzouga, Atlas, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Day trips & excursions (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Private tourist transport (Chauffeur, Shuttle, Rental)' }
+        ],
+        transportLabel: 'Preferred transport formula',
+        transportOptions: [
+          { val: 'With dedicated private chauffeur (VIP Service)', label: 'With dedicated private chauffeur (VIP Service)' },
+          { val: 'Self-drive rental (from 450 MAD/day)', label: 'Self-drive rental (from 450 MAD/day)' }
+        ],
+        notesLabel: 'Notes or special requests',
+        notesPlaceholder: 'e.g. Hotel/riad name, dietary needs, birthday celebration...',
+        btnSubmit: 'Send Request via WhatsApp',
+        directDeskTitle: '24/7 Local Assistance',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marrakech & Across Morocco',
+        reasonsTitle: 'Why Book with Medade Travel?',
+        reasons: [
+          { num: '01', title: 'Fair Direct Local Rates', desc: 'No online middleman fees or hidden commissions.' },
+          { num: '02', title: 'Direct Riad Pick-up', desc: 'Your private driver meets you directly at your accommodation.' },
+          { num: '03', title: 'Flexible Schedule', desc: 'Modify your itinerary easily up to 24 hours in advance.' },
+          { num: '04', title: 'Responsive Support', desc: 'Our Marrakech team is reachable 24/7 on WhatsApp.' }
+        ]
+      },
+      ar: {
+        tag: 'طلب حجز واستفسار مباشر',
+        title: 'طلب عرض سعر وتواصل مباشر',
+        subtitle: 'املأ الاستمارة وتواصل مباشرة مع فريقنا المحلي بمراكش لتأكيد رحلتك بأفضل سعر بدون وسيط.',
+        formTitle: 'تفاصيل طلبكم',
+        formSubtitle: 'استجابة سريعة وعرض سعر مجاني ودقيق عبر واتساب.',
+        nameLabel: 'الاسم الكامل *',
+        namePlaceholder: 'مثال: محمد العمري',
+        phoneLabel: 'رقم الهاتف (واتساب) *',
+        phonePlaceholder: '+212 ... أو +966 ... أو +971 ...',
+        dateLabel: 'تاريخ السفر المطلوب',
+        guestsLabel: 'عدد المسافرين',
+        guestsOptions: [
+          { val: '1', label: 'مسافر واحد (فردي)' },
+          { val: '2', label: 'مسافران (زوجان)' },
+          { val: '3-4', label: '3 إلى 4 مسافرين (عائلة / أصدقاء)' },
+          { val: '5-8', label: '5 إلى 8 مسافرين (مجموعة صغيرة)' },
+          { val: '8+', label: 'أكثر من 8 مسافرين (مجموعة كبيرة)' }
+        ],
+        travelChoiceLabel: 'نوع الخدمة المطلوبة *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. جولات سياحية منظمة (مرزوكة، الأطلس، أوزود...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. رحلات اليوم الواحد (أكافاي، الصويرة...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. نقل سياحي خاص (سائق خاص، نقل مطار، كراء سيارات)' }
+        ],
+        transportLabel: 'خيار النقل المفضل',
+        transportOptions: [
+          { val: 'مع سائق خاص مخصص (خدمة VIP)', label: 'مع سائق خاص مخصص (خدمة VIP)' },
+          { val: 'كراء سيارة بدون سائق (ابتداءً من 450 درهم/يوم)', label: 'كراء سيارة بدون سائق (ابتداءً من 450 درهم/يوم)' }
+        ],
+        notesLabel: 'ملاحظات أو طلبات خاصة',
+        notesPlaceholder: 'مثال: اسم الرياض أو الفندق، أطفال، مناسبة خاصة...',
+        btnSubmit: 'إرسال الطلب عبر واتساب',
+        directDeskTitle: 'تواصل فوري على مدار الساعة',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'مراكش والمغرب بأكمله',
+        reasonsTitle: 'لماذا تختار ميداد ترافل؟',
+        reasons: [
+          { num: '01', title: 'سعر محلي مباشر', desc: 'أسعار بدون عمولات المنصات الأجنبية الوسيطة.' },
+          { num: '02', title: 'استقبال مباشر بالرياض', desc: 'سائقكم يستقبلكم مباشرة أمام مقر إقامتكم.' },
+          { num: '03', title: 'مرونة في المواعيد', desc: 'إمكانية تعديل خط السير بسهولة عبر رسالة واتساب.' },
+          { num: '04', title: 'دعم محلي فوري', desc: 'فريقنا متاح في أي وقت للإجابة على كل استفسار.' }
+        ]
+      },
+      es: {
+        tag: 'RESERVA Y CONTACTO DIRECTO',
+        title: 'Presupuesto Instantáneo y Contacto',
+        subtitle: 'Rellene el formulario para enviar su solicitud directamente a nuestro equipo en Marrakech por WhatsApp.',
+        formTitle: 'Su Plan de Viaje',
+        formSubtitle: 'Respuesta rápida y presupuesto gratuito sin comisiones de intermediarios.',
+        nameLabel: 'Nombre y Apellidos *',
+        namePlaceholder: 'ej: Carlos Martínez',
+        phoneLabel: 'Número de WhatsApp *',
+        phonePlaceholder: '+34 ... o +212 ...',
+        dateLabel: 'Fecha deseada',
+        guestsLabel: 'Número de personas',
+        guestsOptions: [
+          { val: '1', label: '1 viajero (Solo)' },
+          { val: '2', label: '2 viajeros (Pareja)' },
+          { val: '3-4', label: '3 a 4 viajeros (Familia / Amigos)' },
+          { val: '5-8', label: '5 a 8 viajeros (Grupo pequeño)' },
+          { val: '8+', label: 'Más de 8 viajeros (Grupo / Evento)' }
+        ],
+        travelChoiceLabel: 'Tipo de servicio deseado *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Circuitos organizados (Merzouga, Atlas, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Excursiones de un día (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Transporte turístico privado (Chófer, Traslados, Alquiler)' }
+        ],
+        transportLabel: 'Modalidad de transporte',
+        transportOptions: [
+          { val: 'Con chófer privado dedicado (Servicio VIP)', label: 'Con chófer privado dedicado (Servicio VIP)' },
+          { val: 'Alquiler sin chófer (desde 450 MAD/día)', label: 'Alquiler sin chófer (desde 450 MAD/día)' }
+        ],
+        notesLabel: 'Comentarios o peticiones especiales',
+        notesPlaceholder: 'ej: Nombre del riad, celebración de cumpleaños...',
+        btnSubmit: 'Enviar Solicitud por WhatsApp',
+        directDeskTitle: 'Atención Directa 24/7',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marrakech y todo Marruecos',
+        reasonsTitle: '¿Por qué Reservar con Medade Travel?',
+        reasons: [
+          { num: '01', title: 'Precio Local Directo', desc: 'Precios justos sin comisiones de portales externos.' },
+          { num: '02', title: 'Recogida en su Riad', desc: 'Su conductor privado le recogerá directamente en su alojamiento.' },
+          { num: '03', title: 'Flexibilidad de Horarios', desc: 'Cambios sencillos de itinerario hasta 24h antes.' },
+          { num: '04', title: 'Asistencia Local 24/7', desc: 'Nuestro equipo está disponible por WhatsApp en todo momento.' }
+        ]
+      },
+      it: {
+        tag: 'PRENOTAZIONE E CONTATTO DIRETTO',
+        title: 'Preventivo Immediato e Contatto',
+        subtitle: 'Compilate il modulo per inviare la vostra richiesta direttamente al nostro team a Marrakech su WhatsApp.',
+        formTitle: 'Il Vostro Progetto di Viaggio',
+        formSubtitle: 'Risposta rapida e preventivo gratuito garantito senza commissioni.',
+        nameLabel: 'Nome e Cognome *',
+        namePlaceholder: 'es: Marco Rossi',
+        phoneLabel: 'Numero WhatsApp *',
+        phonePlaceholder: '+39 ... o +212 ...',
+        dateLabel: 'Data prevista',
+        guestsLabel: 'Numero di viaggiatori',
+        guestsOptions: [
+          { val: '1', label: '1 viaggiatore (Solo)' },
+          { val: '2', label: '2 viaggiatori (Coppia)' },
+          { val: '3-4', label: '3 a 4 viaggiatori (Famiglia / Amici)' },
+          { val: '5-8', label: '5 a 8 viaggiatori (Piccolo gruppo)' },
+          { val: '8+', label: 'Più di 8 viaggiatori (Gruppo / Evento)' }
+        ],
+        travelChoiceLabel: 'Tipo di servizio richiesto *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Tour organizzati (Merzouga, Atlante, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Escursioni di un giorno (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Trasporto turistico privato (Autista, Navetta, Noleggio)' }
+        ],
+        transportLabel: 'Formula di trasporto preferita',
+        transportOptions: [
+          { val: 'Con autista privato dedicato (Servizio VIP)', label: 'Con autista privato dedicato (Servizio VIP)' },
+          { val: 'Noleggio senza conducente (da 450 MAD/giorno)', label: 'Noleggio senza conducente (da 450 MAD/giorno)' }
+        ],
+        notesLabel: 'Note o richieste particolari',
+        notesPlaceholder: 'es: Nome del riad, esigenze alimentari...',
+        btnSubmit: 'Invia Richiesta su WhatsApp',
+        directDeskTitle: 'Assistenza Diretta 24/7',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marrakech e tutto il Marocco',
+        reasonsTitle: 'Perché Scegliere Medade Travel?',
+        reasons: [
+          { num: '01', title: 'Prezzo Diretto Locale', desc: 'Nessun ricarico di piattaforme intermediarie.' },
+          { num: '02', title: 'Pick-up al Riad', desc: 'Il vostro autista vi aspetta comodamente al vostro alloggio.' },
+          { num: '03', title: 'Massima Flessibilità', desc: 'Modifica facile dell\'itinerario fino a 24h prima.' },
+          { num: '04', title: 'Supporto Costante', desc: 'Il nostro team è reperibile su WhatsApp in qualunque momento.' }
+        ]
+      },
+      de: {
+        tag: 'DIREKTBUCHUNG & ANFRAGE',
+        title: 'Sofortangebot & Direkter Kontakt',
+        subtitle: 'Füllen Sie das Formular aus, um Ihre Reiseanfrage direkt an unser Team in Marrakesch per WhatsApp zu senden.',
+        formTitle: 'Ihre Reiseplanung',
+        formSubtitle: 'Schnelle Antwort und kostenloses Angebot ohne Vermittlungsgebühren.',
+        nameLabel: 'Vor- und Nachname *',
+        namePlaceholder: 'z.B. Michael Weber',
+        phoneLabel: 'WhatsApp-Telefonnummer *',
+        phonePlaceholder: '+49 ... oder +212 ...',
+        dateLabel: 'Gewünschtes Reisedatum',
+        guestsLabel: 'Anzahl der Reisenden',
+        guestsOptions: [
+          { val: '1', label: '1 Reisender (Alleinreisend)' },
+          { val: '2', label: '2 Reisende (Paar)' },
+          { val: '3-4', label: '3 bis 4 Reisende (Familie / Freunde)' },
+          { val: '5-8', label: '5 bis 8 Reisende (Kleine Gruppe)' },
+          { val: '8+', label: 'Mehr als 8 Personen (Gruppe / Event)' }
+        ],
+        travelChoiceLabel: 'Gewünschte Reisekategorie *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Organisierte Rundreisen (Merzouga, Atlas, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Tagesausflüge (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Privater Touristentransport (Chauffeur, Transfer, Mietwagen)' }
+        ],
+        transportLabel: 'Bevorzugter Transport',
+        transportOptions: [
+          { val: 'Mit persönlichem Privatchauffeur (VIP-Service)', label: 'Mit persönlichem Privatchauffeur (VIP-Service)' },
+          { val: 'Mietwagen ohne Fahrer (ab 450 MAD/Tag)', label: 'Mietwagen ohne Fahrer (ab 450 MAD/Tag)' }
+        ],
+        notesLabel: 'Besondere Wünsche oder Hinweise',
+        notesPlaceholder: 'z.B. Name Ihres Riads, besondere Anlässe...',
+        btnSubmit: 'Anfrage per WhatsApp Senden',
+        directDeskTitle: 'Direkte Hilfe 24/7',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marrakesch & ganz Marokko',
+        reasonsTitle: 'Warum Medade Travel?',
+        reasons: [
+          { num: '01', title: 'Faire Direktpreise', desc: 'Keine versteckten Gebühren oder Buchungsportale.' },
+          { num: '02', title: 'Abholung am Riad', desc: 'Ihr Chauffeur holt Sie direkt an Ihrer Unterkunft ab.' },
+          { num: '03', title: 'Flexible Zeitplanung', desc: 'Einfache Anpassung Ihrer Route bis zu 24 Stunden vorher.' },
+          { num: '04', title: '24/7 Ansprechpartner', desc: 'Unser lokales Team ist jederzeit über WhatsApp erreichbar.' }
+        ]
+      },
+      pt: {
+        tag: 'RESERVA E CONTACTO DIRETO',
+        title: 'Orçamento Rápido e Contacto Direto',
+        subtitle: 'Preencha o formulário para enviar o seu pedido diretamente à nossa equipa em Marraquexe via WhatsApp.',
+        formTitle: 'O Seu Pedido de Viagem',
+        formSubtitle: 'Resposta rápida e orçamento gratuito sem comissões de terceiros.',
+        nameLabel: 'Nome Completo *',
+        namePlaceholder: 'ex: Tiago Silva',
+        phoneLabel: 'Número de WhatsApp *',
+        phonePlaceholder: '+351 ... ou +212 ...',
+        dateLabel: 'Data prevista',
+        guestsLabel: 'Número de viajantes',
+        guestsOptions: [
+          { val: '1', label: '1 viajante (Individual)' },
+          { val: '2', label: '2 viajantes (Casal)' },
+          { val: '3-4', label: '3 a 4 viajantes (Família / Amigos)' },
+          { val: '5-8', label: '5 a 8 viajantes (Grupo pequeno)' },
+          { val: '8+', label: 'Mais de 8 viajantes (Grupo grande)' }
+        ],
+        travelChoiceLabel: 'Categoria de serviço pretendida *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Circuitos organizados (Merzouga, Atlas, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Excursões de um dia (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Transporte turístico privado (Motorista, Shuttles, Aluguer)' }
+        ],
+        transportLabel: 'Opção de transporte preferida',
+        transportOptions: [
+          { val: 'Com motorista privado dedicado (Serviço VIP)', label: 'Com motorista privado dedicado (Serviço VIP)' },
+          { val: 'Aluguer sem motorista (desde 450 MAD/dia)', label: 'Aluguer sem motorista (desde 450 MAD/dia)' }
+        ],
+        notesLabel: 'Notas ou pedidos especiais',
+        notesPlaceholder: 'ex: Nome do riad, celebração especial...',
+        btnSubmit: 'Enviar Pedido por WhatsApp',
+        directDeskTitle: 'Apoio Local 24/7',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marraquexe e todo o Marrocos',
+        reasonsTitle: 'Porquê a Medade Travel?',
+        reasons: [
+          { num: '01', title: 'Preço Direto Local', desc: 'Preços sem comissões de intermediários.' },
+          { num: '02', title: 'Recolha no seu Riad', desc: 'O seu motorista privado recolhe-o diretamente no alojamento.' },
+          { num: '03', title: 'Flexibilidade Total', desc: 'Altere itinerários facilmente até 24 horas antes.' },
+          { num: '04', title: 'Apoio Constante', desc: 'A nossa equipa está sempre disponível por WhatsApp.' }
+        ]
+      },
+      nl: {
+        tag: 'DIRECTE BOEKING & CONTACT',
+        title: 'Directe Offerte & Contact',
+        subtitle: 'Vul het formulier in om uw reisaanvraag direct via WhatsApp naar ons team in Marrakech te sturen.',
+        formTitle: 'Uw Reisplannen',
+        formSubtitle: 'Snel antwoord en gratis offerte zonder tussenkomst van boekingssites.',
+        nameLabel: 'Volledige Naam *',
+        namePlaceholder: 'bijv. Daan Jansen',
+        phoneLabel: 'WhatsApp Telefoonnummer *',
+        phonePlaceholder: '+31 ... of +212 ...',
+        dateLabel: 'Gewenste reisdatum',
+        guestsLabel: 'Aantal reizigers',
+        guestsOptions: [
+          { val: '1', label: '1 reiziger (Solo)' },
+          { val: '2', label: '2 reizigers (Koppel)' },
+          { val: '3-4', label: '3 tot 4 reizigers (Familie / Vrienden)' },
+          { val: '5-8', label: '5 tot 8 reizigers (Kleine groep)' },
+          { val: '8+', label: 'Meer dan 8 reizigers (Groep / Evenement)' }
+        ],
+        travelChoiceLabel: 'Gewenste reiscategorie *',
+        travelChoices: [
+          { val: 'Circuits organisés (Merzouga, Atlas, Ouzoud...)', label: '1. Georganiseerde rondreizen (Merzouga, Atlas, Ouzoud...)' },
+          { val: 'Excursions d\'un jour (Agafay, Essaouira...)', label: '2. Dagtochten (Agafay, Essaouira...)' },
+          { val: 'Transport touristique privé (Navette, Chauffeur, Location)', label: '3. Privé toeristisch vervoer (Chauffeur, Shuttles, Autoverhuur)' }
+        ],
+        transportLabel: 'Voorkeur voor vervoer',
+        transportOptions: [
+          { val: 'Met toegewijde privéchauffeur (VIP-service)', label: 'Met toegewijde privéchauffeur (VIP-service)' },
+          { val: 'Huurauto zonder chauffeur (vanaf 450 MAD/dag)', label: 'Huurauto zonder chauffeur (vanaf 450 MAD/dag)' }
+        ],
+        notesLabel: 'Opmerkingen of speciale wensen',
+        notesPlaceholder: 'bijv. Naam van uw riad, verjaardag...',
+        btnSubmit: 'Aanvraag Verzenden via WhatsApp',
+        directDeskTitle: '24/7 Lokale Assistentie',
+        phone1: '+212 6 62 63 60 95',
+        phone2: '+212 6 37 05 31 31',
+        location: 'Marrakech & heel Marokko',
+        reasonsTitle: 'Waarom Medade Travel?',
+        reasons: [
+          { num: '01', title: 'Eerlijke Directe Tarieven', desc: 'Geen provisies aan externe platforms.' },
+          { num: '02', title: 'Ophaalservice bij uw Riad', desc: 'Uw privéchauffeur haalt u comfortabel op bij uw verblijf.' },
+          { num: '03', title: 'Flexibele Planning', desc: 'Pas uw reis eenvoudig aan tot 24 uur van tevoren.' },
+          { num: '04', title: '24/7 WhatsApp Hulp', desc: 'Ons team in Marrakech staat altijd voor u klaar.' }
+        ]
+      }
+    };
+    return d[lang] || d['fr'];
   }
 }

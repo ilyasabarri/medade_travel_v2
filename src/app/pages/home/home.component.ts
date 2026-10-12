@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LanguageService, CircuitTranslation } from '../../services/language.service';
-import { CircuitsPageData, ContactPageData } from '../../services/language-pages.data';
+import { LanguageService, Circuit, ExperienceStory } from '../../services/language.service';
 
 @Component({
   selector: 'app-home',
@@ -14,15 +13,15 @@ import { CircuitsPageData, ContactPageData } from '../../services/language-pages
 export class HomeComponent implements OnInit {
   langService = inject(LanguageService);
 
-  primaryPhone = '+212 6 37 05 31 31';
-  secondaryPhone = '+212 6 37 17 09 09';
-  whatsappNumber = '212637053131';
+  primaryPhone = '+212 6 62 63 60 95';
+  secondaryPhone = '+212 6 37 05 31 31';
+  whatsappNumber = '212662636095';
 
-  activeCircuitId = 'circuit-1';
+  activeCircuitId = 'circuit-merzouga';
   expandedDayIndex: { [key: string]: number | null } = {
-    'circuit-1': 0,
-    'circuit-2': 0,
-    'circuit-3': 0
+    'circuit-merzouga': 0,
+    'circuit-agafay': 0,
+    'circuit-essaouira': 0
   };
 
   bookingForm = {
@@ -35,38 +34,42 @@ export class HomeComponent implements OnInit {
     notes: ''
   };
 
-  get circuits(): CircuitTranslation[] {
-    return this.langService.circuits;
-  }
-
-  get currentCircuit(): CircuitTranslation {
-    return this.circuits.find(c => c.id === this.activeCircuitId) || this.circuits[0];
-  }
-
-  get circuitsPage(): CircuitsPageData {
-    return this.langService.circuitsPage;
-  }
-
-  get contactPage(): ContactPageData {
-    return this.langService.contactPage;
-  }
-
   ngOnInit() {
     this.syncFormDefaults();
   }
 
+  get circuits(): Circuit[] {
+    return this.langService.circuits;
+  }
+
+  get currentCircuit(): Circuit {
+    return this.circuits.find(c => c.id === this.activeCircuitId) || this.circuits[0];
+  }
+
+  get experiences(): ExperienceStory[] {
+    return this.langService.experiences;
+  }
+
+  get philosophy() {
+    return this.langService.philosophy;
+  }
+
+  get transportData() {
+    return this.langService.transport;
+  }
+
+  get contactData() {
+    return this.langService.contact;
+  }
+
   syncFormDefaults() {
-    if (this.contactPage.circuitOptions?.length > 0) {
-      if (this.activeCircuitId === 'circuit-1') {
-        this.bookingForm.serviceType = this.contactPage.circuitOptions[0]?.val || '';
-      } else if (this.activeCircuitId === 'circuit-2') {
-        this.bookingForm.serviceType = this.contactPage.circuitOptions[1]?.val || '';
-      } else if (this.activeCircuitId === 'circuit-3') {
-        this.bookingForm.serviceType = this.contactPage.circuitOptions[2]?.val || '';
-      }
+    const choices = this.contactData.travelChoices;
+    if (choices && choices.length > 0 && !this.bookingForm.serviceType) {
+      this.bookingForm.serviceType = choices[0].val;
     }
-    if (!this.bookingForm.transportOption && this.contactPage.transportOptions?.length > 0) {
-      this.bookingForm.transportOption = this.contactPage.transportOptions[0]?.val || '';
+    const transportOpts = this.contactData.transportOptions;
+    if (transportOpts && transportOpts.length > 0 && !this.bookingForm.transportOption) {
+      this.bookingForm.transportOption = transportOpts[0].val;
     }
   }
 
@@ -75,7 +78,6 @@ export class HomeComponent implements OnInit {
     if (this.expandedDayIndex[id] === undefined) {
       this.expandedDayIndex[id] = 0;
     }
-    this.syncFormDefaults();
   }
 
   toggleDay(circuitId: string, dayIdx: number) {
@@ -102,110 +104,55 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  bookCircuitWhatsApp(circuitId: string) {
-    this.selectCircuit(circuitId);
-    this.scrollToSection('booking');
-  }
-
-  bookCircuitDirect(circuit: CircuitTranslation) {
+  bookCircuitWhatsApp(circuit: Circuit) {
     const lang = this.langService.currentLang();
-    let msg = `Bonjour Medade Travel, je souhaite réserver le "${circuit.name}". Pouvez-vous me confirmer les disponibilités et tarifs ?`;
-    if (lang === 'en') {
-      msg = `Hello Medade Travel, I would like to book "${circuit.name}". Could you please confirm availability and rates?`;
-    } else if (lang === 'ar') {
-      msg = `السلام عليكم مداد ترافيل، أود حجز "${circuit.name}". المرجو إفادتي بالتوافر وأفضل سعر مباشر. شكراً لكم.`;
+    let msg = '';
+    if (lang === 'ar') {
+      msg = `مرحباً ميداد ترافل، أود حجز أو الاستفسار عن ${circuit.name} (${circuit.duration}). يرجى تزويدي بالأسعار والتفاصيل.`;
+    } else if (lang === 'en') {
+      msg = `Hello Medade Travel, I would like to book or inquire about ${circuit.name} (${circuit.duration}). Could you please provide availability and pricing?`;
+    } else if (lang === 'es') {
+      msg = `Hola Medade Travel, me gustaría reservar o consultar sobre ${circuit.name} (${circuit.duration}). ¿Podrían darme disponibilidad y tarifas?`;
+    } else {
+      msg = `Bonjour Medade Travel, je souhaite réserver ou me renseigner sur le circuit ${circuit.name} (${circuit.duration}). Pourriez-vous me transmettre vos disponibilités et tarifs ?`;
     }
-
-    const url = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-    if (typeof window !== 'undefined') {
-      window.open(url, '_blank');
-    }
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
-  inquireTransportWhatsApp(optionTitle: string) {
-    const lang = this.langService.currentLang();
-    let msg = `Bonjour Medade Travel, je souhaite me renseigner sur votre service de transport : "${optionTitle}". Pouvez-vous me communiquer vos disponibilités et tarifs ?`;
-    if (lang === 'en') {
-      msg = `Hello Medade Travel, I would like information about your transport option: "${optionTitle}". Could you please provide vehicle options and rates?`;
-    } else if (lang === 'ar') {
-      msg = `السلام عليكم مداد ترافيل، أود الاستفسار عن خدمة النقل: "${optionTitle}". المرجو إفادتي بالتفاصيل والأسعار. شكراً لكم.`;
-    }
-
-    const url = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-    if (typeof window !== 'undefined') {
-      window.open(url, '_blank');
-    }
-  }
-
-  formatDate(dateStr: string): string {
-    if (!dateStr) return '';
-    try {
-      const parts = dateStr.split('-');
-      if (parts.length === 3) {
-        return `${parts[2]}/${parts[1]}/${parts[0]}`;
-      }
-      return dateStr;
-    } catch {
-      return dateStr;
-    }
-  }
-
-  get guestLabel(): string {
-    const opt = this.contactPage.guestOptions?.find(
-      g => g.val === this.bookingForm.guests || g.label === this.bookingForm.guests
-    );
-    return opt ? opt.label : (this.bookingForm.guests || '2 personnes');
-  }
-
-  get circuitLabel(): string {
-    const opt = this.contactPage.circuitOptions?.find(
-      c => c.val === this.bookingForm.serviceType || c.label === this.bookingForm.serviceType
-    );
-    return opt ? opt.label : (this.bookingForm.serviceType || this.contactPage.circuitOptions[0]?.label || '');
-  }
-
-  get transportLabel(): string {
-    const opt = this.contactPage.transportOptions?.find(
-      t => t.val === this.bookingForm.transportOption || t.label === this.bookingForm.transportOption
-    );
-    return opt ? opt.label : (this.bookingForm.transportOption || this.contactPage.transportOptions[0]?.label || '');
+  inquireTransportWhatsApp(typeTitle: string) {
+    const msg = `Bonjour Medade Travel, je suis intéressé par votre formule : "${typeTitle}". Quelles sont vos disponibilités et tarifs ?`;
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   submitBookingWhatsApp() {
-    const formToSubmit = {
-      ...this.bookingForm,
-      travelDate: this.bookingForm.travelDate ? this.formatDate(this.bookingForm.travelDate) : '',
-      guests: this.guestLabel,
-      serviceType: this.circuitLabel,
-      transportOption: this.transportLabel
-    };
-
-    const msg = this.contactPage.waMessageTemplate(formToSubmit);
-    const encoded = encodeURIComponent(msg);
-    const url = `https://wa.me/${this.whatsappNumber}?text=${encoded}`;
-
-    if (typeof window !== 'undefined') {
-      const win = window.open(url, '_blank');
-      if (!win || win.closed || typeof win.closed === 'undefined') {
-        window.location.href = url;
-      }
+    if (!this.bookingForm.name || !this.bookingForm.phone) {
+      alert(this.langService.currentLang() === 'ar' ? 'يرجى إدخال الاسم ورقم الهاتف' : 'Veuillez renseigner votre nom et votre numéro de téléphone.');
+      return;
     }
+
+    const lines = [
+      `*DEMANDE DE DEVIS / RÉSERVATION - MEDADE TRAVEL*`,
+      `---------------------------------------`,
+      `• *Nom:* ${this.bookingForm.name}`,
+      `• *WhatsApp:* ${this.bookingForm.phone}`,
+      `• *Prestation:* ${this.bookingForm.serviceType}`,
+      `• *Date prévue:* ${this.bookingForm.travelDate || 'À définir'}`,
+      `• *Voyageurs:* ${this.bookingForm.guests}`,
+      `• *Formule transport:* ${this.bookingForm.transportOption}`,
+      this.bookingForm.notes ? `• *Notes / Demandes:* ${this.bookingForm.notes}` : '',
+      `---------------------------------------`,
+      `_Envoyé depuis le site officiel Medade Travel_`
+    ].filter(Boolean).join('\n');
+
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(lines)}`, '_blank');
   }
 
   openDirectWhatsApp() {
-    let msg = 'Bonjour Medade Travel, je souhaiterais des informations sur vos 3 circuits au Maroc et vos disponibilités.';
-    if (this.langService.currentLang() === 'en') {
-      msg = 'Hello Medade Travel, I would like information about your 3 Morocco tours and availability.';
-    } else if (this.langService.currentLang() === 'ar') {
-      msg = 'السلام عليكم مداد ترافيل، أود الاستفسار عن جولاتكم السياحية الثلاث بالمغرب والتوافر لديكم.';
-    }
-    const url = `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`;
-    if (typeof window !== 'undefined') {
-      window.open(url, '_blank');
-    }
-  }
-
-  callDirect(phone: string) {
-    window.location.href = `tel:${phone.replace(/\s+/g, '')}`;
+    const text = encodeURIComponent(
+      this.langService.currentLang() === 'ar'
+        ? 'مرحباً ميداد ترافل، أود الاستفسار عن برامجكم السياحية بالمغرب.'
+        : 'Bonjour Medade Travel, je souhaite me renseigner sur vos circuits et prestations touristiques au Maroc.'
+    );
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${text}`, '_blank');
   }
 }

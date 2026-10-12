@@ -1,13 +1,12 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { LanguageService, Language } from './services/language.service';
+import { RouterOutlet, Router } from '@angular/router';
+import { LanguageService, Language, SUPPORTED_LANGUAGES, LanguageMeta } from './services/language.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -15,65 +14,46 @@ export class AppComponent {
   title = 'Medade Travel';
   isScrolled = false;
   mobileMenuOpen = false;
+  langDropdownOpen = false;
 
   langService = inject(LanguageService);
   private router = inject(Router);
 
-  whatsappNumber = '212637053131';
-  primaryPhone = '+212 6 37 05 31 31';
-  secondaryPhone = '+212 6 37 17 09 09';
+  languages: LanguageMeta[] = SUPPORTED_LANGUAGES;
 
-  constructor() {
-    this.router.events
-      .pipe(filter(e => e instanceof NavigationEnd))
-      .subscribe(() => {
-        if (typeof window !== 'undefined') {
-          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-        }
-      });
-  }
+  // Direct phone & WhatsApp coordinates (NO emails)
+  primaryPhone = '+212 6 62 63 60 95';
+  secondaryPhone = '+212 6 37 05 31 31';
+  whatsappNumber = '212662636095';
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isScrolled = window.scrollY > 50;
+    this.isScrolled = window.scrollY > 40;
   }
 
-  get currentLang(): Language {
-    return this.langService.currentLang();
-  }
-
-  cycleLanguage() {
-    const order: Language[] = ['fr', 'en', 'ar'];
-    const currentIndex = order.indexOf(this.currentLang);
-    const nextLang = order[(currentIndex + 1) % order.length];
-    this.langService.setLanguage(nextLang);
-  }
-
-  get currentLangName(): string {
-    switch (this.currentLang) {
-      case 'fr': return 'Français';
-      case 'en': return 'English';
-      case 'ar': return 'العربية';
-      default: return 'Français';
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.lang-selector-wrapper')) {
+      this.langDropdownOpen = false;
     }
   }
 
-  get nextLangHint(): string {
-    switch (this.currentLang) {
-      case 'fr': return 'Passer en English';
-      case 'en': return 'Switch to العربية';
-      case 'ar': return 'التبديل إلى Français';
-      default: return 'Changer';
-    }
+  get currentMeta(): LanguageMeta {
+    return this.langService.currentMeta();
   }
 
-  get nextLangLabel(): string {
-    switch (this.currentLang) {
-      case 'fr': return 'Passer à l\'anglais (EN)';
-      case 'en': return 'Switch to Arabic (AR)';
-      case 'ar': return 'Passer au français (FR)';
-      default: return 'Changer de langue';
+  toggleLangDropdown(event?: Event) {
+    if (event) {
+      event.stopPropagation();
     }
+    this.langDropdownOpen = !this.langDropdownOpen;
+  }
+
+  selectLanguage(lang: Language) {
+    this.langService.setLanguage(lang);
+    this.langDropdownOpen = false;
+    this.mobileMenuOpen = false;
   }
 
   toggleMobileMenu() {
@@ -89,6 +69,7 @@ export class AppComponent {
       event.preventDefault();
     }
     this.mobileMenuOpen = false;
+    this.langDropdownOpen = false;
     if (typeof document !== 'undefined') {
       const el = document.getElementById(sectionId);
       if (el) {
@@ -97,17 +78,12 @@ export class AppComponent {
     }
   }
 
-  quickWhatsApp() {
-    this.scrollToSection('booking');
-  }
-
   openWhatsAppDirect() {
-    let msg = 'Bonjour Medade Travel, je souhaiterais des informations sur vos 3 circuits au Maroc et vos disponibilites.';
-    if (this.langService.currentLang() === 'en') {
-      msg = 'Hello Medade Travel, I would like information about your 3 Morocco tours and availability.';
-    } else if (this.langService.currentLang() === 'ar') {
-      msg = 'السلام عليكم مداد ترافيل، أود الاستفسار عن جولاتكم السياحية الثلاث بالمغرب والتوافر لديكم.';
-    }
-    window.open(`https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+    const text = encodeURIComponent(
+      this.currentMeta.code === 'ar'
+        ? 'مرحباً ميداد ترافل، أود الاستفسار عن برامجكم السياحية وخدمات النقل الخاص.'
+        : 'Bonjour Medade Travel, je souhaite me renseigner sur vos circuits dans le désert et vos options de transport privé.'
+    );
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${text}`, '_blank');
   }
 }

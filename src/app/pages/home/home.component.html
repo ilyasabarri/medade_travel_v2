@@ -1,168 +1,244 @@
 <!-- ==========================================================================
-     MEDADE TRAVEL - SINGLE PAGE WEBSITE (NO EMOJIS - FULL FOCUS ON 3 CIRCUITS)
+     MEDADE TRAVEL V2 - HOMEPAGE (LE BÉDOUIN AGAFAY LUXURY SYNTHESIS)
      ========================================================================== -->
 
 <!-- ==========================================================================
-     HERO SECTION
+     1. HERO SECTION (FULL BLEED CINEMATIC DESERT EXPERIENCE)
      ========================================================================== -->
-<section id="hero" class="hero">
-  <div class="hero-bg">
+<section id="hero" class="hero-section">
+  <div class="hero-bg-media">
     <img src="assets/merzouga-dunes.jpeg" 
-         alt="Dunes du Sahara Merzouga - Medade Travel"
-         fetchpriority="high"
-         decoding="async">
+         alt="Sahara Dunes Merzouga - Medade Travel" 
+         class="hero-bg-img"
+         fetchpriority="high">
+    <div class="hero-gradient-overlay"></div>
   </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-grain"></div>
 
   <div class="container hero-container">
-    <div class="hero-content">
-      <div class="hero-badge">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-        <span>{{ langService.currentLang() === 'ar' ? 'وكالة محلية 100% • مراكش' : (langService.currentLang() === 'en' ? '100% LOCAL AGENCY • MARRAKECH' : 'AGENCE 100% MAROCAINE • MARRAKECH') }}</span>
-      </div>
+    <div class="hero-text-block">
+      
+      <!-- Tracked Category Eyebrow -->
+      <span class="hero-eyebrow">
+        {{ langService.ui.brandTag }}
+      </span>
 
+      <!-- Luxury Serif Headline -->
       <h1 class="hero-title">
         <ng-container *ngIf="langService.currentLang() === 'fr'">
-          3 Circuits d'Exception au Maroc<br>
-          <em>L'Aventure Commence Ici</em>
+          L'Âme du Maroc, l'Élégance du Voyage
         </ng-container>
         <ng-container *ngIf="langService.currentLang() === 'en'">
-          3 Signature Tours in Morocco<br>
-          <em>Your Sahara Journey Begins</em>
+          The Soul of Morocco, The Elegance of Travel
         </ng-container>
         <ng-container *ngIf="langService.currentLang() === 'ar'">
-          3 جولات استثنائية في المغرب<br>
-          <em>مغامرتكم الصحراوية تبدأ هنا</em>
+          روح المغرب الأصيل وسحر السفر الراقي
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'es'">
+          El Alma de Marruecos, la Elegancia del Viaje
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'it'">
+          L'Anima del Marocco, l'Eleganza del Viaggio
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'de'">
+          Die Seele Marokkos, die Eleganz des Reisens
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'pt'">
+          A Alma de Marrocos, a Elegância da Viagem
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'nl'">
+          De Ziel van Marokko, de Elegantie van het Reizen
         </ng-container>
       </h1>
 
+      <!-- Refined Subtitle -->
       <p class="hero-subtitle">
         <ng-container *ngIf="langService.currentLang() === 'fr'">
-          L'Atlas, le Sahara et l'Atlantique en immersion totale au départ de Marrakech. Formules avec chauffeur privé ou véhicule sans chauffeur dès 450 DH/jour sans intermédiaire.
+          Circuits privatifs sur-mesure au départ de Marrakech, bivouacs de charme sous les étoiles et transport haut de gamme avec chauffeur dédié ou véhicule sans chauffeur dès 450 DH/jour.
         </ng-container>
         <ng-container *ngIf="langService.currentLang() === 'en'">
-          The Atlas Mountains, Sahara Dunes, and Atlantic Coast from Marrakech. Private chauffeur or self-drive vehicle from 450 MAD/day with zero middleman fees.
+          Bespoke private journeys departing from Marrakech, luxury starlit desert camps, and premium transport with dedicated chauffeur or self-drive vehicle from 450 MAD/day.
         </ng-container>
         <ng-container *ngIf="langService.currentLang() === 'ar'">
-          جبال الأطلس، كثبان الصحراء الكبرى والساحل الأطلسي انطلاقاً من مراكش. خيارات نقل مع سائق خاص أو كراء سيارة ابتداءً من 450 درهم/اليوم بدون وسيط.
+          جولات سياحية خاصة انطلاقاً من مراكش، مخيمات فاخرة تحت أضواء النجوم، ونقل سياحي راقٍ مع سائق خاص أو كراء سيارات ابتداءً من 450 درهم/اليوم بدون وسيط.
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'es'">
+          Circuitos privados a medida desde Marrakech, campamentos bajo las estrellas y transporte VIP con chófer dedicado o alquiler sin conductor desde 450 MAD/día.
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'it'">
+          Tour privati su misura con partenza da Marrakech, bivacchi di lusso sotto le stelle e veicoli recenti con autista o a noleggio da 450 MAD/giorno.
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'de'">
+          Maßgeschneiderte private Rundreisen ab Marrakesch, Wüstencamps unterm Sternenhimmel und VIP-Transport mit Chauffeur oder Mietwagen ab 450 MAD/Tag.
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'pt'">
+          Circuitos privados a partir de Marraquexe, acampamentos de charme sob as estrelas e transporte VIP com motorista dedicado ou aluguer desde 450 MAD/dia.
+        </ng-container>
+        <ng-container *ngIf="langService.currentLang() === 'nl'">
+          Privérondreizen op maat vanuit Marrakech, luxe woestijnkampen onder de sterren en modern vervoer met privéchauffeur of autoverhuur vanaf 450 MAD/dag.
         </ng-container>
       </p>
 
-      <div class="hero-actions">
+      <!-- Dual Actions -->
+      <div class="hero-btn-row">
         <a href="#circuits" class="btn btn--primary" (click)="scrollToSection('circuits', $event)">
-          <span>{{ langService.currentLang() === 'ar' ? 'استكشف الجولات الثلاث' : (langService.currentLang() === 'en' ? 'Explore the 3 Tours' : 'Découvrir les 3 Circuits') }}</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <span>{{ langService.ui.btnBookActivities }}</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </a>
 
-        <a href="#booking" class="btn btn--outline" (click)="scrollToSection('booking', $event)">
+        <a href="#booking" class="btn btn--outline-white" (click)="scrollToSection('booking', $event)">
           <span>{{ langService.ui.btnWhatsApp }}</span>
         </a>
       </div>
 
-      <!-- Quick Trust Badges (NO EMOJIS - Clean SVG icons only) -->
-      <div class="hero-trust-row">
-        <div class="hero-trust-tag">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <!-- Trust Badges -->
+      <div class="hero-trust-strip">
+        <div class="trust-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-          <span>{{ langService.currentLang() === 'ar' ? 'سعر مباشر بدون وسيط' : (langService.currentLang() === 'en' ? 'Direct Fair Price' : 'Prix Direct sans Intermédiaire') }}</span>
+          <span>{{ langService.currentLang() === 'ar' ? 'سعر محلي مباشر بدون وسيط' : 'Tarifs directs sans intermédiaire' }}</span>
         </div>
-
-        <div class="hero-trust-tag">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="trust-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="1" y="3" width="15" height="13"></rect>
-            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
             <circle cx="5.5" cy="18.5" r="2.5"></circle>
             <circle cx="18.5" cy="18.5" r="2.5"></circle>
           </svg>
-          <span>{{ langService.currentLang() === 'ar' ? 'نقل ابتداءً من 450 درهم/يوم' : (langService.currentLang() === 'en' ? 'Transport from 450 MAD/day' : 'Transport dès 450 DH/jour') }}</span>
+          <span>{{ langService.currentLang() === 'ar' ? 'نقل سياحي dès 450 درهم/يوم' : 'Transport dès 450 DH / jour' }}</span>
         </div>
-
-        <div class="hero-trust-tag">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="trust-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
           </svg>
-          <span>{{ langService.currentLang() === 'ar' ? 'دعم واتساب مباشر 24/7' : (langService.currentLang() === 'en' ? '24/7 WhatsApp Support' : 'Support WhatsApp 24/7') }}</span>
+          <span>{{ langService.currentLang() === 'ar' ? 'دعم واستجابة 24/7' : 'Assistance WhatsApp 24/7' }}</span>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
 <!-- ==========================================================================
-     CORE SECTION: THE 3 CIRCUITS (FULL FOCUS)
+     2. PHILOSOPHY QUOTE SECTION (LE BÉDOUIN "DISCOVER THE DESERT DIFFERENTLY")
      ========================================================================== -->
-<section id="circuits" class="section section--circuits">
+<section class="section philosophy-section">
+  <div class="container text-center">
+    
+    <!-- Central Moroccan Star Emblem -->
+    <div class="philosophy-emblem">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </svg>
+    </div>
+
+    <!-- Iconic Serif Quote -->
+    <h2 class="philosophy-quote">
+      {{ philosophy.quote }}
+    </h2>
+
+    <!-- Lead and Body Paragraphs -->
+    <p class="philosophy-lead">
+      {{ philosophy.lead }}
+    </p>
+
+    <p class="philosophy-text">
+      {{ philosophy.text }}
+    </p>
+
+    <div class="philosophy-cta">
+      <a href="#circuits" class="btn btn--primary" (click)="scrollToSection('circuits', $event)">
+        {{ philosophy.btnText }}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     3. OUR SIGNATURE CIRCUITS (LE BÉDOUIN "OUR TENTS & SUITES" SHOWCASE)
+     ========================================================================== -->
+<section id="circuits" class="section circuits-section">
   <div class="container">
     
     <!-- Section Header -->
     <div class="section-header section-header--center">
-      <span class="label">{{ langService.currentLang() === 'ar' ? 'البرامج الرئيسية الموصى بها' : (langService.currentLang() === 'en' ? 'SIGNATURE MOROCCO EXPEDITIONS' : 'PROGRAMMES PHARES AU DÉPART DE MARRAKECH') }}</span>
+      <span class="section-eyebrow">
+        {{ langService.currentLang() === 'ar' ? 'الجولات والرحلات الرئيسية' : 'NOS CIRCUITS & SÉJOURS PHARES' }}
+      </span>
       <h2 class="section-title">
-        {{ langService.currentLang() === 'ar' ? 'الجولات السياحية الثلاث الأكثر طلباً' : (langService.currentLang() === 'en' ? 'Our 3 Premier Morocco Tours' : 'Les 3 Circuits Phares au Maroc') }}
+        {{ langService.currentLang() === 'ar' ? 'الجولات الثلاث الأكثر طلباً بالمغرب' : 'Les 3 Circuits Phares au Maroc' }}
       </h2>
       <p class="section-subtitle">
-        {{ langService.currentLang() === 'ar' ? 'اختر جولتك المفضلة واطلع على تفاصيل خط السير يوماً بيوم، واحجز مباشرة عبر واتساب.' : (langService.currentLang() === 'en' ? 'Select any tour below to explore its day-by-day itinerary and book directly via WhatsApp.' : 'Sélectionnez un circuit ci-dessous pour découvrir son itinéraire détaillé et réserver au meilleur tarif direct.') }}
+        {{ langService.currentLang() === 'ar' ? 'اختر جولتك المفضلة واطلع على تفاصيل خط السير يوماً بيوم مع حجز مباشر عبر واتساب.' : 'Sélectionnez un circuit pour explorer son itinéraire exclusif et réserver directement sans intermédiaire.' }}
       </p>
     </div>
 
-    <!-- Circuit Selector Tabs -->
-    <div class="circuit-tabs-nav" role="tablist">
-      <button *ngFor="let c of circuits"
-              type="button"
-              class="circuit-tab-pill" 
-              [class.active]="c.id === activeCircuitId"
-              (click)="selectCircuit(c.id)"
-              [attr.aria-selected]="c.id === activeCircuitId">
-        <span class="tab-duration">{{ c.duration }}</span>
-        <span class="tab-title">{{ c.name.split(':')[0] }}</span>
-        <span class="tab-badge-hint">{{ c.badge }}</span>
-      </button>
+    <!-- 3 Luxury Cards Selector Grid -->
+    <div class="circuits-cards-grid">
+      <div *ngFor="let c of circuits" 
+           class="circuit-card-item"
+           [class.active]="c.id === activeCircuitId"
+           (click)="selectCircuit(c.id)">
+        <div class="circuit-card-media">
+          <img [src]="c.imageUrl" [alt]="c.name" class="card-img" loading="lazy">
+          <span class="card-badge-pill">{{ c.badge }}</span>
+        </div>
+        <div class="circuit-card-body">
+          <div class="card-meta-row">
+            <span class="card-duration">{{ c.duration }}</span>
+            <span class="card-price">{{ c.priceNote }}</span>
+          </div>
+          <h3 class="card-title">{{ c.name }}</h3>
+          <p class="card-excerpt">{{ c.summary }}</p>
+          <div class="card-footer-cta">
+            <span class="view-details-text">
+              {{ langService.currentLang() === 'ar' ? 'عرض البرنامج الكامل ←' : 'Voir le programme complet →' }}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Active Circuit Showcase Presentation -->
-    <div class="circuit-showcase-card">
-      <div class="showcase-grid">
+    <!-- Active Circuit Details & Itinerary Drawer -->
+    <div class="circuit-details-panel">
+      <div class="details-split-grid">
         
-        <!-- Left: Circuit Narrative & Key Specs -->
-        <div class="showcase-content">
-          <div class="showcase-badge-row">
-            <span class="badge-gold">{{ currentCircuit.badge }}</span>
+        <!-- Left: Narrative & Inclusions -->
+        <div class="details-content">
+          <div class="details-badge-row">
+            <span class="badge-terracotta">{{ currentCircuit.badge }}</span>
             <span class="badge-duration">{{ currentCircuit.duration }}</span>
             <span class="badge-pace">{{ currentCircuit.pace }}</span>
           </div>
 
-          <h3 class="showcase-title">{{ currentCircuit.name }}</h3>
+          <h3 class="details-title">{{ currentCircuit.name }}</h3>
+          <p class="details-summary">{{ currentCircuit.summary }}</p>
 
-          <p class="showcase-summary">{{ currentCircuit.summary }}</p>
-
-          <!-- Transport Callout -->
-          <div class="transport-highlight-banner" *ngIf="currentCircuit.transportOffer">
-            <div class="transport-highlight-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="1" y="3" width="15" height="13"></rect>
-                <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
-                <circle cx="5.5" cy="18.5" r="2.5"></circle>
-                <circle cx="18.5" cy="18.5" r="2.5"></circle>
-              </svg>
-            </div>
-            <div class="transport-highlight-text">
-              <strong>{{ circuitsPage.transportBadge }} :</strong> {{ currentCircuit.transportOffer }}
+          <!-- Transport Highlight Banner -->
+          <div class="transport-highlight-card">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <div>
+              <strong>{{ langService.currentLang() === 'ar' ? 'نقل مرن متاح :' : 'Transport au choix :' }}</strong>
+              {{ currentCircuit.transportOffer }}
             </div>
           </div>
 
           <!-- Inclusions List -->
-          <div class="inclusions-panel">
-            <h4 class="inclusions-heading">{{ circuitsPage.inclusionsTitle }}</h4>
+          <div class="inclusions-block">
+            <h4 class="inclusions-heading">
+              {{ langService.currentLang() === 'ar' ? 'الخدمات المشمولة في هذا البرنامج :' : 'Prestations incluses dans ce programme :' }}
+            </h4>
             <ul class="inclusions-list">
               <li *ngFor="let inc of currentCircuit.inclusions">
-                <svg class="check-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="check-icon">
                   <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
                 <span>{{ inc }}</span>
@@ -170,79 +246,57 @@
             </ul>
           </div>
 
-          <!-- Direct Actions for this Circuit -->
-          <div class="showcase-actions">
-            <button type="button" class="btn btn--primary" (click)="bookCircuitWhatsApp(currentCircuit.id)">
-              <span>{{ langService.currentLang() === 'ar' ? 'طلب حجز هذا البرنامج' : (langService.currentLang() === 'en' ? 'Book This Tour on WhatsApp' : 'Réserver ce Circuit sur WhatsApp') }}</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <!-- Action Buttons -->
+          <div class="details-actions-row">
+            <button class="btn btn--primary" (click)="bookCircuitWhatsApp(currentCircuit)">
+              <span>{{ langService.currentLang() === 'ar' ? 'طلب حجز هذا البرنامج' : 'Réserver ce Circuit sur WhatsApp' }}</span>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
 
-            <button type="button" class="btn btn--outline-dark" (click)="bookCircuitDirect(currentCircuit)">
-              <span>{{ langService.currentLang() === 'ar' ? 'محادثة سريعة حول هذا البرنامج' : (langService.currentLang() === 'en' ? 'Quick Chat about this Tour' : 'Échanger sur ce Circuit') }}</span>
-            </button>
+            <a href="#booking" class="btn btn--outline-dark" (click)="scrollToSection('booking', $event)">
+              {{ langService.ui.btnBookRoom }}
+            </a>
           </div>
         </div>
 
-        <!-- Right: High Impact Image Frame -->
-        <div class="showcase-media">
-          <div class="showcase-image-wrapper">
-            <img [src]="currentCircuit.imageUrl" 
-                 [alt]="currentCircuit.name" 
-                 class="showcase-img"
-                 loading="lazy" 
-                 decoding="async">
-            <div class="showcase-img-badge">
-              <span class="showcase-img-dest">{{ currentCircuit.duration }}</span>
-              <span class="showcase-img-label">{{ currentCircuit.badge }}</span>
-            </div>
-          </div>
+        <!-- Right: Photographic Visual Frame -->
+        <div class="details-media-frame">
+          <img [src]="currentCircuit.imageUrl" [alt]="currentCircuit.name" class="details-hero-img">
         </div>
+
       </div>
 
-      <!-- ====================================================================
-           EXPANDABLE DAY-BY-DAY ITINERARY TIMELINE (COMPACT & PUNCHY)
-           ==================================================================== -->
-      <div class="day-by-day-container">
-        <div class="day-by-day-header">
-          <div class="day-by-day-title-wrap">
-            <span class="label">{{ circuitsPage.detailedProgramTag }}</span>
-            <h4 class="day-by-day-title">{{ circuitsPage.dayByDayTitle }}</h4>
-          </div>
-          <span class="day-by-day-hint">{{ circuitsPage.clickHint }}</span>
-        </div>
+      <!-- Expandable Day-by-Day Timeline -->
+      <div class="day-by-day-wrap">
+        <h4 class="day-by-day-title">
+          {{ langService.currentLang() === 'ar' ? 'خط السير المفصل يوماً بيوم :' : 'Itinéraire Détaillé Jour par Jour :' }}
+        </h4>
 
-        <div class="timeline-steps">
+        <div class="itinerary-accordion">
           <div *ngFor="let day of currentCircuit.days; let i = index" 
-               class="timeline-card"
+               class="accordion-day-card"
                [class.expanded]="isDayExpanded(currentCircuit.id, i)">
             
-            <button type="button" class="timeline-card-header" (click)="toggleDay(currentCircuit.id, i)">
-              <div class="timeline-day-badge">
-                <span class="day-number-text">{{ circuitsPage.dayPrefix }} {{ day.dayNumber }}</span>
+            <button class="accordion-day-header" (click)="toggleDay(currentCircuit.id, i)">
+              <div class="day-badge-num">
+                {{ langService.currentLang() === 'ar' ? 'اليوم' : 'Jour' }} {{ day.dayNumber }}
               </div>
-
-              <div class="timeline-title-area">
-                <h5 class="day-title-text">{{ day.title }}</h5>
-              </div>
-
-              <div class="timeline-chevron">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="chevron-icon">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </div>
+              <h5 class="day-title-text">{{ day.title }}</h5>
+              <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
             </button>
 
-            <!-- Expanded Details -->
-            <div class="timeline-card-body" *ngIf="isDayExpanded(currentCircuit.id, i)">
-              <p class="day-description-text">{{ day.description }}</p>
-
+            <div class="accordion-day-body" *ngIf="isDayExpanded(currentCircuit.id, i)">
+              <p class="day-desc">{{ day.description }}</p>
+              
               <div class="day-stops-row" *ngIf="day.stops && day.stops.length > 0">
-                <span class="stops-label-text">{{ circuitsPage.keyStopsLabel }}</span>
-                <div class="stops-tags-list">
-                  <span *ngFor="let stop of day.stops" class="stop-tag">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <span class="stops-label">{{ langService.currentLang() === 'ar' ? 'المحطات الرئيسية :' : 'Points d\'intérêt :' }}</span>
+                <div class="stops-chips">
+                  <span *ngFor="let stop of day.stops" class="stop-chip">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                       <circle cx="12" cy="10" r="3"></circle>
                     </svg>
@@ -251,222 +305,261 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
+
     </div>
+
   </div>
 </section>
 
 <!-- ==========================================================================
-     SECTION 2: TRANSPORT & MOBILITY OPTIONS
+     4. ALTERNATING LUXURY STORIES (LE BÉDOUIN RESTAURANT & EVENTS STYLE)
      ========================================================================== -->
-<section id="transport" class="section section--transport">
-  <div class="container">
-    <div class="section-header section-header--center">
-      <span class="label">{{ circuitsPage.transportSectionTag }}</span>
-      <h2 class="section-title">
-        {{ circuitsPage.transportSectionTitle }}
-      </h2>
-      <p class="section-subtitle">
-        {{ circuitsPage.transportSectionDesc }}
-      </p>
-    </div>
-
-    <div class="transport-cards-grid">
-      <!-- Card 1: Self-Drive Rental -->
-      <div class="transport-box-card">
-        <div class="transport-box-header">
-          <span class="transport-tag">{{ circuitsPage.card1.tag }}</span>
-          <div class="transport-pricing">
-            <span class="price-from">{{ circuitsPage.card1.from }}</span>
-            <div class="price-amount-wrap">
-              <span class="price-amount">{{ circuitsPage.card1.price }}</span>
-              <span class="price-currency">{{ circuitsPage.card1.unit }}</span>
-            </div>
-          </div>
-        </div>
-
-        <h3 class="transport-box-title">{{ circuitsPage.card1.title }}</h3>
-        <p class="transport-box-desc">{{ circuitsPage.card1.desc }}</p>
-
-        <ul class="transport-perks-list">
-          <li *ngFor="let perk of circuitsPage.card1.perks">
-            <svg class="check-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>{{ perk }}</span>
-          </li>
-        </ul>
-
-        <button type="button" class="btn btn--outline-dark w-full" (click)="inquireTransportWhatsApp(circuitsPage.card1.title)">
-          <span>{{ circuitsPage.card1.btn }}</span>
-        </button>
-      </div>
-
-      <!-- Card 2: Dedicated Chauffeur Service -->
-      <div class="transport-box-card featured">
-        <div class="transport-box-header">
-          <span class="transport-tag featured-tag">{{ circuitsPage.card2.tag }}</span>
-          <div class="transport-pricing">
-            <span class="price-from">{{ circuitsPage.card2.from }}</span>
-            <div class="price-amount-wrap">
-              <span class="price-amount">{{ circuitsPage.card2.price }}</span>
-              <span class="price-currency">{{ circuitsPage.card2.unit }}</span>
-            </div>
-          </div>
-        </div>
-
-        <h3 class="transport-box-title">{{ circuitsPage.card2.title }}</h3>
-        <p class="transport-box-desc">{{ circuitsPage.card2.desc }}</p>
-
-        <ul class="transport-perks-list">
-          <li *ngFor="let perk of circuitsPage.card2.perks">
-            <svg class="check-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            <span>{{ perk }}</span>
-          </li>
-        </ul>
-
-        <button type="button" class="btn btn--primary w-full" (click)="inquireTransportWhatsApp(circuitsPage.card2.title)">
-          <span>{{ circuitsPage.card2.btn }}</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==========================================================================
-     SECTION 3: DIRECT RESERVATION & FAST CONTACT
-     ========================================================================== -->
-<section id="booking" class="section section--booking">
+<section id="experiences" class="section experiences-section">
   <div class="container">
     
     <div class="section-header section-header--center">
-      <span class="label">{{ contactPage.heroTag }}</span>
+      <span class="section-eyebrow">
+        {{ langService.currentLang() === 'ar' ? 'تجارب السفر والاستجمام' : 'L\'ART DU VOYAGE AU MAROC' }}
+      </span>
       <h2 class="section-title">
-        {{ langService.currentLang() === 'ar' ? 'حجز مباشر وسريع عبر واتساب' : (langService.currentLang() === 'en' ? 'Direct middleman-free booking' : 'Réservation & Devis Direct sur WhatsApp') }}
+        {{ langService.currentLang() === 'ar' ? 'تجارب وخدمات استثنائية' : 'Des Expériences Uniques & Raffinées' }}
       </h2>
       <p class="section-subtitle">
-        {{ langService.currentLang() === 'ar' ? 'املأ الاستمارة وتواصل مباشرة مع فريقنا المحلي بمراكش لتأكيد رحلتك بأفضل سعر.' : (langService.currentLang() === 'en' ? 'Fill out the form below to chat directly with our local team in Marrakech and lock in your direct fair rate.' : 'Remplissez le formulaire ci-dessous pour transmettre votre demande directement à notre équipe à Marrakech.') }}
+        {{ langService.currentLang() === 'ar' ? 'من ليالي الصحراء الساحرة إلى أسطول النقل الخاص الفاخر، صممنا كل تفصيلة لراحتكم.' : 'De la quiétude des bivouacs sahariens à notre flotte de transport privé, nous façonnons vos plus beaux souvenirs.' }}
       </p>
     </div>
 
-    <div class="booking-layout">
-      
-      <!-- Interactive Form Card -->
-      <div class="booking-form-card">
-        <h3 class="booking-form-title">{{ contactPage.formHeading }}</h3>
-        <p class="booking-form-subtitle">{{ contactPage.formSubtext }}</p>
+    <!-- Alternating 2-Column Stories -->
+    <div class="stories-list">
+      <div *ngFor="let story of experiences; let idx = index" 
+           class="story-row" 
+           [class.reverse]="idx % 2 === 1">
+        
+        <!-- Story Content -->
+        <div class="story-content">
+          <span class="story-badge">{{ story.badge }}</span>
+          <h3 class="story-title">{{ story.title }}</h3>
+          <p class="story-desc">{{ story.description }}</p>
+          
+          <ul class="story-perks">
+            <li *ngFor="let perk of story.perks">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="check-icon">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>{{ perk }}</span>
+            </li>
+          </ul>
 
-        <form (ngSubmit)="submitBookingWhatsApp()" class="booking-form-fields">
+          <a [href]="story.ctaLink" class="story-arrow-link" (click)="scrollToSection(story.ctaLink.replace('#', ''), $event)">
+            <span>{{ story.ctaText }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Story Image -->
+        <div class="story-media">
+          <div class="story-img-wrap">
+            <img [src]="story.imageUrl" [alt]="story.title" class="story-img" loading="lazy">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     5. TRANSPORT & MOBILITY OPTIONS
+     ========================================================================== -->
+<section id="transport" class="section transport-section">
+  <div class="container">
+    
+    <div class="section-header section-header--center">
+      <span class="section-eyebrow">{{ transportData.tag }}</span>
+      <h2 class="section-title">{{ transportData.title }}</h2>
+      <p class="section-subtitle">{{ transportData.subtitle }}</p>
+    </div>
+
+    <div class="transport-boxes-grid">
+      
+      <!-- Box 1: Self-Drive -->
+      <div class="transport-box">
+        <div class="transport-box-top">
+          <span class="transport-pill">{{ transportData.card1.tag }}</span>
+          <div class="transport-price-wrap">
+            <span class="from-text">{{ transportData.card1.from }}</span>
+            <div class="price-val">
+              <span class="num">{{ transportData.card1.price }}</span>
+              <span class="unit">{{ transportData.card1.unit }}</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="transport-title">{{ transportData.card1.title }}</h3>
+        <p class="transport-desc">{{ transportData.card1.desc }}</p>
+
+        <ul class="transport-perks-list">
+          <li *ngFor="let perk of transportData.card1.perks">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="check-icon">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{{ perk }}</span>
+          </li>
+        </ul>
+
+        <button class="btn btn--outline-dark w-full" (click)="inquireTransportWhatsApp(transportData.card1.title)">
+          {{ transportData.card1.btn }}
+        </button>
+      </div>
+
+      <!-- Box 2: Private Chauffeur VIP -->
+      <div class="transport-box featured">
+        <div class="transport-box-top">
+          <span class="transport-pill featured-pill">{{ transportData.card2.tag }}</span>
+          <div class="transport-price-wrap">
+            <span class="from-text">{{ transportData.card2.from }}</span>
+            <div class="price-val">
+              <span class="num">{{ transportData.card2.price }}</span>
+              <span class="unit">{{ transportData.card2.unit }}</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="transport-title">{{ transportData.card2.title }}</h3>
+        <p class="transport-desc">{{ transportData.card2.desc }}</p>
+
+        <ul class="transport-perks-list">
+          <li *ngFor="let perk of transportData.card2.perks">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="check-icon">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            <span>{{ perk }}</span>
+          </li>
+        </ul>
+
+        <button class="btn btn--primary w-full" (click)="inquireTransportWhatsApp(transportData.card2.title)">
+          {{ transportData.card2.btn }}
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     6. FAST DIRECT BOOKING & CONTACT (STRICTLY 3 TRAVEL CHOICES, NO EMAILS)
+     ========================================================================== -->
+<section id="booking" class="section booking-section">
+  <div class="container">
+    
+    <div class="section-header section-header--center">
+      <span class="section-eyebrow">{{ contactData.tag }}</span>
+      <h2 class="section-title">{{ contactData.title }}</h2>
+      <p class="section-subtitle">{{ contactData.subtitle }}</p>
+    </div>
+
+    <div class="booking-grid">
+      
+      <!-- Left: Interactive Form -->
+      <div class="booking-card">
+        <h3 class="booking-card-title">{{ contactData.formTitle }}</h3>
+        <p class="booking-card-sub">{{ contactData.formSubtitle }}</p>
+
+        <form (ngSubmit)="submitBookingWhatsApp()" class="booking-form">
           
           <div class="form-row-2">
             <div class="form-group">
-              <label>{{ contactPage.labelName }}</label>
-              <input type="text" 
-                     [(ngModel)]="bookingForm.name" 
-                     name="name" 
-                     [placeholder]="contactPage.placeholderName" 
-                     required>
+              <label>{{ contactData.nameLabel }}</label>
+              <input type="text" [(ngModel)]="bookingForm.name" name="name" [placeholder]="contactData.namePlaceholder" required>
             </div>
-
             <div class="form-group">
-              <label>{{ contactPage.labelPhone }}</label>
-              <input type="tel" 
-                     [(ngModel)]="bookingForm.phone" 
-                     name="phone" 
-                     [placeholder]="contactPage.placeholderPhone" 
-                     required>
+              <label>{{ contactData.phoneLabel }}</label>
+              <input type="tel" [(ngModel)]="bookingForm.phone" name="phone" [placeholder]="contactData.phonePlaceholder" required>
             </div>
           </div>
 
           <div class="form-row-2">
             <div class="form-group">
-              <label>{{ contactPage.labelDate }}</label>
-              <input type="date" 
-                     [(ngModel)]="bookingForm.travelDate" 
-                     name="travelDate">
+              <label>{{ contactData.dateLabel }}</label>
+              <input type="date" [(ngModel)]="bookingForm.travelDate" name="travelDate">
             </div>
-
             <div class="form-group">
-              <label>{{ contactPage.labelGuests }}</label>
+              <label>{{ contactData.guestsLabel }}</label>
               <select [(ngModel)]="bookingForm.guests" name="guests">
-                <option *ngFor="let g of contactPage.guestOptions" [value]="g.val">
-                  {{ g.label }}
-                </option>
+                <option *ngFor="let g of contactData.guestsOptions" [value]="g.val">{{ g.label }}</option>
               </select>
             </div>
           </div>
 
+          <!-- The strictly required 3 options in travel choice -->
           <div class="form-group">
-            <label>{{ contactPage.labelCircuit }}</label>
+            <label>{{ contactData.travelChoiceLabel }}</label>
             <select [(ngModel)]="bookingForm.serviceType" name="serviceType">
-              <option *ngFor="let c of contactPage.circuitOptions" [value]="c.val">
-                {{ c.label }}
-              </option>
+              <option *ngFor="let c of contactData.travelChoices" [value]="c.val">{{ c.label }}</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>{{ contactPage.labelTransport }}</label>
+            <label>{{ contactData.transportLabel }}</label>
             <select [(ngModel)]="bookingForm.transportOption" name="transportOption">
-              <option *ngFor="let t of contactPage.transportOptions" [value]="t.val">
-                {{ t.label }}
-              </option>
+              <option *ngFor="let t of contactData.transportOptions" [value]="t.val">{{ t.label }}</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>{{ contactPage.labelNotes }}</label>
-            <textarea [(ngModel)]="bookingForm.notes" 
-                      name="notes" 
-                      rows="3" 
-                      [placeholder]="contactPage.placeholderNotes"></textarea>
+            <label>{{ contactData.notesLabel }}</label>
+            <textarea [(ngModel)]="bookingForm.notes" name="notes" rows="3" [placeholder]="contactData.notesPlaceholder"></textarea>
           </div>
 
           <button type="submit" class="btn btn--primary btn-large w-full">
-            <span>{{ contactPage.btnSubmit }}</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <span>{{ contactData.btnSubmit }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </button>
+
         </form>
       </div>
 
-      <!-- Right Column: Direct Help & Guarantee Cards -->
+      <!-- Right: Direct Help Desk & Local Guarantees -->
       <div class="booking-sidebar">
         
-        <!-- Direct Call & WhatsApp Contact Card -->
-        <div class="sidebar-contact-card">
-          <h4 class="sidebar-contact-heading">{{ langService.currentLang() === 'ar' ? 'تواصل فوري ومباشر' : (langService.currentLang() === 'en' ? 'Direct Contact Desk' : 'Assistance Immédiate') }}</h4>
+        <!-- Direct Desk -->
+        <div class="sidebar-desk-box">
+          <h4 class="desk-title">{{ contactData.directDeskTitle }}</h4>
           
-          <div class="sidebar-phone-item">
-            <span class="phone-label">WhatsApp Direct 24/7 :</span>
-            <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="phone-val">{{ primaryPhone }}</a>
+          <div class="desk-phone-item">
+            <span class="desk-phone-label">WhatsApp 24/7 :</span>
+            <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val">{{ primaryPhone }}</a>
           </div>
 
-          <div class="sidebar-phone-item">
-            <span class="phone-label">{{ langService.currentLang() === 'ar' ? 'هاتف المساعدة 2 :' : (langService.currentLang() === 'en' ? 'Support Line 2:' : 'Ligne d\'assistance :') }}</span>
-            <a [href]="'tel:' + secondaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="phone-val">{{ secondaryPhone }}</a>
+          <div class="desk-phone-item">
+            <span class="desk-phone-label">{{ langService.ui.footerAssistanceLabel }}</span>
+            <a [href]="'tel:' + secondaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val">{{ secondaryPhone }}</a>
           </div>
 
-          <div class="sidebar-wa-action">
-            <button type="button" class="btn btn--outline-dark w-full" (click)="openDirectWhatsApp()">
+          <div class="desk-wa-btn-wrap">
+            <button class="btn btn--outline-dark w-full" (click)="openDirectWhatsApp()">
               {{ langService.ui.btnDiscussWhatsApp }}
             </button>
           </div>
         </div>
 
-        <!-- 4 Reassurance Points (NO EMOJIS) -->
-        <div class="sidebar-reasons-card">
-          <h4 class="reasons-heading">{{ contactPage.sidebarTitle }}</h4>
-
+        <!-- 4 Reassurance Points -->
+        <div class="sidebar-reasons-box">
+          <h4 class="reasons-heading">{{ contactData.reasonsTitle }}</h4>
           <div class="reasons-list">
-            <div *ngFor="let r of contactPage.reasons" class="reason-item">
-              <div class="reason-num-badge">{{ r.num }}</div>
-              <div class="reason-text">
+            <div *ngFor="let r of contactData.reasons" class="reason-row">
+              <span class="reason-num">{{ r.num }}</span>
+              <div>
                 <strong class="reason-title">{{ r.title }}</strong>
                 <p class="reason-desc">{{ r.desc }}</p>
               </div>
@@ -475,6 +568,8 @@
         </div>
 
       </div>
+
     </div>
+
   </div>
 </section>

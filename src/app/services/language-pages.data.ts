@@ -154,7 +154,7 @@ export interface HomePageData {
   ctaBtnQuote: string;
 }
 
-export const CIRCUITS_PAGE_DATA: Record<Language, CircuitsPageData> = {
+export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
   fr: {
     heroTag: 'PROGRAMMES & CIRCUITS SUR MESURE AU MAROC',
     heroTitle: 'Nos Nouveaux Circuits & Expéditions',
@@ -334,7 +334,7 @@ export const CIRCUITS_PAGE_DATA: Record<Language, CircuitsPageData> = {
   }
 };
 
-export const DESTINATIONS_PAGE_DATA: Record<Language, DestinationsPageData> = {
+export const DESTINATIONS_PAGE_DATA: Record<string, DestinationsPageData> = {
   fr: {
     heroTag: 'EXPLORER LE MAROC AUTHENTIQUE',
     heroTitle: 'Destinations & Régions du Maroc',
@@ -364,7 +364,7 @@ export const DESTINATIONS_PAGE_DATA: Record<Language, DestinationsPageData> = {
   }
 };
 
-export const CONTACT_PAGE_DATA: Record<Language, ContactPageData> = {
+export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
   fr: {
     heroTag: 'DISPONIBILITÉS & DEVIS DIRECTS',
     heroTitle: 'Contactez l\'Équipe Medade Travel',
@@ -697,7 +697,7 @@ export const CONTACT_PAGE_DATA: Record<Language, ContactPageData> = {
   }
 };
 
-export const HOME_PAGE_DATA: Record<Language, HomePageData> = {
+export const HOME_PAGE_DATA: Record<string, HomePageData> = {
   fr: {
     heroBadge: 'Agence 100% Marocaine • Meilleurs Tarifs Directs',
     heroEyebrow: 'CIRCUITS DÉSERT & EXPÉDITIONS MAROC DEPUIS MARRAKECH',
