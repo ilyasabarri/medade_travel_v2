@@ -396,42 +396,44 @@
                [class.hidden]="i !== activeActivityIndex && i !== (activeActivityIndex - 1 + activities.length) % activities.length && i !== (activeActivityIndex + 1) % activities.length"
                (click)="goToActivity(i)">
             
+            <!-- 1. Pure Clean Photo (Zero Text on Picture) -->
             <div class="deck-card-image-wrap">
               <img [src]="act.imageUrl" [alt]="act.title" class="deck-card-img" loading="lazy">
-              <div class="deck-card-overlay"></div>
-              <span class="deck-badge-pill">{{ act.badge }}</span>
             </div>
 
-            <!-- Card Bottom Glass Content -->
-            <div class="deck-card-content">
-              <div class="activity-specs-chips">
-                <span class="spec-chip">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  {{ act.duration }}
-                </span>
-                <span class="spec-chip">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                  {{ act.location }}
-                </span>
+            <!-- 2. Activity Content BELOW the Picture -->
+            <div class="deck-card-body">
+              <div class="card-meta-line">
+                <span class="activity-badge-tag">{{ act.badge }}</span>
+                <div class="activity-specs-chips">
+                  <span class="spec-chip">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    {{ act.duration }}
+                  </span>
+                  <span class="spec-chip">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    {{ act.location }}
+                  </span>
+                </div>
               </div>
 
               <h3 class="deck-activity-title">{{ act.title }}</h3>
               <p class="deck-activity-desc">{{ act.description }}</p>
 
-              <div class="deck-highlight-pill">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-                <span>{{ act.highlight }}</span>
-              </div>
+              <div class="deck-footer-row">
+                <div class="deck-highlight-pill">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>{{ act.highlight }}</span>
+                </div>
 
-              <div class="deck-actions-row">
                 <button class="btn btn--primary btn-sm" (click)="bookActivityWhatsApp(act); $event.stopPropagation()">
                   <span>{{ activitiesSection.bookBtn }}</span>
                   <svg class="arrow-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
