@@ -863,23 +863,22 @@ body.rtl-mode .active-category-pill {
   font-size: 0.95rem;
 }
 
-/* 3D Perspective Stage Container */
+/* Razor-Sharp Panoramic Coverflow Stage Container (Zero Blurriness) */
 .slider-stage-container {
   position: relative;
   min-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;
-  perspective: 1400px;
   margin-bottom: 32px;
+  overflow: visible;
 }
 
 .slider-cards-deck {
   position: relative;
   width: 100%;
-  max-width: 880px;
+  max-width: 900px;
   height: 500px;
-  transform-style: preserve-3d;
 }
 
 .activity-deck-card {
@@ -894,47 +893,52 @@ body.rtl-mode .active-category-pill {
   overflow: hidden;
   cursor: pointer;
   background: var(--espresso);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
   transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
               opacity 0.65s cubic-bezier(0.25, 1, 0.5, 1),
-              filter 0.65s cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 0.65s cubic-bezier(0.25, 1, 0.5, 1);
-  box-shadow: 0 16px 36px rgba(27, 24, 21, 0.2);
+              box-shadow 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+              filter 0.65s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 16px 36px rgba(27, 24, 21, 0.22);
 }
 
 .activity-deck-card.active {
-  transform: translateX(0) scale(1) translateZ(0) rotateY(0deg);
+  transform: translate3d(0, 0, 0) scale(1);
   opacity: 1;
   z-index: 10;
   filter: none;
-  box-shadow: 0 28px 60px rgba(27, 24, 21, 0.4);
-  border-color: rgba(197, 160, 89, 0.45);
+  box-shadow: 0 24px 60px rgba(27, 24, 21, 0.45);
+  border-color: rgba(197, 160, 89, 0.5);
 }
 
 .activity-deck-card.prev {
-  transform: translateX(-52%) scale(0.85) translateZ(-80px) rotateY(15deg);
-  opacity: 0.55;
+  transform: translate3d(-56%, 0, 0) scale(0.88);
+  opacity: 0.65;
   z-index: 5;
-  filter: brightness(0.65) blur(1px);
+  filter: brightness(0.82);
 }
 
 .activity-deck-card.next {
-  transform: translateX(52%) scale(0.85) translateZ(-80px) rotateY(-15deg);
-  opacity: 0.55;
+  transform: translate3d(56%, 0, 0) scale(0.88);
+  opacity: 0.65;
   z-index: 5;
-  filter: brightness(0.65) blur(1px);
+  filter: brightness(0.82);
 }
 
 body.rtl-mode .activity-deck-card.prev {
-  transform: translateX(52%) scale(0.85) translateZ(-80px) rotateY(-15deg);
+  transform: translate3d(56%, 0, 0) scale(0.88);
 }
 
 body.rtl-mode .activity-deck-card.next {
-  transform: translateX(-52%) scale(0.85) translateZ(-80px) rotateY(15deg);
+  transform: translate3d(-56%, 0, 0) scale(0.88);
 }
 
 .activity-deck-card.hidden {
-  transform: translateX(0) scale(0.7) translateZ(-160px);
+  transform: translate3d(0, 0, 0) scale(0.7);
   opacity: 0;
   pointer-events: none;
   z-index: 1;
@@ -950,6 +954,7 @@ body.rtl-mode .activity-deck-card.next {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  image-rendering: auto;
   transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -960,18 +965,16 @@ body.rtl-mode .activity-deck-card.next {
 .deck-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(27, 24, 21, 0.1) 0%, rgba(27, 24, 21, 0.35) 45%, rgba(27, 24, 21, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(20, 18, 16, 0.08) 0%, rgba(20, 18, 16, 0.3) 40%, rgba(20, 18, 16, 0.94) 100%);
 }
 
 .deck-badge-pill {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(27, 24, 21, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(20, 18, 16, 0.85);
   color: var(--white);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -979,6 +982,7 @@ body.rtl-mode .activity-deck-card.next {
   padding: 6px 14px;
   border-radius: 20px;
   z-index: 2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 body.rtl-mode .deck-badge-pill {
@@ -996,6 +1000,7 @@ body.rtl-mode .deck-badge-pill {
   padding: 28px 32px 32px;
   z-index: 3;
   color: var(--white);
+  background: linear-gradient(180deg, transparent 0%, rgba(20, 18, 16, 0.75) 30%, rgba(20, 18, 16, 0.96) 100%);
 }
 
 .activity-specs-chips {
@@ -1009,11 +1014,9 @@ body.rtl-mode .deck-badge-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(35, 30, 26, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 14px;
   font-size: 12px;
   font-weight: 500;
