@@ -1,10 +1,14 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { CIRCUITS_PAGE_DATA, DESTINATIONS_PAGE_DATA, CONTACT_PAGE_DATA } from './language-pages.data';
 import { ALL_CIRCUITS_DATA } from './circuits.data';
+import { ALL_EVENTS_SECTIONS, ALL_EVENTS_DATA, EventStory, EventsSectionHeader } from './events.data';
+import { ALL_ACTIVITIES_SECTIONS, ALL_ACTIVITIES_DATA, ActivityItem, ActivitiesSectionHeader } from './activities.data';
 
 export type Language = 'fr' | 'en' | 'ar' | 'es' | 'it' | 'de' | 'pt' | 'nl';
 export type CircuitTranslation = Circuit;
 export type DestinationTranslation = any;
+export type ExperienceStory = EventStory;
+export { EventStory, EventsSectionHeader, ActivityItem, ActivitiesSectionHeader };
 
 export interface LanguageMeta {
   code: Language;
@@ -44,17 +48,6 @@ export interface Circuit {
   imageUrl: string;
   inclusions: string[];
   days: CircuitDay[];
-}
-
-export interface ExperienceStory {
-  id: string;
-  badge: string;
-  title: string;
-  description: string;
-  perks: string[];
-  imageUrl: string;
-  ctaText: string;
-  ctaLink: string;
 }
 
 @Injectable({
@@ -138,7 +131,8 @@ export class LanguageService {
         menuLabel: 'MENU',
         navHome: 'Accueil',
         navCircuits: 'Circuits Phares',
-        navExperiences: 'Expériences',
+        navExperiences: 'Événements & Mariages',
+        navActivities: 'Activités Désert',
         navTransport: 'Transport VIP',
         navBooking: 'Devis & Contact',
         btnBookRoom: 'DEMANDER UN DEVIS',
@@ -160,7 +154,8 @@ export class LanguageService {
         menuLabel: 'MENU',
         navHome: 'Home',
         navCircuits: 'Signature Tours',
-        navExperiences: 'Experiences',
+        navExperiences: 'Private Events & Weddings',
+        navActivities: 'Desert Activities',
         navTransport: 'VIP Transport',
         navBooking: 'Quote & Contact',
         btnBookRoom: 'REQUEST A QUOTE',
@@ -182,7 +177,8 @@ export class LanguageService {
         menuLabel: 'القائمة',
         navHome: 'الرئيسية',
         navCircuits: 'الجولات الرئيسية',
-        navExperiences: 'تجارب السفر',
+        navExperiences: 'المناسبات والأعراس',
+        navActivities: 'أنشطة الصحراء والباجي',
         navTransport: 'النقل السياحي',
         navBooking: 'طلب حجز واستفسار',
         btnBookRoom: 'طلب عرض سعر',
@@ -204,7 +200,8 @@ export class LanguageService {
         menuLabel: 'MENÚ',
         navHome: 'Inicio',
         navCircuits: 'Circuitos Destacados',
-        navExperiences: 'Experiencias',
+        navExperiences: 'Eventos y Bodas',
+        navActivities: 'Actividades Desierto',
         navTransport: 'Transporte VIP',
         navBooking: 'Presupuesto y Contacto',
         btnBookRoom: 'SOLICITAR PRESUPUESTO',
@@ -226,7 +223,8 @@ export class LanguageService {
         menuLabel: 'MENU',
         navHome: 'Home',
         navCircuits: 'I Nostri Tour',
-        navExperiences: 'Esperienze',
+        navExperiences: 'Eventi & Matrimoni',
+        navActivities: 'Attività Deserto',
         navTransport: 'Trasporto VIP',
         navBooking: 'Preventivo e Contatto',
         btnBookRoom: 'RICHIEDI UN PREVENTIVO',
@@ -248,7 +246,8 @@ export class LanguageService {
         menuLabel: 'MENÜ',
         navHome: 'Startseite',
         navCircuits: 'Top-Rundreisen',
-        navExperiences: 'Erlebnisse',
+        navExperiences: 'Events & Hochzeiten',
+        navActivities: 'Wüstenaktivitäten',
         navTransport: 'VIP-Transport',
         navBooking: 'Angebot & Kontakt',
         btnBookRoom: 'ANGEBOT ANFORDERN',
@@ -270,7 +269,8 @@ export class LanguageService {
         menuLabel: 'MENU',
         navHome: 'Início',
         navCircuits: 'Circuitos Exclusivos',
-        navExperiences: 'Experiências',
+        navExperiences: 'Eventos & Casamentos',
+        navActivities: 'Atividades no Deserto',
         navTransport: 'Transporte VIP',
         navBooking: 'Orçamento e Contacto',
         btnBookRoom: 'PEDIR ORÇAMENTO',
@@ -292,7 +292,8 @@ export class LanguageService {
         menuLabel: 'MENU',
         navHome: 'Home',
         navCircuits: 'Populaire Rondreizen',
-        navExperiences: 'Ervaringen',
+        navExperiences: 'Evenementen & Bruiloften',
+        navActivities: 'Woestijnactiviteiten',
         navTransport: 'VIP Vervoer',
         navBooking: 'Offerte & Contact',
         btnBookRoom: 'OFFERTE AANVRAGEN',
@@ -553,322 +554,38 @@ export class LanguageService {
     return d[lang] || d['fr'];
   }
 
-  // Experiences showcase section localized labels
-  get experiencesSection() {
-    const lang = this.currentLang();
-    const d: Record<Language, any> = {
-      fr: {
-        eyebrow: "L'ART DU VOYAGE AU MAROC",
-        title: 'Des Expériences Uniques & Raffinées',
-        subtitle: 'De la quiétude des bivouacs sahariens à notre flotte de transport privé, nous façonnons vos plus beaux souvenirs.'
-      },
-      en: {
-        eyebrow: 'THE ART OF MOROCCAN TRAVEL',
-        title: 'Unique & Refined Experiences',
-        subtitle: 'From the tranquility of Saharan luxury camps to our VIP private fleet, we craft unforgettable memories.'
-      },
-      ar: {
-        eyebrow: 'تجارب السفر والاستجمام',
-        title: 'تجارب وخدمات استثنائية',
-        subtitle: 'من ليالي الصحراء الساحرة إلى أسطول النقل الخاص الفاخر، صممنا كل تفصيلة لراحتكم وسعادتكم.'
-      },
-      es: {
-        eyebrow: 'EL ARTE DE VIAJAR POR MARRUECOS',
-        title: 'Experiencias Únicas y Refinadas',
-        subtitle: 'Desde la serenidad de los campamentos del Sahara hasta nuestra flota de transporte privado VIP, creamos sus mejores recuerdos.'
-      },
-      it: {
-        eyebrow: "L'ARTE DEL VIAGGIO IN MAROCCO",
-        title: 'Esperienze Uniche e Raffinate',
-        subtitle: 'Dalla magia dei bivacchi sahariani alla nostra flotta di trasporto VIP, diamo forma ai vostri ricordi più belli.'
-      },
-      de: {
-        eyebrow: 'DIE KUNST DES REISENS IN MAROKKO',
-        title: 'Einzigartige & Exklusive Erlebnisse',
-        subtitle: 'Von der Ruhe stilvoller Wüstencamps bis hin zu unserem VIP-Fahrservice gestalten wir Ihre unvergesslichsten Momente.'
-      },
-      pt: {
-        eyebrow: 'A ARTE DE VIAJAR EM MARROCOS',
-        title: 'Experiências Únicas e Refinadas',
-        subtitle: 'Da serenidade dos acampamentos no Saara à nossa frota de transporte VIP, cuidamos de cada detalhe para as suas melhores memórias.'
-      },
-      nl: {
-        eyebrow: 'DE KUNST VAN REIZEN IN MAROKKO',
-        title: 'Unieke & Exclusieve Reiservaringen',
-        subtitle: 'Van de rust in sfeervolle Sahara-kampen tot onze privé VIP-vervoersvloot, wij creëren uw mooiste herinneringen.'
-      }
-    };
-    return d[lang] || d['fr'];
+  // Events & Celebrations showcase section (Weddings, Proposals, Anniversaries)
+  get eventsSection(): EventsSectionHeader {
+    return ALL_EVENTS_SECTIONS[this.currentLang()] || ALL_EVENTS_SECTIONS['fr'];
+  }
+
+  // Backward-compatibility alias
+  get experiencesSection(): EventsSectionHeader {
+    return this.eventsSection;
+  }
+
+  // Event Stories with concise texts (Weddings, Proposals, Anniversaries)
+  get events(): EventStory[] {
+    return ALL_EVENTS_DATA[this.currentLang()] || ALL_EVENTS_DATA['fr'];
+  }
+
+  // Backward-compatibility alias
+  get experiences(): EventStory[] {
+    return this.events;
+  }
+
+  // Desert Activities Section Header & Slider data
+  get activitiesSection(): ActivitiesSectionHeader {
+    return ALL_ACTIVITIES_SECTIONS[this.currentLang()] || ALL_ACTIVITIES_SECTIONS['fr'];
+  }
+
+  get activities(): ActivityItem[] {
+    return ALL_ACTIVITIES_DATA[this.currentLang()] || ALL_ACTIVITIES_DATA['fr'];
   }
 
   // The 3 Signature Tours (identical to v1 with all days, stops, and durations across all 8 languages)
   get circuits(): Circuit[] {
-    const lang = this.currentLang();
-    return ALL_CIRCUITS_DATA[lang] || ALL_CIRCUITS_DATA['fr'];
-  }
-
-  // Alternating Luxury Experience Stories (Le Bédouin style: Bivouacs, Fleet VIP, Activities)
-  get experiences(): ExperienceStory[] {
-    const lang = this.currentLang();
-    const map: Record<Language, ExperienceStory[]> = {
-      fr: [
-        {
-          id: 'bivouacs',
-          badge: 'IMMERSION SAHARIENNE',
-          title: 'Bivouacs Nomades & Nuits Étoilées',
-          description: 'Au cœur des dunes de Merzouga ou sur les collines minérales d’Agafay, nos campements allient authenticité berbère et confort absolu. Lits douillets, tentes privatives climatisées/chauffées, dîners raffinés aux chandelles et veillées musicales autour du feu de camp.',
-          perks: ['Tentes privatives avec salle de bain intégrée', 'Dîner traditionnel 3 plats sous les étoiles', 'Feu de camp et animation musicale gnaoua'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Découvrir nos bivouacs',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'TRANSPORT & MOBILITÉ',
-          title: 'Chauffeurs Privés & Flotte de Prestige',
-          description: 'Voyagez à travers le Maroc avec sérénité grâce à notre flotte de Mercedes V-Class spacieux, SUV et 4x4 tout-terrain récents. Nos chauffeurs professionnels, courtois et multilingues, s’adaptent à vos horaires et vos envies d’arrêts photos spontanés.',
-          perks: ['Véhicules récents, climatisés et désinfectés', 'Chauffeurs agréés et bilingues à votre écoute', 'Formule location sans chauffeur disponible sur devis'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'Voir nos options de transport',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'AVENTURE & DÉTENTE',
-          title: 'Activités & Sensations au Désert',
-          description: 'Donnez vie à vos envies d’évasion : escapades en quad ou buggy dans le désert d’Agafay, balades poétiques à dos de dromadaire au coucher du soleil, déjeuners au bord de piscines panoramiques et dîners spectacles enchanteurs.',
-          perks: ['Guides certifiés et matériel récent sécurisé', 'Formules adaptées aux familles et couples', 'Départs quotidiens avec navette privative'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Demander un devis activités',
-          ctaLink: '#booking'
-        }
-      ],
-      en: [
-        {
-          id: 'bivouacs',
-          badge: 'SAHARA IMMERSION',
-          title: 'Nomadic Luxury Camps & Starlit Nights',
-          description: 'In the heart of the Merzouga dunes or the rocky hills of Agafay, our desert camps blend Berber authenticity with supreme comfort. Plush beds, private en-suite tents, candlelit dinners, and fireside acoustic musical evenings.',
-          perks: ['Private luxury tents with en-suite bathrooms', '3-course traditional dinner under the stars', 'Campfire with live Gnawa musical performance'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Explore our desert camps',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'TRANSPORT & MOBILITY',
-          title: 'Private Chauffeurs & Modern Fleet',
-          description: 'Travel across Morocco with peace of mind in our spacious Mercedes V-Class vans, premium SUVs, and 4x4 vehicles. Our experienced, bilingual drivers cater entirely to your pace, comfort, and spontaneous photo stops.',
-          perks: ['Recent, fully air-conditioned vehicles', 'Certified bilingual professional drivers', 'Self-drive rental option available on quote'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'View transport options',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'ADVENTURE & RECREATION',
-          title: 'Desert Adventures & Bespoke Activities',
-          description: 'Experience exhilarating quad and buggy safaris through the Agafay stone desert, sunset camel treks, relaxation by panoramic oasis swimming pools, and mesmerizing evening dinner shows.',
-          perks: ['Certified guides and modern safety gear', 'Options suitable for families and couples', 'Daily departures with private round-trip transfers'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Enquire about activities',
-          ctaLink: '#booking'
-        }
-      ],
-      ar: [
-        {
-          id: 'bivouacs',
-          badge: 'سحر الصحراء',
-          title: 'مخيمات بدوية فاخرة وليالٍ تحت النجوم',
-          description: 'في قلب كثبان مرزوكة أو فوق تلال أكافاي الساحرة، تجمع مخيماتنا بين الأصالة المغربية والراحة الفندقية التامة. أسرّة مريحة، خيام مجهزة بحمامات خاصة، عشاء فاخر على ضوء الشموع، وسهرات موسيقية حول نار المخيم.',
-          perks: ['خيام خاصة فاخرة مجهزة بحمام مدمج', 'عشاء مغربي تقليدي 3 أطباق تحت النجوم', 'جلسات نار المخيم مع أنغام كناوة التراثية'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'اكتشفوا مخيماتنا الصحراوية',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'النقل والراحة',
-          title: 'سائقون خاصون وأسطول سيارات حديث',
-          description: 'سافروا في أرجاء المغرب بكل راحة وأمان مع أسطول سيارات مرسيدس في-كلاس، وسيارات دفع رباعي 4x4 حديثة ومكيفة. سائقونا المحترفون والمطلعون على مسارات المغرب رهن إشارتكم في كل خطوة.',
-          perks: ['سيارات حديثة، نظيفة ومكيفة بالكامل', 'سائقون معتمدون وذوو خبرة واسعة', 'خيار كراء سيارة بدون سائق متاح حسب الطلب'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'اطلعوا على خيارات النقل',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'مغامرات وأنشطة',
-          title: 'أنشطة ومغامرات استثنائية في الصحراء',
-          description: 'استمتعوا بجولات الكواد والباجي الممتعة في صحراء أكافاي، ركوب الجمال عند غروب الشمس، استرخاء بجانب المسابح البانورامية، وأمسيات عشاء ساحرة مع عروض الفلكلور المغربي.',
-          perks: ['مرشدون معتمدون ومعدات سلامة حديثة', 'برامج مناسبة للعائلات والأزواج', 'انطلاق يومي مع خدمة نقل خاص ومباشر'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'طلب حجز الأنشطة',
-          ctaLink: '#booking'
-        }
-      ],
-      es: [
-        {
-          id: 'bivouacs',
-          badge: 'INMERSIÓN EN EL SAHARA',
-          title: 'Campamentos Nómadas y Noches Estrelladas',
-          description: 'En el corazón de Merzouga o en las colinas de Agafay, nuestros campamentos combinan autenticidad bereber y confort absoluto. Jaimas con baño privado, cenas a la luz de las velas y música junto a la hoguera.',
-          perks: ['Jaimas privadas con baño completo', 'Cena tradicional de 3 platos bajo las estrellas', 'Hoguera con música tradicional gnawa'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Descubrir nuestros campamentos',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'TRANSPORTE Y MOVILIDAD',
-          title: 'Chóferes Privados y Flota de Prestigio',
-          description: 'Viaje por Marruecos con total tranquilidad en nuestras furgonetas Mercedes V-Class y 4x4 modernos. Chóferes bilingües y experimentados que se adaptan a su ritmo.',
-          perks: ['Vehículos modernos y climatizados', 'Chóferes profesionales a su disposición', 'Alquiler sin chófer disponible bajo presupuesto'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'Ver opciones de transporte',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'AVENTURA Y OCIO',
-          title: 'Aventuras y Actividades en el Desierto',
-          description: 'Disfrute de safaris en quad y buggy por Agafay, paseos en dromedario al atardecer, piscinas panorámicas y mágicas cenas espectáculo.',
-          perks: ['Guías certificados y equipo de seguridad', 'Ideal para familias y parejas', 'Salidas diarias con traslados privados'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Consultar actividades',
-          ctaLink: '#booking'
-        }
-      ],
-      it: [
-        {
-          id: 'bivouacs',
-          badge: 'IMMERSIONE NEL SAHARA',
-          title: 'Campi Nomadi di Lusso e Notti Stellate',
-          description: 'Tra le dune di Merzouga o le colline di Agafay, i nostri campi fondono l’autenticità berbera con il comfort moderno: tende con bagno privato, cene a lume di candela e musica attorno al fuoco.',
-          perks: ['Tende private di lusso con bagno interno', 'Cena tradizionale a 3 portate sotto le stelle', 'Falò serale con musica gnaoua'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Scopri i nostri campi',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'TRASPORTO E MOBILITÀ',
-          title: 'Autisti Privati e Flotta di Pregio',
-          description: 'Esplorate il Marocco con la massima serenità a bordo di Mercedes V-Class e 4x4 recenti. Autisti professionisti bilingui sempre disponibili per il vostro comfort.',
-          perks: ['Veicoli recenti e climatizzati', 'Autisti esperti al vostro servizio', 'Noleggio auto senza conducente su preventivo'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'Vedi opzioni di trasporto',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'AVVENTURA E RELAX',
-          title: 'Avventure e Attività nel Deserto',
-          description: 'Giri emozionanti in quad e buggy ad Agafay, passeggiate in dromedario al tramonto, relax a bordo piscina panoramica e suggestive cene spettacolo.',
-          perks: ['Guide certificate e massima sicurezza', 'Formule perfette per coppie e famiglie', 'Partenze giornaliere con transfer privato'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Richiedi info attività',
-          ctaLink: '#booking'
-        }
-      ],
-      de: [
-        {
-          id: 'bivouacs',
-          badge: 'SAHARA-ERLEBNIS',
-          title: 'Nomadencamps & Nächte unter den Sternen',
-          description: 'Inmitten der Dünen von Merzouga oder den Hügeln von Agafay vereinen unsere Wüstencamps traditionelle Berberkultur mit höchstem Komfort: komfortable Betten, private Zelte mit eigenem Bad und stimmungsvolle Lagerfeuer.',
-          perks: ['Private Luxuszelte mit eigenem Bad', 'Traditionelles 3-Gänge-Menü unterm Sternenhimmel', 'Lagerfeuer mit traditioneller Gnawa-Musik'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Unsere Wüstencamps entdecken',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'TRANSPORT & MOBILITÄT',
-          title: 'Private Chauffeure & Moderner Fuhrpark',
-          description: 'Reisen Sie entspannt durch Marokko in geräumigen Mercedes V-Klasse Vans und modernen 4x4 Geländewagen. Unsere erfahrenen Chauffeure richten sich ganz nach Ihren Wünschen.',
-          perks: ['Neueste klimatisierte Fahrzeuge', 'Erfahrene mehrsprachige Chauffeure', 'Mietwagen ohne Fahrer auf Anfrage'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'Transportoptionen ansehen',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'ABENTEUER & ERHOLUNG',
-          title: 'Wüstenabenteuer & Maßgeschneiderte Aktivitäten',
-          description: 'Erleben Sie aufregende Quad- und Buggy-Touren durch die Steinwüste von Agafay, Kamelritte zum Sonnenuntergang, Panoramapools und bezaubernde Dinnershows.',
-          perks: ['Geprüfte Guides und moderne Ausrüstung', 'Ideal für Paare und Familien', 'Tägliche Abfahrten mit Privattransfer'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Aktivitäten anfragen',
-          ctaLink: '#booking'
-        }
-      ],
-      pt: [
-        {
-          id: 'bivouacs',
-          badge: 'IMERSÃO SAARIANA',
-          title: 'Acampamentos Nómadas & Noites Estreladas',
-          description: 'Nas dunas de Merzouga ou em Agafay, os nossos acampamentos combinam autenticidade e conforto: tendas privadas com casa de banho, jantares à luz de velas e música tradicional junto à fogueira.',
-          perks: ['Tendas privadas com casa de banho privativa', 'Jantar tradicional de 3 pratos sob as estrelas', 'Fogueira e música gnaoua ao vivo'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Conhecer os nossos acampamentos',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'TRANSPORTE E MOBILIDADE',
-          title: 'Motoristas Privados & Frota de Prestígio',
-          description: 'Viaje por Marrocos com total conforto em carrinhas Mercedes V-Class e viaturas 4x4 recentes. Motoristas profissionais bilíngues inteiramente dedicados ao seu bem-estar.',
-          perks: ['Viaturas recentes e climatizadas', 'Motoristas qualificados e pontuais', 'Aluguer sem motorista sob orçamento'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'Ver opções de transporte',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'AVENTURA E LAZER',
-          title: 'Aventuras e Atividades no Deserto',
-          description: 'Experimente passeios de moto-quatro e buggy em Agafay, passeios de dromedário ao pôr do sol, relaxamento junto à piscina e jantares espetáculo fascinantes.',
-          perks: ['Guias certificados e segurança total', 'Perfeito para casais e famílias', 'Saídas diárias com transfer privado'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Saber mais sobre atividades',
-          ctaLink: '#booking'
-        }
-      ],
-      nl: [
-        {
-          id: 'bivouacs',
-          badge: 'SAHARA BELEVING',
-          title: 'Nomadenkampen & Nachten onder de Sterrenhemel',
-          description: 'Tussen de zandduinen van Merzouga of de heuvels van Agafay combineren onze kampen Berberse gastvrijheid met modern comfort: luxe tenten met eigen badkamer, diners bij kaarslicht en muziek bij het kampvuur.',
-          perks: ['Privétenten met eigen badkamer', 'Traditioneel 3-gangendiner onder de sterren', 'Kampvuur met traditionele Gnawa-muziek'],
-          imageUrl: 'assets/star-lit-nights.jpeg',
-          ctaText: 'Ontdek onze woestijnkampen',
-          ctaLink: '#circuits'
-        },
-        {
-          id: 'flotte-vip',
-          badge: 'VERVOER & MOBILITEIT',
-          title: 'Privéchauffeurs & Luxe Wagenpark',
-          description: 'Reis zorgeloos door Marokko in onze ruime Mercedes V-Klasse busjes en moderne 4x4 terreinwagens met ervaren meertalige chauffeurs.',
-          perks: ['Moderne voertuigen met airconditioning', 'Gecertificeerde privéchauffeurs', 'Autohuur zonder chauffeur op aanvraag'],
-          imageUrl: 'assets/taghazout-morocco.jpeg',
-          ctaText: 'Bekijk vervoersopties',
-          ctaLink: '#transport'
-        },
-        {
-          id: 'activites',
-          badge: 'AVONTUUR & ONTSPANNING',
-          title: 'Woestijnavonturen & Activiteiten op Maat',
-          description: 'Beleef spectaculaire quad- en buggytours door Agafay, kamelenritten bij zonsondergang, ontspanning aan panoramische zwembaden en betoverende dinnershows.',
-          perks: ['Gecertificeerde gidsen en veiligheidsuitrusting', 'Ideaal voor koppels en gezinnen', 'Dagelijkse transfers vanaf uw riad'],
-          imageUrl: 'assets/agafay-amanjena.jpeg',
-          ctaText: 'Activiteiten aanvragen',
-          ctaLink: '#booking'
-        }
-      ]
-    };
-    return map[lang] || map['fr'];
+    return ALL_CIRCUITS_DATA[this.currentLang()] || ALL_CIRCUITS_DATA['fr'];
   }
 
   // Transport options

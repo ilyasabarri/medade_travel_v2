@@ -1,7 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LanguageService, Circuit, ExperienceStory } from '../../services/language.service';
+import { 
+  LanguageService, 
+  Circuit, 
+  EventStory, 
+  ActivityItem, 
+  EventsSectionHeader, 
+  ActivitiesSectionHeader 
+} from '../../services/language.service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +17,7 @@ import { LanguageService, Circuit, ExperienceStory } from '../../services/langua
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   langService = inject(LanguageService);
 
   primaryPhone = '+212 6 62 63 60 95';
@@ -24,6 +31,13 @@ export class HomeComponent implements OnInit {
     'circuit-3': 0
   };
 
+  // Activities 3D Perspective Slider state
+  activeActivityIndex = 0;
+  autoPlayTimer: any = null;
+  isPaused = false;
+  touchStartX = 0;
+  touchEndX = 0;
+
   bookingForm = {
     name: '',
     phone: '',
@@ -36,6 +50,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.syncFormDefaults();
+    this.startSliderAutoplay();
+  }
+
+  ngOnDestroy() {
+    this.stopSliderAutoplay();
   }
 
   get circuits(): Circuit[] {
@@ -46,8 +65,33 @@ export class HomeComponent implements OnInit {
     return this.circuits.find(c => c.id === this.activeCircuitId) || this.circuits[0];
   }
 
-  get experiences(): ExperienceStory[] {
-    return this.langService.experiences;
+  get events(): EventStory[] {
+    return this.langService.events;
+  }
+
+  get experiences(): EventStory[] {
+    return this.events;
+  }
+
+  get eventsSection(): EventsSectionHeader {
+    return this.langService.eventsSection;
+  }
+
+  get experiencesSection(): EventsSectionHeader {
+    return this.eventsSection;
+  }
+
+  get activities(): ActivityItem[] {
+    return this.langService.activities;
+  }
+
+  get activitiesSection(): ActivitiesSectionHeader {
+    return this.langService.activitiesSection;
+  }
+
+  get currentActivity(): ActivityItem {
+    const list = this.activities;
+    return list[this.activeActivityIndex] || list[0];
   }
 
   get philosophy() {
@@ -68,10 +112,6 @@ export class HomeComponent implements OnInit {
 
   get circuitsSection() {
     return this.langService.circuitsSection;
-  }
-
-  get experiencesSection() {
-    return this.langService.experiencesSection;
   }
 
   syncFormDefaults() {
@@ -114,6 +154,101 @@ export class HomeComponent implements OnInit {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
+  }
+
+  // =========================================================================
+  // ACTIVITIES 3D SLIDER LOGIC
+  // =========================================================================
+  startSliderAutoplay() {
+    this.stopSliderAutoplay();
+    if (typeof window !== 'undefined') {
+      this.autoPlayTimer = setInterval(() => {
+        if (!this.isPaused) {
+          this.nextActivity();
+        }
+      }, 5500);
+    }
+  }
+
+  stopSliderAutoplay() {
+    if (this.autoPlayTimer) {
+      clearInterval(this.autoPlayTimer);
+      this.autoPlayTimer = null;
+    }
+  }
+
+  pauseSlider() {
+    this.isPaused = true;
+  }
+
+  resumeSlider() {
+    this.isPaused = false;
+  }
+
+  nextActivity() {
+    const total = this.activities.length;
+    if (total === 0) return;
+    this.activeActivityIndex = (this.activeActivityIndex + 1) % total;
+  }
+
+  prevActivity() {
+    const total = this.activities.length;
+    if (total === 0) return;
+    this.activeActivityIndex = (this.activeActivityIndex - 1 + total) % total;
+  }
+
+  goToActivity(idx: number) {
+    this.activeActivityIndex = idx;
+  }
+
+  onTouchStart(e: TouchEvent) {
+    if (e.touches && e.touches.length > 0) {
+      this.touchStartX = e.touches[0].clientX;
+    }
+  }
+
+  onTouchMove(e: TouchEvent) {
+    if (e.touches && e.touches.length > 0) {
+      this.touchEndX = e.touches[0].clientX;
+    }
+  }
+
+  onTouchEnd() {
+    const diff = this.touchStartX - this.touchEndX;
+    const isRtl = this.langService.isRtl();
+    // Swiping threshold 40px
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        // Swiped left
+        if (isRtl) {
+          this.prevActivity();
+        } else {
+          this.nextActivity();
+        }
+      } else {
+        // Swiped right
+        if (isRtl) {
+          this.nextActivity();
+        } else {
+          this.prevActivity();
+        }
+      }
+    }
+    this.touchStartX = 0;
+    this.touchEndX = 0;
+  }
+
+  // Booking / Inquiries via WhatsApp
+  bookActivityWhatsApp(activity: ActivityItem) {
+    const prefix = this.activitiesSection.waInquiryPrefix;
+    const msg = `${prefix} "${activity.title}" (${activity.category} - ${activity.location}). Pourriez-vous me transmettre les disponibilités et un devis personnalisé ?`;
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  bookEventWhatsApp(event: EventStory) {
+    const prefix = this.eventsSection.waInquiryPrefix;
+    const msg = `${prefix} "${event.title}" (${event.badge}). Pourriez-vous me transmettre des conseils d'organisation et un devis personnalisé ?`;
+    window.open(`https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
   bookCircuitWhatsApp(circuit: Circuit) {

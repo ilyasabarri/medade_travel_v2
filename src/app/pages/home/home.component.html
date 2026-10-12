@@ -270,26 +270,26 @@
 </section>
 
 <!-- ==========================================================================
-     4. ALTERNATING LUXURY STORIES (LE BÉDOUIN RESTAURANT & EVENTS STYLE)
+     4. PRIVATE EVENTS & CELEBRATIONS (MARIAGES, DEMANDES & ANNIVERSAIRES)
      ========================================================================== -->
-<section id="experiences" class="section experiences-section">
+<section id="experiences" class="section events-section">
   <div class="container">
     
     <div class="section-header section-header--center">
       <span class="section-eyebrow">
-        {{ experiencesSection.eyebrow }}
+        {{ eventsSection.eyebrow }}
       </span>
       <h2 class="section-title">
-        {{ experiencesSection.title }}
+        {{ eventsSection.title }}
       </h2>
       <p class="section-subtitle">
-        {{ experiencesSection.subtitle }}
+        {{ eventsSection.subtitle }}
       </p>
     </div>
 
-    <!-- Alternating 2-Column Stories -->
+    <!-- Alternating 2-Column Event Stories -->
     <div class="stories-list">
-      <div *ngFor="let story of experiences; let idx = index" 
+      <div *ngFor="let story of events; let idx = index" 
            class="story-row" 
            [class.reverse]="idx % 2 === 1">
         
@@ -308,22 +308,168 @@
             </li>
           </ul>
 
-          <a [href]="story.ctaLink" class="story-arrow-link" (click)="scrollToSection(story.ctaLink.replace('#', ''), $event)">
-            <span>{{ story.ctaText }}</span>
-            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
+          <div class="event-actions-row">
+            <button class="btn btn--primary" (click)="bookEventWhatsApp(story)">
+              <span>{{ story.ctaText }}</span>
+              <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+
+            <a href="#booking" class="btn btn--outline-dark" (click)="scrollToSection('booking', $event)">
+              <span>{{ langService.ui.btnBookRoom }}</span>
+            </a>
+          </div>
         </div>
 
         <!-- Story Image -->
         <div class="story-media">
           <div class="story-img-wrap">
             <img [src]="story.imageUrl" [alt]="story.title" class="story-img" loading="lazy">
+            <span class="story-floating-tag">{{ story.badge }}</span>
           </div>
         </div>
 
       </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     5. SHOWCASE ACTIVITÉS & LOISIRS AU DÉSERT (3D COVERFLOW PERSPECTIVE SLIDER)
+     ========================================================================== -->
+<section id="activities" class="section activities-section">
+  <div class="container">
+    
+    <div class="section-header section-header--center">
+      <span class="section-eyebrow">
+        {{ activitiesSection.eyebrow }}
+      </span>
+      <h2 class="section-title">
+        {{ activitiesSection.title }}
+      </h2>
+      <p class="section-subtitle">
+        {{ activitiesSection.subtitle }}
+      </p>
+    </div>
+
+    <!-- Interactive 3D Perspective Slider -->
+    <div class="activities-slider-wrapper"
+         (mouseenter)="pauseSlider()"
+         (mouseleave)="resumeSlider()"
+         (touchstart)="onTouchStart($event)"
+         (touchmove)="onTouchMove($event)"
+         (touchend)="onTouchEnd()">
+
+      <!-- Slider Top Utility Bar -->
+      <div class="slider-top-bar">
+        <div class="active-category-pill">
+          <span class="sparkle-dot"></span>
+          <span>{{ currentActivity.category }}</span>
+        </div>
+
+        <div class="slider-counter">
+          <span class="current-num">0{{ activeActivityIndex + 1 }}</span>
+          <span class="divider">/</span>
+          <span class="total-num">0{{ activities.length }}</span>
+        </div>
+      </div>
+
+      <!-- 3D Perspective Cards Track -->
+      <div class="slider-stage-container">
+        
+        <button class="slider-nav-btn prev-btn" 
+                (click)="prevActivity()" 
+                aria-label="Activité précédente">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+
+        <div class="slider-cards-deck">
+          <div *ngFor="let act of activities; let i = index"
+               class="activity-deck-card"
+               [class.active]="i === activeActivityIndex"
+               [class.prev]="i === (activeActivityIndex - 1 + activities.length) % activities.length"
+               [class.next]="i === (activeActivityIndex + 1) % activities.length"
+               [class.hidden]="i !== activeActivityIndex && i !== (activeActivityIndex - 1 + activities.length) % activities.length && i !== (activeActivityIndex + 1) % activities.length"
+               (click)="goToActivity(i)">
+            
+            <div class="deck-card-image-wrap">
+              <img [src]="act.imageUrl" [alt]="act.title" class="deck-card-img" loading="lazy">
+              <div class="deck-card-overlay"></div>
+              <span class="deck-badge-pill">{{ act.badge }}</span>
+            </div>
+
+            <!-- Card Bottom Glass Content -->
+            <div class="deck-card-content">
+              <div class="activity-specs-chips">
+                <span class="spec-chip">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  {{ act.duration }}
+                </span>
+                <span class="spec-chip">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  {{ act.location }}
+                </span>
+              </div>
+
+              <h3 class="deck-activity-title">{{ act.title }}</h3>
+              <p class="deck-activity-desc">{{ act.description }}</p>
+
+              <div class="deck-highlight-pill">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+                <span>{{ act.highlight }}</span>
+              </div>
+
+              <div class="deck-actions-row">
+                <button class="btn btn--primary btn-sm" (click)="bookActivityWhatsApp(act); $event.stopPropagation()">
+                  <span>{{ activitiesSection.bookBtn }}</span>
+                  <svg class="arrow-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="slider-nav-btn next-btn" 
+                (click)="nextActivity()" 
+                aria-label="Activité suivante">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M9 18l6-6-6-6"/>
+          </svg>
+        </button>
+
+      </div>
+
+      <!-- Slider Thumbnails Deck -->
+      <div class="slider-thumbnails-row">
+        <button *ngFor="let act of activities; let idx = index"
+                class="thumb-nav-item"
+                [class.active]="idx === activeActivityIndex"
+                (click)="goToActivity(idx)">
+          <div class="thumb-img-wrapper">
+            <img [src]="act.imageUrl" [alt]="act.title" class="thumb-img">
+          </div>
+          <div class="thumb-info">
+            <span class="thumb-index">0{{ idx + 1 }}</span>
+            <span class="thumb-title">{{ act.title }}</span>
+          </div>
+        </button>
+      </div>
+
     </div>
 
   </div>
