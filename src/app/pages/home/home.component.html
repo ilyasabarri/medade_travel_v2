@@ -6,12 +6,29 @@
      1. HERO SECTION (FULL BLEED CINEMATIC DESERT EXPERIENCE)
      ========================================================================== -->
 <section id="hero" class="hero-section">
-  <div class="hero-bg-media">
-    <img src="assets/merzouga-dunes.jpeg" 
-         alt="Sahara Dunes Merzouga - Medade Travel" 
-         class="hero-bg-img"
-         fetchpriority="high">
-    <div class="hero-gradient-overlay"></div>
+  <!-- Animated Background Slideshow (Le Bédouin Agafay Ken Burns Style) -->
+  <div class="hero-slideshow-wrap" aria-hidden="true">
+    <div *ngFor="let slide of heroSlides; let idx = index" 
+         class="hero-slide-layer" 
+         [class.active]="idx === currentSlideIndex">
+      <img [src]="slide.image" 
+           [alt]="slide.alt" 
+           class="hero-slide-img"
+           [loading]="idx === 0 ? 'eager' : 'lazy'"
+           [attr.fetchpriority]="idx === 0 ? 'high' : 'auto'">
+    </div>
+    <div class="hero-vignette-overlay"></div>
+  </div>
+
+  <!-- Interactive Slide Controls (Le Bédouin luxury style) -->
+  <div class="hero-slider-nav" role="tablist" aria-label="Contrôles du diaporama">
+    <button *ngFor="let slide of heroSlides; let idx = index"
+            class="slider-dot"
+            [class.active]="idx === currentSlideIndex"
+            (click)="setSlide(idx)"
+            [attr.aria-label]="'Vue panoramique ' + (idx + 1)">
+      <span class="dot-progress"></span>
+    </button>
   </div>
 
   <div class="container hero-container">

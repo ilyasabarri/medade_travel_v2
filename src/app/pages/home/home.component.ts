@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LanguageService, Circuit, ExperienceStory } from '../../services/language.service';
@@ -10,12 +10,34 @@ import { LanguageService, Circuit, ExperienceStory } from '../../services/langua
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   langService = inject(LanguageService);
 
   primaryPhone = '+212 6 62 63 60 95';
   secondaryPhone = '+212 6 37 05 31 31';
   whatsappNumber = '212662636095';
+
+  // Hero animated background slideshow (Le Bédouin Agafay Ken Burns style)
+  heroSlides = [
+    {
+      image: 'assets/hero-agafay-camp.jpg',
+      alt: 'Le Bédouin Agafay - Camp de Luxe & Piscine au Désert'
+    },
+    {
+      image: 'assets/merzouga-dunes.jpeg',
+      alt: 'Dunes de Merzouga Sahara - Medade Travel'
+    },
+    {
+      image: 'assets/star-lit-nights.jpeg',
+      alt: 'Bivouac nomade et nuit étoilée au désert'
+    },
+    {
+      image: 'assets/agafay-amanjena.jpeg',
+      alt: 'Canyon et oasis minérale du désert d Agafay'
+    }
+  ];
+  currentSlideIndex = 0;
+  private slideInterval: any;
 
   activeCircuitId = 'circuit-1';
   expandedDayIndex: { [key: string]: number | null } = {
@@ -36,6 +58,36 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.syncFormDefaults();
+    this.startHeroSlideshow();
+  }
+
+  ngOnDestroy() {
+    this.stopHeroSlideshow();
+  }
+
+  startHeroSlideshow() {
+    if (typeof window !== 'undefined') {
+      this.slideInterval = setInterval(() => {
+        this.nextSlide();
+      }, 5000);
+    }
+  }
+
+  stopHeroSlideshow() {
+    if (this.slideInterval) {
+      clearInterval(this.slideInterval);
+      this.slideInterval = null;
+    }
+  }
+
+  nextSlide() {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.heroSlides.length;
+  }
+
+  setSlide(index: number) {
+    this.currentSlideIndex = index;
+    this.stopHeroSlideshow();
+    this.startHeroSlideshow();
   }
 
   get circuits(): Circuit[] {
