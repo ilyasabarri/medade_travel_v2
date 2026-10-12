@@ -287,12 +287,16 @@ body.rtl-mode .lang-option-badge {
   align-items: center;
   gap: 7px;
   color: var(--sand-warm);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   padding: 6px 12px;
   border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.08);
   transition: background var(--transition);
+  white-space: nowrap;
+  direction: ltr !important;
+  unicode-bidi: isolate;
+  flex-shrink: 0;
 }
 
 .nav-phone-pill:hover {
@@ -301,8 +305,29 @@ body.rtl-mode .lang-option-badge {
 }
 
 .nav-cta-btn {
-  padding: 10px 22px;
-  font-size: 12px;
+  padding: 9px 18px;
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1200px) {
+  .nav-phone-pill {
+    padding: 6px 9px;
+    font-size: 11px;
+    gap: 5px;
+  }
+  .nav-cta-btn {
+    padding: 8px 14px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 1060px) {
+  .nav-phone-pill.desktop-only {
+    display: none !important;
+  }
 }
 
 /* MOBILE TOGGLE BURGER */

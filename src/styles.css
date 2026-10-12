@@ -75,6 +75,34 @@ body.rtl-mode {
   text-align: right;
 }
 
+/* Phone numbers & Latin alphanumeric text Bidi isolation */
+.phone-isolated,
+.nav-phone-pill,
+.desk-phone-val,
+.contact-value,
+.mobile-tel-button {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  white-space: nowrap !important;
+}
+
+body.rtl-mode .phone-isolated,
+body.rtl-mode .nav-phone-pill,
+body.rtl-mode .desk-phone-val,
+body.rtl-mode .contact-value,
+body.rtl-mode .mobile-tel-button {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  text-align: right;
+  display: inline-flex;
+}
+
+/* Arrow orientation in RTL (forward points left in RTL) */
+body.rtl-mode svg.arrow-icon,
+body.rtl-mode .arrow-icon {
+  transform: scaleX(-1);
+}
+
 img {
   display: block;
   max-width: 100%;

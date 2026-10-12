@@ -24,65 +24,19 @@
 
       <!-- Luxury Serif Headline -->
       <h1 class="hero-title">
-        <ng-container *ngIf="langService.currentLang() === 'fr'">
-          L'Âme du Maroc, l'Élégance du Voyage
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'en'">
-          The Soul of Morocco, The Elegance of Travel
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'ar'">
-          روح المغرب الأصيل وسحر السفر الراقي
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'es'">
-          El Alma de Marruecos, la Elegancia del Viaje
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'it'">
-          L'Anima del Marocco, l'Eleganza del Viaggio
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'de'">
-          Die Seele Marokkos, die Eleganz des Reisens
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'pt'">
-          A Alma de Marrocos, a Elegância da Viagem
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'nl'">
-          De Ziel van Marokko, de Elegantie van het Reizen
-        </ng-container>
+        {{ hero.title }}
       </h1>
 
       <!-- Refined Subtitle -->
       <p class="hero-subtitle">
-        <ng-container *ngIf="langService.currentLang() === 'fr'">
-          Circuits privatifs sur-mesure au départ de Marrakech, bivouacs de charme sous les étoiles et transport haut de gamme avec chauffeur dédié ou véhicule sans chauffeur dès 450 DH/jour.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'en'">
-          Bespoke private journeys departing from Marrakech, luxury starlit desert camps, and premium transport with dedicated chauffeur or self-drive vehicle from 450 MAD/day.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'ar'">
-          جولات سياحية خاصة انطلاقاً من مراكش، مخيمات فاخرة تحت أضواء النجوم، ونقل سياحي راقٍ مع سائق خاص أو كراء سيارات ابتداءً من 450 درهم/اليوم بدون وسيط.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'es'">
-          Circuitos privados a medida desde Marrakech, campamentos bajo las estrellas y transporte VIP con chófer dedicado o alquiler sin conductor desde 450 MAD/día.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'it'">
-          Tour privati su misura con partenza da Marrakech, bivacchi di lusso sotto le stelle e veicoli recenti con autista o a noleggio da 450 MAD/giorno.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'de'">
-          Maßgeschneiderte private Rundreisen ab Marrakesch, Wüstencamps unterm Sternenhimmel und VIP-Transport mit Chauffeur oder Mietwagen ab 450 MAD/Tag.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'pt'">
-          Circuitos privados a partir de Marraquexe, acampamentos de charme sob as estrelas e transporte VIP com motorista dedicado ou aluguer desde 450 MAD/dia.
-        </ng-container>
-        <ng-container *ngIf="langService.currentLang() === 'nl'">
-          Privérondreizen op maat vanuit Marrakech, luxe woestijnkampen onder de sterren en modern vervoer met privéchauffeur of autoverhuur vanaf 450 MAD/dag.
-        </ng-container>
+        {{ hero.subtitle }}
       </p>
 
       <!-- Dual Actions -->
       <div class="hero-btn-row">
         <a href="#circuits" class="btn btn--primary" (click)="scrollToSection('circuits', $event)">
           <span>{{ langService.ui.btnBookActivities }}</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="arrow-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </a>
@@ -98,7 +52,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
           </svg>
-          <span>{{ langService.currentLang() === 'ar' ? 'سعر محلي مباشر بدون وسيط' : 'Tarifs directs sans intermédiaire' }}</span>
+          <span>{{ hero.badges.fairPrice }}</span>
         </div>
         <div class="trust-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -107,13 +61,13 @@
             <circle cx="5.5" cy="18.5" r="2.5"></circle>
             <circle cx="18.5" cy="18.5" r="2.5"></circle>
           </svg>
-          <span>{{ langService.currentLang() === 'ar' ? 'نقل سياحي dès 450 درهم/يوم' : 'Transport dès 450 DH / jour' }}</span>
+          <span>{{ hero.badges.transport }}</span>
         </div>
         <div class="trust-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
           </svg>
-          <span>{{ langService.currentLang() === 'ar' ? 'دعم واستجابة 24/7' : 'Assistance WhatsApp 24/7' }}</span>
+          <span>{{ hero.badges.support }}</span>
         </div>
       </div>
 
@@ -166,13 +120,13 @@
     <!-- Section Header -->
     <div class="section-header section-header--center">
       <span class="section-eyebrow">
-        {{ langService.currentLang() === 'ar' ? 'الجولات والرحلات الرئيسية' : 'NOS CIRCUITS & SÉJOURS PHARES' }}
+        {{ circuitsSection.eyebrow }}
       </span>
       <h2 class="section-title">
-        {{ langService.currentLang() === 'ar' ? 'الجولات الثلاث الأكثر طلباً بالمغرب' : 'Les 3 Circuits Phares au Maroc' }}
+        {{ circuitsSection.title }}
       </h2>
       <p class="section-subtitle">
-        {{ langService.currentLang() === 'ar' ? 'اختر جولتك المفضلة واطلع على تفاصيل خط السير يوماً بيوم مع حجز مباشر عبر واتساب.' : 'Sélectionnez un circuit pour explorer son itinéraire exclusif et réserver directement sans intermédiaire.' }}
+        {{ circuitsSection.subtitle }}
       </p>
     </div>
 
@@ -195,7 +149,7 @@
           <p class="card-excerpt">{{ c.summary }}</p>
           <div class="card-footer-cta">
             <span class="view-details-text">
-              {{ langService.currentLang() === 'ar' ? 'عرض البرنامج الكامل ←' : 'Voir le programme complet →' }}
+              {{ circuitsSection.viewFull }}
             </span>
           </div>
         </div>
@@ -226,7 +180,7 @@
               <circle cx="18.5" cy="18.5" r="2.5"></circle>
             </svg>
             <div>
-              <strong>{{ langService.currentLang() === 'ar' ? 'نقل مرن متاح :' : 'Transport au choix :' }}</strong>
+              <strong>{{ circuitsSection.transportLabel }}</strong>
               {{ currentCircuit.transportOffer }}
             </div>
           </div>
@@ -234,7 +188,7 @@
           <!-- Inclusions List -->
           <div class="inclusions-block">
             <h4 class="inclusions-heading">
-              {{ langService.currentLang() === 'ar' ? 'الخدمات المشمولة في هذا البرنامج :' : 'Prestations incluses dans ce programme :' }}
+              {{ circuitsSection.inclusionsTitle }}
             </h4>
             <ul class="inclusions-list">
               <li *ngFor="let inc of currentCircuit.inclusions">
@@ -249,8 +203,8 @@
           <!-- Action Buttons -->
           <div class="details-actions-row">
             <button class="btn btn--primary" (click)="bookCircuitWhatsApp(currentCircuit)">
-              <span>{{ langService.currentLang() === 'ar' ? 'طلب حجز هذا البرنامج' : 'Réserver ce Circuit sur WhatsApp' }}</span>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <span>{{ circuitsSection.bookBtn }}</span>
+              <svg class="arrow-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </button>
@@ -271,7 +225,7 @@
       <!-- Expandable Day-by-Day Timeline -->
       <div class="day-by-day-wrap">
         <h4 class="day-by-day-title">
-          {{ langService.currentLang() === 'ar' ? 'خط السير المفصل يوماً بيوم :' : 'Itinéraire Détaillé Jour par Jour :' }}
+          {{ circuitsSection.dayByDayTitle }}
         </h4>
 
         <div class="itinerary-accordion">
@@ -281,7 +235,7 @@
             
             <button class="accordion-day-header" (click)="toggleDay(currentCircuit.id, i)">
               <div class="day-badge-num">
-                {{ langService.currentLang() === 'ar' ? 'اليوم' : 'Jour' }} {{ day.dayNumber }}
+                {{ circuitsSection.dayPrefix }} {{ day.dayNumber }}
               </div>
               <h5 class="day-title-text">{{ day.title }}</h5>
               <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -293,7 +247,7 @@
               <p class="day-desc">{{ day.description }}</p>
               
               <div class="day-stops-row" *ngIf="day.stops && day.stops.length > 0">
-                <span class="stops-label">{{ langService.currentLang() === 'ar' ? 'المحطات الرئيسية :' : 'Points d\'intérêt :' }}</span>
+                <span class="stops-label">{{ circuitsSection.stopsLabel }}</span>
                 <div class="stops-chips">
                   <span *ngFor="let stop of day.stops" class="stop-chip">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -323,13 +277,13 @@
     
     <div class="section-header section-header--center">
       <span class="section-eyebrow">
-        {{ langService.currentLang() === 'ar' ? 'تجارب السفر والاستجمام' : 'L\'ART DU VOYAGE AU MAROC' }}
+        {{ experiencesSection.eyebrow }}
       </span>
       <h2 class="section-title">
-        {{ langService.currentLang() === 'ar' ? 'تجارب وخدمات استثنائية' : 'Des Expériences Uniques & Raffinées' }}
+        {{ experiencesSection.title }}
       </h2>
       <p class="section-subtitle">
-        {{ langService.currentLang() === 'ar' ? 'من ليالي الصحراء الساحرة إلى أسطول النقل الخاص الفاخر، صممنا كل تفصيلة لراحتكم.' : 'De la quiétude des bivouacs sahariens à notre flotte de transport privé, nous façonnons vos plus beaux souvenirs.' }}
+        {{ experiencesSection.subtitle }}
       </p>
     </div>
 
@@ -356,7 +310,7 @@
 
           <a [href]="story.ctaLink" class="story-arrow-link" (click)="scrollToSection(story.ctaLink.replace('#', ''), $event)">
             <span>{{ story.ctaText }}</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </a>
@@ -521,7 +475,7 @@
 
           <button type="submit" class="btn btn--primary btn-large w-full">
             <span>{{ contactData.btnSubmit }}</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </button>
@@ -538,12 +492,12 @@
           
           <div class="desk-phone-item">
             <span class="desk-phone-label">WhatsApp 24/7 :</span>
-            <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val">{{ primaryPhone }}</a>
+            <a [href]="'tel:' + primaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val phone-isolated" dir="ltr">{{ primaryPhone }}</a>
           </div>
 
           <div class="desk-phone-item">
             <span class="desk-phone-label">{{ langService.ui.footerAssistanceLabel }}</span>
-            <a [href]="'tel:' + secondaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val">{{ secondaryPhone }}</a>
+            <a [href]="'tel:' + secondaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val phone-isolated" dir="ltr">{{ secondaryPhone }}</a>
           </div>
 
           <div class="desk-wa-btn-wrap">

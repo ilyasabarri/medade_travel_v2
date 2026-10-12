@@ -87,11 +87,21 @@ export class LanguageService {
   }
 
   constructor() {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const saved = localStorage.getItem('medade_lang_v2') as Language;
-      if (saved && SUPPORTED_LANGUAGES.some(l => l.code === saved)) {
-        this.setLanguage(saved);
-        return;
+    if (typeof window !== 'undefined') {
+      if (window.location && window.location.search) {
+        const params = new URLSearchParams(window.location.search);
+        const qLang = params.get('lang') as Language;
+        if (qLang && SUPPORTED_LANGUAGES.some(l => l.code === qLang)) {
+          this.setLanguage(qLang);
+          return;
+        }
+      }
+      if (window.localStorage) {
+        const saved = localStorage.getItem('medade_lang_v2') as Language;
+        if (saved && SUPPORTED_LANGUAGES.some(l => l.code === saved)) {
+          this.setLanguage(saved);
+          return;
+        }
       }
     }
     this.applyLanguage('fr');
@@ -354,6 +364,238 @@ export class LanguageService {
         lead: 'Beleef een authentieke droomreis vanuit Marrakech, tussen de gouden duinen van de Sahara, het Hoge Atlasgebergte en de Atlantische kust van Essaouira.',
         text: 'Medade Travel verzorgt op maat gemaakte privérondreizen, sfeervolle woestijnkampen onder de sterrenhemel en moderne voertuigen met privéchauffeur tegen directe, eerlijke tarieven.',
         btnText: 'BEKIJK ONZE RONDREIZEN'
+      }
+    };
+    return d[lang] || d['fr'];
+  }
+
+  // Hero section localized content and trust badges
+  get hero() {
+    const lang = this.currentLang();
+    const d: Record<Language, any> = {
+      fr: {
+        title: "L'Âme du Maroc, l'Élégance du Voyage",
+        subtitle: "Circuits privatifs sur-mesure au départ de Marrakech, bivouacs de charme sous les étoiles et transport haut de gamme avec chauffeur dédié ou véhicule sans chauffeur dès 450 DH/jour.",
+        badges: {
+          fairPrice: 'Tarifs directs sans intermédiaire',
+          transport: 'Transport dès 450 DH / jour',
+          support: 'Assistance WhatsApp 24/7'
+        }
+      },
+      en: {
+        title: "The Soul of Morocco, The Elegance of Travel",
+        subtitle: "Bespoke private journeys departing from Marrakech, luxury starlit desert camps, and premium transport with dedicated chauffeur or self-drive vehicle from 450 MAD/day.",
+        badges: {
+          fairPrice: 'Direct local rates, no middleman',
+          transport: 'Transport from 450 MAD / day',
+          support: '24/7 WhatsApp assistance'
+        }
+      },
+      ar: {
+        title: "روح المغرب الأصيل وسحر السفر الراقي",
+        subtitle: "جولات سياحية خاصة انطلاقاً من مراكش، مخيمات فاخرة تحت أضواء النجوم، ونقل سياحي راقٍ مع سائق خاص أو كراء سيارات ابتداءً من 450 درهم/اليوم بدون وسيط.",
+        badges: {
+          fairPrice: 'سعر محلي مباشر بدون وسيط',
+          transport: 'نقل سياحي ابتداءً من 450 درهم/يوم',
+          support: 'دعم واستجابة واتساب 24/7'
+        }
+      },
+      es: {
+        title: "El Alma de Marruecos, la Elegancia del Viaje",
+        subtitle: "Circuitos privados a medida desde Marrakech, campamentos bajo las estrellas y transporte VIP con chófer dedicado o alquiler sin conductor desde 450 MAD/día.",
+        badges: {
+          fairPrice: 'Precios directos sin intermediarios',
+          transport: 'Transporte desde 450 MAD / día',
+          support: 'Asistencia WhatsApp 24/7'
+        }
+      },
+      it: {
+        title: "L'Anima del Marocco, l'Eleganza del Viaggio",
+        subtitle: "Tour privati su misura con partenza da Marrakech, bivacchi di lusso sotto le stelle e veicoli recenti con autista o a noleggio da 450 MAD/giorno.",
+        badges: {
+          fairPrice: 'Tariffe dirette senza intermediari',
+          transport: 'Trasporto da 450 MAD / giorno',
+          support: 'Assistenza WhatsApp 24/7'
+        }
+      },
+      de: {
+        title: "Die Seele Marokkos, die Eleganz des Reisens",
+        subtitle: "Maßgeschneiderte private Rundreisen ab Marrakesch, Wüstencamps unterm Sternenhimmel und VIP-Transport mit Chauffeur oder Mietwagen ab 450 MAD/Tag.",
+        badges: {
+          fairPrice: 'Direktpreise ohne Zwischenhändler',
+          transport: 'Transport ab 450 MAD / Tag',
+          support: '24/7 WhatsApp-Betreuung'
+        }
+      },
+      pt: {
+        title: "A Alma de Marrocos, a Elegância da Viagem",
+        subtitle: "Circuitos privados a partir de Marraquexe, acampamentos de charme sob as estrelas e transporte VIP com motorista dedicado ou aluguer desde 450 MAD/dia.",
+        badges: {
+          fairPrice: 'Preços diretos sem intermediários',
+          transport: 'Transporte a partir de 450 MAD / dia',
+          support: 'Apoio WhatsApp 24/7'
+        }
+      },
+      nl: {
+        title: "De Ziel van Marokko, de Elegantie van het Reizen",
+        subtitle: "Privérondreizen op maat vanuit Marrakech, luxe woestijnkampen onder de sterren en modern vervoer met privéchauffeur of autoverhuur vanaf 450 MAD/dag.",
+        badges: {
+          fairPrice: 'Directe tarieven zonder tussenpersonen',
+          transport: 'Vervoer vanaf 450 MAD / dag',
+          support: '24/7 WhatsApp-ondersteuning'
+        }
+      }
+    };
+    return d[lang] || d['fr'];
+  }
+
+  // Circuits showcase section localized labels
+  get circuitsSection() {
+    const lang = this.currentLang();
+    const d: Record<Language, any> = {
+      fr: {
+        eyebrow: 'NOS CIRCUITS & SÉJOURS PHARES',
+        title: 'Les 3 Circuits Phares au Maroc',
+        subtitle: 'Sélectionnez un circuit pour explorer son itinéraire exclusif et réserver directement sans intermédiaire.',
+        viewFull: 'Voir le programme complet →',
+        transportLabel: 'Transport au choix :',
+        inclusionsTitle: 'Prestations incluses dans ce programme :',
+        bookBtn: 'Réserver ce Circuit sur WhatsApp',
+        dayByDayTitle: 'Itinéraire Détaillé Jour par Jour :',
+        dayPrefix: 'Jour',
+        stopsLabel: 'Points d\'intérêt :'
+      },
+      en: {
+        eyebrow: 'OUR SIGNATURE TOURS & JOURNEYS',
+        title: 'The 3 Signature Morocco Tours',
+        subtitle: 'Select a tour to explore its detailed day-by-day itinerary and book directly without middleman.',
+        viewFull: 'View full itinerary →',
+        transportLabel: 'Transport choice:',
+        inclusionsTitle: 'Included in this itinerary:',
+        bookBtn: 'Book This Tour via WhatsApp',
+        dayByDayTitle: 'Detailed Day-by-Day Itinerary:',
+        dayPrefix: 'Day',
+        stopsLabel: 'Key highlights:'
+      },
+      ar: {
+        eyebrow: 'الجولات والرحلات الرئيسية',
+        title: 'الجولات الثلاث الأكثر طلباً بالمغرب',
+        subtitle: 'اختر جولتك المفضلة واطلع على تفاصيل خط السير يوماً بيوم مع حجز مباشر عبر واتساب.',
+        viewFull: 'عرض البرنامج الكامل ←',
+        transportLabel: 'نقل مرن متاح :',
+        inclusionsTitle: 'الخدمات المشمولة في هذا البرنامج :',
+        bookBtn: 'طلب حجز هذا البرنامج على واتساب',
+        dayByDayTitle: 'خط السير المفصل يوماً بيوم :',
+        dayPrefix: 'اليوم',
+        stopsLabel: 'المحطات الرئيسية :'
+      },
+      es: {
+        eyebrow: 'NUESTROS CIRCUITOS DESTACADOS',
+        title: 'Los 3 Circuitos Emblemáticos en Marruecos',
+        subtitle: 'Seleccione un circuito para explorar su itinerario día a día y reservar directamente sin intermediarios.',
+        viewFull: 'Ver itinerario completo →',
+        transportLabel: 'Transporte a elegir:',
+        inclusionsTitle: 'Servicios incluidos en este programa:',
+        bookBtn: 'Reservar este Circuito por WhatsApp',
+        dayByDayTitle: 'Itinerario Detallado Día por Día:',
+        dayPrefix: 'Día',
+        stopsLabel: 'Puntos de interés:'
+      },
+      it: {
+        eyebrow: 'I NOSTRI TOUR DI PUNTA',
+        title: 'I 3 Tour Emblematici in Marocco',
+        subtitle: 'Seleziona un tour per scoprire l’itinerario giorno per giorno e prenotare direttamente senza intermediari.',
+        viewFull: 'Visualizza il programma completo →',
+        transportLabel: 'Scelta del trasporto:',
+        inclusionsTitle: 'Servizi inclusi in questo programma:',
+        bookBtn: 'Prenota questo Tour su WhatsApp',
+        dayByDayTitle: 'Itinerario Dettagliato Giorno per Giorno:',
+        dayPrefix: 'Giorno',
+        stopsLabel: 'Punti di interesse:'
+      },
+      de: {
+        eyebrow: 'UNSERE TOP-RUNDREISEN',
+        title: 'Die 3 Beliebtesten Rundreisen in Marokko',
+        subtitle: 'Wählen Sie eine Rundreise, um den detaillierten Tagesablauf einzusehen und direkt ohne Zwischenhändler zu buchen.',
+        viewFull: 'Vollständiges Programm ansehen →',
+        transportLabel: 'Transport nach Wahl:',
+        inclusionsTitle: 'In dieser Rundreise enthaltene Leistungen:',
+        bookBtn: 'Diese Rundreise via WhatsApp anfragen',
+        dayByDayTitle: 'Detaillierter Reiseverlauf Tag für Tag:',
+        dayPrefix: 'Tag',
+        stopsLabel: 'Wichtigste Stationen:'
+      },
+      pt: {
+        eyebrow: 'OS NOSSOS CIRCUITOS EXCLUSIVOS',
+        title: 'Os 3 Circuitos Emblemáticos em Marrocos',
+        subtitle: 'Selecione um circuito para explorar o seu itinerário dia a dia e reservar diretamente sem intermediários.',
+        viewFull: 'Ver o programa completo →',
+        transportLabel: 'Transporte à escolha:',
+        inclusionsTitle: 'Serviços incluídos neste programa:',
+        bookBtn: 'Reservar este Circuito no WhatsApp',
+        dayByDayTitle: 'Itinerário Detalhado Dia a Dia:',
+        dayPrefix: 'Dia',
+        stopsLabel: 'Pontos de interesse:'
+      },
+      nl: {
+        eyebrow: 'ONZE SIGNATURE RONDREIZEN',
+        title: 'De 3 Meest Populaire Rondreizen in Marokko',
+        subtitle: 'Kies een rondreis om het dag-tot-dag programma te bekijken en boek rechtstreeks zonder tussenpersonen.',
+        viewFull: 'Bekijk het volledige programma →',
+        transportLabel: 'Vervoer naar keuze:',
+        inclusionsTitle: 'Inbegrepen in dit reisprogramma:',
+        bookBtn: 'Deze Rondreis Reserveren via WhatsApp',
+        dayByDayTitle: 'Gedetailleerd Reisprogramma per Dag:',
+        dayPrefix: 'Dag',
+        stopsLabel: 'Belangrijkste hoogtepunten:'
+      }
+    };
+    return d[lang] || d['fr'];
+  }
+
+  // Experiences showcase section localized labels
+  get experiencesSection() {
+    const lang = this.currentLang();
+    const d: Record<Language, any> = {
+      fr: {
+        eyebrow: "L'ART DU VOYAGE AU MAROC",
+        title: 'Des Expériences Uniques & Raffinées',
+        subtitle: 'De la quiétude des bivouacs sahariens à notre flotte de transport privé, nous façonnons vos plus beaux souvenirs.'
+      },
+      en: {
+        eyebrow: 'THE ART OF MOROCCAN TRAVEL',
+        title: 'Unique & Refined Experiences',
+        subtitle: 'From the tranquility of Saharan luxury camps to our VIP private fleet, we craft unforgettable memories.'
+      },
+      ar: {
+        eyebrow: 'تجارب السفر والاستجمام',
+        title: 'تجارب وخدمات استثنائية',
+        subtitle: 'من ليالي الصحراء الساحرة إلى أسطول النقل الخاص الفاخر، صممنا كل تفصيلة لراحتكم وسعادتكم.'
+      },
+      es: {
+        eyebrow: 'EL ARTE DE VIAJAR POR MARRUECOS',
+        title: 'Experiencias Únicas y Refinadas',
+        subtitle: 'Desde la serenidad de los campamentos del Sahara hasta nuestra flota de transporte privado VIP, creamos sus mejores recuerdos.'
+      },
+      it: {
+        eyebrow: "L'ARTE DEL VIAGGIO IN MAROCCO",
+        title: 'Esperienze Uniche e Raffinate',
+        subtitle: 'Dalla magia dei bivacchi sahariani alla nostra flotta di trasporto VIP, diamo forma ai vostri ricordi più belli.'
+      },
+      de: {
+        eyebrow: 'DIE KUNST DES REISENS IN MAROKKO',
+        title: 'Einzigartige & Exklusive Erlebnisse',
+        subtitle: 'Von der Ruhe stilvoller Wüstencamps bis hin zu unserem VIP-Fahrservice gestalten wir Ihre unvergesslichsten Momente.'
+      },
+      pt: {
+        eyebrow: 'A ARTE DE VIAJAR EM MARROCOS',
+        title: 'Experiências Únicas e Refinadas',
+        subtitle: 'Da serenidade dos acampamentos no Saara à nossa frota de transporte VIP, cuidamos de cada detalhe para as suas melhores memórias.'
+      },
+      nl: {
+        eyebrow: 'DE KUNST VAN REIZEN IN MAROKKO',
+        title: 'Unieke & Exclusieve Reiservaringen',
+        subtitle: 'Van de rust in sfeervolle Sahara-kampen tot onze privé VIP-vervoersvloot, wij creëren uw mooiste herinneringen.'
       }
     };
     return d[lang] || d['fr'];

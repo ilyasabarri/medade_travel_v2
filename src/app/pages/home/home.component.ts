@@ -62,6 +62,18 @@ export class HomeComponent implements OnInit {
     return this.langService.contact;
   }
 
+  get hero() {
+    return this.langService.hero;
+  }
+
+  get circuitsSection() {
+    return this.langService.circuitsSection;
+  }
+
+  get experiencesSection() {
+    return this.langService.experiencesSection;
+  }
+
   syncFormDefaults() {
     const choices = this.contactData.travelChoices;
     if (choices && choices.length > 0 && !this.bookingForm.serviceType) {
