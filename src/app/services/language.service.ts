@@ -375,73 +375,73 @@ export class LanguageService {
     const d: Record<Language, any> = {
       fr: {
         title: "L'Âme du Maroc, l'Élégance du Voyage",
-        subtitle: "Circuits privatifs sur-mesure au départ de Marrakech, bivouacs de charme sous les étoiles et transport haut de gamme avec chauffeur dédié ou véhicule sans chauffeur dès 450 DH/jour.",
+        subtitle: "Circuits privatifs sur-mesure au départ de Marrakech, bivouacs de charme sous les étoiles et transport haut de gamme avec chauffeur dédié ou véhicule sans chauffeur sur devis direct.",
         badges: {
           fairPrice: 'Tarifs directs sans intermédiaire',
-          transport: 'Transport dès 450 DH / jour',
+          transport: 'Devis direct sur WhatsApp',
           support: 'Assistance WhatsApp 24/7'
         }
       },
       en: {
         title: "The Soul of Morocco, The Elegance of Travel",
-        subtitle: "Bespoke private journeys departing from Marrakech, luxury starlit desert camps, and premium transport with dedicated chauffeur or self-drive vehicle from 450 MAD/day.",
+        subtitle: "Bespoke private journeys departing from Marrakech, luxury starlit desert camps, and premium transport with dedicated chauffeur or self-drive vehicle on direct quote.",
         badges: {
           fairPrice: 'Direct local rates, no middleman',
-          transport: 'Transport from 450 MAD / day',
+          transport: 'Direct quotes on WhatsApp',
           support: '24/7 WhatsApp assistance'
         }
       },
       ar: {
         title: "روح المغرب الأصيل وسحر السفر الراقي",
-        subtitle: "جولات سياحية خاصة انطلاقاً من مراكش، مخيمات فاخرة تحت أضواء النجوم، ونقل سياحي راقٍ مع سائق خاص أو كراء سيارات ابتداءً من 450 درهم/اليوم بدون وسيط.",
+        subtitle: "جولات سياحية خاصة انطلاقاً من مراكش، مخيمات فاخرة تحت أضواء النجوم، ونقل سياحي راقٍ مع سائق خاص أو كراء سيارات حسب الطلب وبسعر مباشر بدون وسيط.",
         badges: {
           fairPrice: 'سعر محلي مباشر بدون وسيط',
-          transport: 'نقل سياحي ابتداءً من 450 درهم/يوم',
+          transport: 'طلب عرض سعر مباشر عبر واتساب',
           support: 'دعم واستجابة واتساب 24/7'
         }
       },
       es: {
         title: "El Alma de Marruecos, la Elegancia del Viaje",
-        subtitle: "Circuitos privados a medida desde Marrakech, campamentos bajo las estrellas y transporte VIP con chófer dedicado o alquiler sin conductor desde 450 MAD/día.",
+        subtitle: "Circuitos privados a medida desde Marrakech, campamentos bajo las estrellas y transporte VIP con chófer dedicado o alquiler sin conductor bajo presupuesto directo.",
         badges: {
           fairPrice: 'Precios directos sin intermediarios',
-          transport: 'Transporte desde 450 MAD / día',
+          transport: 'Presupuesto directo en WhatsApp',
           support: 'Asistencia WhatsApp 24/7'
         }
       },
       it: {
         title: "L'Anima del Marocco, l'Eleganza del Viaggio",
-        subtitle: "Tour privati su misura con partenza da Marrakech, bivacchi di lusso sotto le stelle e veicoli recenti con autista o a noleggio da 450 MAD/giorno.",
+        subtitle: "Tour privati su misura con partenza da Marrakech, bivacchi di lusso sotto le stelle e veicoli recenti con autista o a noleggio su preventivo diretto.",
         badges: {
           fairPrice: 'Tariffe dirette senza intermediari',
-          transport: 'Trasporto da 450 MAD / giorno',
+          transport: 'Preventivo diretto su WhatsApp',
           support: 'Assistenza WhatsApp 24/7'
         }
       },
       de: {
         title: "Die Seele Marokkos, die Eleganz des Reisens",
-        subtitle: "Maßgeschneiderte private Rundreisen ab Marrakesch, Wüstencamps unterm Sternenhimmel und VIP-Transport mit Chauffeur oder Mietwagen ab 450 MAD/Tag.",
+        subtitle: "Maßgeschneiderte private Rundreisen ab Marrakesch, Wüstencamps unterm Sternenhimmel und VIP-Transport mit Chauffeur oder Mietwagen auf direkte Anfrage.",
         badges: {
           fairPrice: 'Direktpreise ohne Zwischenhändler',
-          transport: 'Transport ab 450 MAD / Tag',
+          transport: 'Direktes Angebot per WhatsApp',
           support: '24/7 WhatsApp-Betreuung'
         }
       },
       pt: {
         title: "A Alma de Marrocos, a Elegância da Viagem",
-        subtitle: "Circuitos privados a partir de Marraquexe, acampamentos de charme sob as estrelas e transporte VIP com motorista dedicado ou aluguer desde 450 MAD/dia.",
+        subtitle: "Circuitos privados a partir de Marraquexe, acampamentos de charme sob as estrelas e transporte VIP com motorista dedicado ou aluguer sob orçamento direto.",
         badges: {
           fairPrice: 'Preços diretos sem intermediários',
-          transport: 'Transporte a partir de 450 MAD / dia',
+          transport: 'Orçamento direto no WhatsApp',
           support: 'Apoio WhatsApp 24/7'
         }
       },
       nl: {
         title: "De Ziel van Marokko, de Elegantie van het Reizen",
-        subtitle: "Privérondreizen op maat vanuit Marrakech, luxe woestijnkampen onder de sterren en modern vervoer met privéchauffeur of autoverhuur vanaf 450 MAD/dag.",
+        subtitle: "Privérondreizen op maat vanuit Marrakech, luxe woestijnkampen onder de sterren en modern vervoer met privéchauffeur of autoverhuur op directe offerte.",
         badges: {
           fairPrice: 'Directe tarieven zonder tussenpersonen',
-          transport: 'Vervoer vanaf 450 MAD / dag',
+          transport: 'Directe offerte via WhatsApp',
           support: '24/7 WhatsApp-ondersteuning'
         }
       }
@@ -627,7 +627,7 @@ export class LanguageService {
           badge: 'TRANSPORT & MOBILITÉ',
           title: 'Chauffeurs Privés & Flotte de Prestige',
           description: 'Voyagez à travers le Maroc avec sérénité grâce à notre flotte de Mercedes V-Class spacieux, SUV et 4x4 tout-terrain récents. Nos chauffeurs professionnels, courtois et multilingues, s’adaptent à vos horaires et vos envies d’arrêts photos spontanés.',
-          perks: ['Véhicules récents, climatisés et désinfectés', 'Chauffeurs agréés et bilingues à votre écoute', 'Formule location sans chauffeur dès 450 DH/jour'],
+          perks: ['Véhicules récents, climatisés et désinfectés', 'Chauffeurs agréés et bilingues à votre écoute', 'Formule location sans chauffeur disponible sur devis'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'Voir nos options de transport',
           ctaLink: '#transport'
@@ -659,7 +659,7 @@ export class LanguageService {
           badge: 'TRANSPORT & MOBILITY',
           title: 'Private Chauffeurs & Modern Fleet',
           description: 'Travel across Morocco with peace of mind in our spacious Mercedes V-Class vans, premium SUVs, and 4x4 vehicles. Our experienced, bilingual drivers cater entirely to your pace, comfort, and spontaneous photo stops.',
-          perks: ['Recent, fully air-conditioned vehicles', 'Certified bilingual professional drivers', 'Self-drive rental option from 450 MAD/day'],
+          perks: ['Recent, fully air-conditioned vehicles', 'Certified bilingual professional drivers', 'Self-drive rental option available on quote'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'View transport options',
           ctaLink: '#transport'
@@ -691,7 +691,7 @@ export class LanguageService {
           badge: 'النقل والراحة',
           title: 'سائقون خاصون وأسطول سيارات حديث',
           description: 'سافروا في أرجاء المغرب بكل راحة وأمان مع أسطول سيارات مرسيدس في-كلاس، وسيارات دفع رباعي 4x4 حديثة ومكيفة. سائقونا المحترفون والمطلعون على مسارات المغرب رهن إشارتكم في كل خطوة.',
-          perks: ['سيارات حديثة، نظيفة ومكيفة بالكامل', 'سائقون معتمدون وذوو خبرة واسعة', 'خيار كراء سيارة بدون سائق ابتداءً من 450 درهم/يوم'],
+          perks: ['سيارات حديثة، نظيفة ومكيفة بالكامل', 'سائقون معتمدون وذوو خبرة واسعة', 'خيار كراء سيارة بدون سائق متاح حسب الطلب'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'اطلعوا على خيارات النقل',
           ctaLink: '#transport'
@@ -723,7 +723,7 @@ export class LanguageService {
           badge: 'TRANSPORTE Y MOVILIDAD',
           title: 'Chóferes Privados y Flota de Prestigio',
           description: 'Viaje por Marruecos con total tranquilidad en nuestras furgonetas Mercedes V-Class y 4x4 modernos. Chóferes bilingües y experimentados que se adaptan a su ritmo.',
-          perks: ['Vehículos modernos y climatizados', 'Chóferes profesionales a su disposición', 'Alquiler sin chófer desde 450 MAD/día'],
+          perks: ['Vehículos modernos y climatizados', 'Chóferes profesionales a su disposición', 'Alquiler sin chófer disponible bajo presupuesto'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'Ver opciones de transporte',
           ctaLink: '#transport'
@@ -755,7 +755,7 @@ export class LanguageService {
           badge: 'TRASPORTO E MOBILITÀ',
           title: 'Autisti Privati e Flotta di Pregio',
           description: 'Esplorate il Marocco con la massima serenità a bordo di Mercedes V-Class e 4x4 recenti. Autisti professionisti bilingui sempre disponibili per il vostro comfort.',
-          perks: ['Veicoli recenti e climatizzati', 'Autisti esperti al vostro servizio', 'Noleggio auto senza conducente da 450 MAD/giorno'],
+          perks: ['Veicoli recenti e climatizzati', 'Autisti esperti al vostro servizio', 'Noleggio auto senza conducente su preventivo'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'Vedi opzioni di trasporto',
           ctaLink: '#transport'
@@ -787,7 +787,7 @@ export class LanguageService {
           badge: 'TRANSPORT & MOBILITÄT',
           title: 'Private Chauffeure & Moderner Fuhrpark',
           description: 'Reisen Sie entspannt durch Marokko in geräumigen Mercedes V-Klasse Vans und modernen 4x4 Geländewagen. Unsere erfahrenen Chauffeure richten sich ganz nach Ihren Wünschen.',
-          perks: ['Neueste klimatisierte Fahrzeuge', 'Erfahrene mehrsprachige Chauffeure', 'Mietwagen ohne Fahrer ab 450 MAD/Tag'],
+          perks: ['Neueste klimatisierte Fahrzeuge', 'Erfahrene mehrsprachige Chauffeure', 'Mietwagen ohne Fahrer auf Anfrage'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'Transportoptionen ansehen',
           ctaLink: '#transport'
@@ -819,7 +819,7 @@ export class LanguageService {
           badge: 'TRANSPORTE E MOBILIDADE',
           title: 'Motoristas Privados & Frota de Prestígio',
           description: 'Viaje por Marrocos com total conforto em carrinhas Mercedes V-Class e viaturas 4x4 recentes. Motoristas profissionais bilíngues inteiramente dedicados ao seu bem-estar.',
-          perks: ['Viaturas recentes e climatizadas', 'Motoristas qualificados e pontuais', 'Aluguer sem motorista desde 450 MAD/dia'],
+          perks: ['Viaturas recentes e climatizadas', 'Motoristas qualificados e pontuais', 'Aluguer sem motorista sob orçamento'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'Ver opções de transporte',
           ctaLink: '#transport'
@@ -851,7 +851,7 @@ export class LanguageService {
           badge: 'VERVOER & MOBILITEIT',
           title: 'Privéchauffeurs & Luxe Wagenpark',
           description: 'Reis zorgeloos door Marokko in onze ruime Mercedes V-Klasse busjes en moderne 4x4 terreinwagens met ervaren meertalige chauffeurs.',
-          perks: ['Moderne voertuigen met airconditioning', 'Gecertificeerde privéchauffeurs', 'Autohuur zonder chauffeur vanaf 450 MAD/dag'],
+          perks: ['Moderne voertuigen met airconditioning', 'Gecertificeerde privéchauffeurs', 'Autohuur zonder chauffeur op aanvraag'],
           imageUrl: 'assets/taghazout-morocco.jpeg',
           ctaText: 'Bekijk vervoersopties',
           ctaLink: '#transport'
@@ -881,9 +881,7 @@ export class LanguageService {
         subtitle: 'Sillonnez le Maroc en toute liberté au volant d’un véhicule récent ou profitez de l’accompagnement sur-mesure d’un chauffeur dédié.',
         card1: {
           tag: 'Autonomie Complète',
-          from: 'À partir de',
-          price: '450',
-          unit: 'DH / Jour',
+          from: 'Autonomie & Liberté', price: 'Sur Devis', unit: 'Direct Local',
           title: 'Location Sans Chauffeur',
           desc: 'Flotte de citadines, berlines et SUV récents et parfaitement entretenus avec climatisation pour découvrir le Maroc à votre propre rythme.',
           perks: ['Véhicules récents et climatisés', 'Prise en charge à l’aéroport ou à votre riad', 'Assistance locale 24/7 & kilométrage adapté', 'Contrat clair et sans frais cachés'],
@@ -906,9 +904,7 @@ export class LanguageService {
         subtitle: 'Explore Morocco with total independence behind the wheel or relax with our dedicated private bilingual chauffeur service.',
         card1: {
           tag: 'Total Independence',
-          from: 'Starting from',
-          price: '450',
-          unit: 'MAD / Day',
+          from: 'Freedom & Flexibility', price: 'On Quote', unit: 'Direct Local',
           title: 'Self-Drive Vehicle Rental',
           desc: 'Modern fleet of air-conditioned city cars and comfortable SUVs to explore Morocco at your personal pace.',
           perks: ['Recent, fully air-conditioned vehicles', 'Airport or hotel/riad pick-up & return', '24/7 local assistance & flexible mileage', 'Transparent agreements with zero hidden fees'],
@@ -931,9 +927,7 @@ export class LanguageService {
         subtitle: 'اكتشفوا المغرب بحرية تامة بقيادة سيارة حديثة أو تمتعوا بأعلى درجات الراحة مع سائق خاص ومحترف رهن إشارتكم.',
         card1: {
           tag: 'حرية واستقلالية',
-          from: 'ابتداءً من',
-          price: '450',
-          unit: 'درهم / اليوم',
+          from: 'حرية واستقلالية', price: 'حسب الطلب', unit: 'سعر مباشر',
           title: 'كراء سيارة بدون سائق',
           desc: 'أسطول سيارات سياحية وسيارات دفع رباعي حديثة ومكيفة تتيح لكم استكشاف المغرب حسب وتيرتكم الخاصة.',
           perks: ['سيارات حديثة ومكيفة بالكامل', 'تسليم واستلام بالمطار أو بمكان الإقامة', 'مساعدة محلية 24/7 وكيلومترات مريحة', 'معاملات واضحة وشفافة بدون مصاريف مخفية'],
@@ -956,9 +950,7 @@ export class LanguageService {
         subtitle: 'Recorra Marruecos con total libertad al volante o relájese con el acompañamiento de nuestros chóferes privados profesionales.',
         card1: {
           tag: 'Total Autonomía',
-          from: 'A partir de',
-          price: '450',
-          unit: 'MAD / Día',
+          from: 'Autonomía y Libertad', price: 'Bajo Presupuesto', unit: 'Directo Local',
           title: 'Alquiler Sin Chófer',
           desc: 'Flota de turismos y SUV modernos y climatizados para explorar Marruecos a su propio ritmo.',
           perks: ['Vehículos modernos y climatizados', 'Entrega en el aeropuerto o su riad', 'Asistencia local 24/7', 'Tarifas claras sin gastos ocultos'],
@@ -981,9 +973,7 @@ export class LanguageService {
         subtitle: 'Viaggiate in libertà alla guida di un veicolo recente o affidatevi al servizio su misura di un autista dedicato.',
         card1: {
           tag: 'Autonomia Completa',
-          from: 'A partire da',
-          price: '450',
-          unit: 'MAD / Giorno',
+          from: 'Autonomia & Libertà', price: 'Su Preventivo', unit: 'Diretto Locale',
           title: 'Noleggio Senza Conducente',
           desc: 'Flotta di berline e SUV recenti e climatizzati per visitare il Marocco secondo i vostri ritmi.',
           perks: ['Veicoli recenti con aria condizionata', 'Ritiro in aeroporto o al vostro riad', 'Assistenza locale 24/7', 'Condizioni chiare e trasparenti'],
@@ -1006,9 +996,7 @@ export class LanguageService {
         subtitle: 'Reisen Sie völlig unabhängig im Mietwagen oder genießen Sie die Vorzüge eines privaten Chauffeurs.',
         card1: {
           tag: 'Volle Unabhängigkeit',
-          from: 'Ab',
-          price: '450',
-          unit: 'MAD / Tag',
+          from: 'Freiheit & Flexibilität', price: 'Auf Anfrage', unit: 'Direkt Vor Ort',
           title: 'Mietwagen ohne Fahrer',
           desc: 'Moderne, klimatisierte Pkws und SUVs, um Marokko im eigenen Tempo zu entdecken.',
           perks: ['Neueste Fahrzeuge mit Klimaanlage', 'Abholung am Flughafen oder Riad', '24/7 Pannenhilfe vor Ort', 'Transparente Verträge ohne Zusatzkosten'],
@@ -1031,9 +1019,7 @@ export class LanguageService {
         subtitle: 'Viaje em autonomia ao volante de uma viatura recente ou relaxe com o acompanhamento de um motorista privado.',
         card1: {
           tag: 'Autonomia Total',
-          from: 'A partir de',
-          price: '450',
-          unit: 'MAD / Dia',
+          from: 'Autonomia & Liberdade', price: 'Sob Orçamento', unit: 'Direto Local',
           title: 'Aluguer Sem Motorista',
           desc: 'Viaturas ligeiras e SUV climatizados para explorar Marrocos ao seu próprio ritmo.',
           perks: ['Veículos recentes e climatizados', 'Recolha no aeroporto ou no seu riad', 'Assistência local 24/7', 'Contratos claros sem taxas ocultas'],
@@ -1056,9 +1042,7 @@ export class LanguageService {
         subtitle: 'Ontdek Marokko in alle vrijheid achter het stuur of geniet van de service van een ervaren privéchauffeur.',
         card1: {
           tag: 'Volledige Vrijheid',
-          from: 'Vanaf',
-          price: '450',
-          unit: 'MAD / Dag',
+          from: 'Vrijheid & Zelfstandigheid', price: 'Op Aanvraag', unit: 'Direct Lokaal',
           title: 'Autohuur Zonder Chauffeur',
           desc: 'Moderne vloot van stadsauto\'s en comfortabele SUV\'s om Marokko op eigen tempo te verkennen.',
           perks: ['Recente auto\'s met airconditioning', 'Ophaalservice op vliegveld of bij riad', '24/7 pechhulp & flexibele kilometers', 'Heldere voorwaarden zonder verborgen kosten'],
@@ -1112,7 +1096,7 @@ export class LanguageService {
         transportLabel: 'Formule de transport préférée',
         transportOptions: [
           { val: 'Avec chauffeur privé dédié (Service VIP)', label: 'Avec chauffeur privé dédié (Service VIP)' },
-          { val: 'Location sans chauffeur (dès 450 DH/jour)', label: 'Location sans chauffeur (dès 450 DH/jour)' }
+          { val: 'Location sans chauffeur (sur devis)', label: 'Location sans chauffeur (sur devis)' }
         ],
         notesLabel: 'Précisions ou demandes particulières',
         notesPlaceholder: 'ex: Nom de votre riad, enfants à bord, célébration particulière...',
@@ -1157,7 +1141,7 @@ export class LanguageService {
         transportLabel: 'Preferred transport formula',
         transportOptions: [
           { val: 'With dedicated private chauffeur (VIP Service)', label: 'With dedicated private chauffeur (VIP Service)' },
-          { val: 'Self-drive rental (from 450 MAD/day)', label: 'Self-drive rental (from 450 MAD/day)' }
+          { val: 'Self-drive rental (on quote)', label: 'Self-drive rental (on quote)' }
         ],
         notesLabel: 'Notes or special requests',
         notesPlaceholder: 'e.g. Hotel/riad name, dietary needs, birthday celebration...',
@@ -1202,7 +1186,7 @@ export class LanguageService {
         transportLabel: 'خيار النقل المفضل',
         transportOptions: [
           { val: 'مع سائق خاص مخصص (خدمة VIP)', label: 'مع سائق خاص مخصص (خدمة VIP)' },
-          { val: 'كراء سيارة بدون سائق (ابتداءً من 450 درهم/يوم)', label: 'كراء سيارة بدون سائق (ابتداءً من 450 درهم/يوم)' }
+          { val: 'كراء سيارة بدون سائق (حسب الطلب)', label: 'كراء سيارة بدون سائق (حسب الطلب)' }
         ],
         notesLabel: 'ملاحظات أو طلبات خاصة',
         notesPlaceholder: 'مثال: اسم الرياض أو الفندق، أطفال، مناسبة خاصة...',
@@ -1247,7 +1231,7 @@ export class LanguageService {
         transportLabel: 'Modalidad de transporte',
         transportOptions: [
           { val: 'Con chófer privado dedicado (Servicio VIP)', label: 'Con chófer privado dedicado (Servicio VIP)' },
-          { val: 'Alquiler sin chófer (desde 450 MAD/día)', label: 'Alquiler sin chófer (desde 450 MAD/día)' }
+          { val: 'Alquiler sin chófer (bajo presupuesto)', label: 'Alquiler sin chófer (bajo presupuesto)' }
         ],
         notesLabel: 'Comentarios o peticiones especiales',
         notesPlaceholder: 'ej: Nombre del riad, celebración de cumpleaños...',
@@ -1292,7 +1276,7 @@ export class LanguageService {
         transportLabel: 'Formula di trasporto preferita',
         transportOptions: [
           { val: 'Con autista privato dedicato (Servizio VIP)', label: 'Con autista privato dedicato (Servizio VIP)' },
-          { val: 'Noleggio senza conducente (da 450 MAD/giorno)', label: 'Noleggio senza conducente (da 450 MAD/giorno)' }
+          { val: 'Noleggio senza conducente (su preventivo)', label: 'Noleggio senza conducente (su preventivo)' }
         ],
         notesLabel: 'Note o richieste particolari',
         notesPlaceholder: 'es: Nome del riad, esigenze alimentari...',
@@ -1337,7 +1321,7 @@ export class LanguageService {
         transportLabel: 'Bevorzugter Transport',
         transportOptions: [
           { val: 'Mit persönlichem Privatchauffeur (VIP-Service)', label: 'Mit persönlichem Privatchauffeur (VIP-Service)' },
-          { val: 'Mietwagen ohne Fahrer (ab 450 MAD/Tag)', label: 'Mietwagen ohne Fahrer (ab 450 MAD/Tag)' }
+          { val: 'Mietwagen ohne Fahrer (auf Anfrage)', label: 'Mietwagen ohne Fahrer (auf Anfrage)' }
         ],
         notesLabel: 'Besondere Wünsche oder Hinweise',
         notesPlaceholder: 'z.B. Name Ihres Riads, besondere Anlässe...',
@@ -1382,7 +1366,7 @@ export class LanguageService {
         transportLabel: 'Opção de transporte preferida',
         transportOptions: [
           { val: 'Com motorista privado dedicado (Serviço VIP)', label: 'Com motorista privado dedicado (Serviço VIP)' },
-          { val: 'Aluguer sem motorista (desde 450 MAD/dia)', label: 'Aluguer sem motorista (desde 450 MAD/dia)' }
+          { val: 'Aluguer sem motorista (sob orçamento)', label: 'Aluguer sem motorista (sob orçamento)' }
         ],
         notesLabel: 'Notas ou pedidos especiais',
         notesPlaceholder: 'ex: Nome do riad, celebração especial...',
@@ -1427,7 +1411,7 @@ export class LanguageService {
         transportLabel: 'Voorkeur voor vervoer',
         transportOptions: [
           { val: 'Met toegewijde privéchauffeur (VIP-service)', label: 'Met toegewijde privéchauffeur (VIP-service)' },
-          { val: 'Huurauto zonder chauffeur (vanaf 450 MAD/dag)', label: 'Huurauto zonder chauffeur (vanaf 450 MAD/dag)' }
+          { val: 'Huurauto zonder chauffeur (op aanvraag)', label: 'Huurauto zonder chauffeur (op aanvraag)' }
         ],
         notesLabel: 'Opmerkingen of speciale wensen',
         notesPlaceholder: 'bijv. Naam van uw riad, verjaardag...',

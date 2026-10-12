@@ -158,7 +158,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
   fr: {
     heroTag: 'PROGRAMMES & CIRCUITS SUR MESURE AU MAROC',
     heroTitle: 'Nos Nouveaux Circuits & Expéditions',
-    heroSubtitle: 'Du Haut-Atlas à la montagne Ayachi, des dunes dorées de Merzouga aux côtes atlantiques d\'Essaouira et Taghazout, jusqu\'aux fééries nocturnes d\'Agafay et d\'Ouarzazate. Formules avec chauffeur privé dédié ou véhicule sans chauffeur dès 450 DH/jour.',
+    heroSubtitle: 'Du Haut-Atlas à la montagne Ayachi, des dunes dorées de Merzouga aux côtes atlantiques d\'Essaouira et Taghazout, jusqu\'aux fééries nocturnes d\'Agafay et d\'Ouarzazate. Formules avec chauffeur privé dédié ou véhicule sans chauffeur sur devis direct.',
     rythmeLabel: 'Rythme :',
     transportBadge: 'TRANSPORT FLEXIBLE',
     inclusionsTitle: 'Inclus dans ce programme :',
@@ -176,7 +176,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
     card1: {
       tag: 'Autonomie Complète',
       from: 'À partir de',
-      price: '450',
+      price: 'Sur Devis',
       unit: 'DHS / Jour',
       title: 'Location Sans Chauffeur',
       desc: 'Idéal pour les voyageurs autonomes souhaitant sillonner le Maroc en toute liberté. Flotte de véhicules récents, citadines ou SUV tout confort.',
@@ -187,7 +187,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
         'Formalités simples et transparentes'
       ],
       btn: 'Réserver Sans Chauffeur',
-      waMsg: 'Bonjour Medade Travel, je souhaite louer un véhicule sans chauffeur à partir de 450 DH/jour. Quelles sont vos disponibilités ?'
+      waMsg: 'Bonjour Medade Travel, je souhaite louer un véhicule sans chauffeur sur devis. Quelles sont vos disponibilités ?'
     },
     card2: {
       tag: 'Service VIP Recommandé',
@@ -211,13 +211,13 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
       { accent: '01', title: 'Véhicules Récents & Confortables', desc: 'Minivans Mercedes, 4x4 tout-terrain et véhicules de location récents et parfaitement entretenus avec climatisation.' },
       { accent: '02', title: 'Riads, Hôtels & Bivouacs Sélectionnés', desc: 'De Midelt à Merzouga en passant par Asni, Agafay, Essaouira et Ouarzazate, chaque étape privilégie authenticité et propreté.' },
       { accent: '03', title: 'Chauffeurs à Votre Entière Disposition', desc: 'Disponibilité totale de nos chauffeurs pour s\'adapter à votre rythme, vos envies d\'arrêts et vos découvertes spontanées.' },
-      { accent: '04', title: 'Tarifs Directs dès 450 DH/j', desc: 'Des tarifs directs d\'agence marocaine sans commission intermédiaire, pour un voyage serein et économique.' }
+      { accent: '04', title: 'Tarifs Directs sur devis direct', desc: 'Des tarifs directs d\'agence marocaine sans commission intermédiaire, pour un voyage serein et économique.' }
     ]
   },
   en: {
     heroTag: 'CUSTOM TAILORED TOURS & EXPEDITIONS IN MOROCCO',
     heroTitle: 'Our Signature Tours & Private Expeditions',
-    heroSubtitle: 'From the High Atlas to Mount Ayachi, from the golden dunes of Merzouga to the Atlantic shores of Essaouira and Taghazout, to magical evenings in Agafay and Ouarzazate. Flexible transport options: self-drive from 450 MAD/day or dedicated private chauffeur.',
+    heroSubtitle: 'From the High Atlas to Mount Ayachi, from the golden dunes of Merzouga to the Atlantic shores of Essaouira and Taghazout, to magical evenings in Agafay and Ouarzazate. Flexible transport options: self-drive on direct quote or dedicated private chauffeur.',
     rythmeLabel: 'Pace:',
     transportBadge: 'FLEXIBLE TRANSPORT',
     inclusionsTitle: 'Included in this package:',
@@ -235,7 +235,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
     card1: {
       tag: 'Total Independence',
       from: 'Starting from',
-      price: '450',
+      price: 'Sur Devis',
       unit: 'MAD / Day',
       title: 'Self-Drive Vehicle Rental',
       desc: 'Ideal for independent travellers looking to explore Morocco at their own rhythm. Modern fleet of air-conditioned city cars and comfortable SUVs.',
@@ -246,7 +246,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
         'Transparent contracts with zero hidden fees'
       ],
       btn: 'Book Self-Drive Rental',
-      waMsg: 'Hello Medade Travel, I would like to book a self-drive vehicle starting from 450 MAD/day. What are your current availabilities?'
+      waMsg: 'Hello Medade Travel, I would like to book a self-drive vehicle starting on direct quote. What are your current availabilities?'
     },
     card2: {
       tag: 'Recommended VIP Service',
@@ -270,13 +270,13 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
       { accent: '01', title: 'Recent & Comfortable Fleet', desc: 'Mercedes minivans, rugged 4x4s, and well-maintained modern rental vehicles with premium air conditioning.' },
       { accent: '02', title: 'Handpicked Riads & Desert Camps', desc: 'From Midelt to Merzouga, Asni, Agafay, Essaouira, and Ouarzazate, each accommodation prioritizes authentic charm and cleanliness.' },
       { accent: '03', title: 'Chauffeurs at Your Complete Service', desc: 'Total driver availability tailored to your natural pace, spontaneous photo pauses, and personal discovery wishes.' },
-      { accent: '04', title: 'Direct Rates from 450 MAD/day', desc: 'Local Moroccan agency direct pricing without middlemen or OTA commissions for a smooth and rewarding trip.' }
+      { accent: '04', title: 'Direct Rates on direct quote', desc: 'Local Moroccan agency direct pricing without middlemen or OTA commissions for a smooth and rewarding trip.' }
     ]
   },
   ar: {
     heroTag: 'برامج وجولات سياحية مخصصة في المغرب',
     heroTitle: 'جولاتنا ورحلاتنا السياحية الاستثنائية',
-    heroSubtitle: 'من قمم الأطلس الكبير إلى جبل العياشي، ومن كثبان مرزوكة الذهبية إلى شواطئ الصويرة وتغازوت، وصولاً إلى ليالي أغفاي وورزازات الساحرة. مع خيارات نقل مرنة: كراء سيارة بدون سائق ابتداءً من 450 درهم/اليوم أو مع سائق خاص رهن إشارتكم.',
+    heroSubtitle: 'من قمم الأطلس الكبير إلى جبل العياشي، ومن كثبان مرزوكة الذهبية إلى شواطئ الصويرة وتغازوت، وصولاً إلى ليالي أغفاي وورزازات الساحرة. مع خيارات نقل مرنة: كراء سيارة بدون سائق حسب الطلب بدون وسيط أو مع سائق خاص رهن إشارتكم.',
     rythmeLabel: 'طبيعة الرحلة:',
     transportBadge: 'نقل مرن حسب رغبتكم',
     inclusionsTitle: 'الخدمات المشمولة في هذا البرنامج:',
@@ -294,7 +294,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
     card1: {
       tag: 'استقلالية تامة',
       from: 'ابتداءً من',
-      price: '450',
+      price: 'Sur Devis',
       unit: 'درهم / اليوم',
       title: 'كراء سيارة بدون سائق',
       desc: 'الخيار الأمثل للمسافرين الراغبين في اكتشاف مدن وطبيعة المغرب بكل حرية. أسطول سيارات حديثة واقتصادية وسيارات دفع رباعي مريحة.',
@@ -305,7 +305,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
         'إجراءات حجز بسيطة وشفافة وبدون تعقيدات'
       ],
       btn: 'حجز سيارة بدون سائق',
-      waMsg: 'السلام عليكم مداد ترافيل، أود كراء سيارة بدون سائق ابتداءً من 450 درهم في اليوم. ما هي السيارات المتاحة لديكم؟'
+      waMsg: 'السلام عليكم مداد ترافيل، أود كراء سيارة بدون سائق حسب الطلب في اليوم. ما هي السيارات المتاحة لديكم؟'
     },
     card2: {
       tag: 'خدمة VIP ممتازة',
@@ -329,7 +329,7 @@ export const CIRCUITS_PAGE_DATA: Record<string, CircuitsPageData> = {
       { accent: '01', title: 'أسطول سيارات حديث ومريح', desc: 'ميني فان مرسيدس، سيارات 4x4 وسيارات كراء حديثة ومكيفة تخضع لصيانة دورية صارمة.' },
       { accent: '02', title: 'رياضات وفنادق ومخيمات مختارة بعناية', desc: 'من ميدلت إلى مرزوكة وأسني وأغفاي والصويرة وورزازات، نضمن لكم إقامة تجمع بين الأصالة والنظافة التامة.' },
       { accent: '03', title: 'سائقون رهن إشارتكم طوال الوقت', desc: 'مرونة تامة لتلبية رغباتكم وتكييف التوقفات واستكشاف المواقع حسب راحتكم.' },
-      { accent: '04', title: 'أسعار مباشرة تبدأ من 450 درهم/يوم', desc: 'أسعار وكالة مغربية محلية مباشرة بدون أي وسيط لضمان رحلة اقتصادية ومريحة.' }
+      { accent: '04', title: 'أسعار مباشرة تبدأ من Sur Devis/يوم', desc: 'أسعار وكالة مغربية محلية مباشرة بدون أي وسيط لضمان رحلة اقتصادية ومريحة.' }
     ]
   }
 };
@@ -414,7 +414,7 @@ export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
     labelTransport: 'Formule de Transport au Choix',
     transportOptions: [
       { val: 'Avec chauffeur privé à entière disposition', label: 'Avec chauffeur privé à votre entière disposition' },
-      { val: 'Sans chauffeur (location dès 450 DH / jour)', label: 'Sans chauffeur (location de véhicule à partir de 450 DH / jour)' }
+      { val: 'Sans chauffeur (location sur devis)', label: 'Sans chauffeur (location de véhicule à partir de Sur Devis)' }
     ],
     labelNotes: 'Notes ou Précisions Particulières',
     placeholderNotes: 'Ex: Nom de votre riad, célébration d\'un événement, souhaits particuliers...',
@@ -435,7 +435,7 @@ export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
     faqList: [
       {
         question: 'Quelles sont vos options de transport pour les circuits ?',
-        answer: 'Nous proposons deux formules adaptées à vos envies : la location de véhicule sans chauffeur à partir de 450 DH (MAD) par jour pour une totale autonomie, ou la formule avec nos chauffeurs privés bilingues et professionnels à votre entière disposition tout au long de votre périple.',
+        answer: 'Nous proposons deux formules adaptées à vos envies : la location de véhicule sans chauffeur à partir de Sur Devis (MAD) par jour pour une totale autonomie, ou la formule avec nos chauffeurs privés bilingues et professionnels à votre entière disposition tout au long de votre périple.',
         open: true
       },
       {
@@ -524,7 +524,7 @@ export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
     labelTransport: 'Preferred Transport Option',
     transportOptions: [
       { val: 'With dedicated private chauffeur at full disposal', label: 'With dedicated private chauffeur at full disposal' },
-      { val: 'Self-drive rental (from 450 MAD / day)', label: 'Self-drive rental (modern vehicle from 450 MAD / day)' }
+      { val: 'Self-drive rental (on quote)', label: 'Self-drive rental (modern vehicle on quote)' }
     ],
     labelNotes: 'Special Requests & Notes',
     placeholderNotes: 'e.g. Riad name, dietary requirements, birthday celebration...',
@@ -545,7 +545,7 @@ export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
     faqList: [
       {
         question: 'What are your transport options for tours?',
-        answer: 'We provide two convenient formulas: self-drive rental starting from 450 MAD per day for complete freedom, or a private vehicle with an experienced bilingual driver at your disposal throughout your trip.',
+        answer: 'We provide two convenient formulas: self-drive rental starting on quote per day for complete freedom, or a private vehicle with an experienced bilingual driver at your disposal throughout your trip.',
         open: true
       },
       {
@@ -634,7 +634,7 @@ export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
     labelTransport: 'صيغة النقل المفضلة',
     transportOptions: [
       { val: 'مع سائق خاص رهن الإشارة طوال الرحلة', label: 'مع سائق خاص مخصص رهن إشارتكم طوال الرحلة' },
-      { val: 'بدون سائق (كراء سيارة ابتداءً من 450 درهم/يوم)', label: 'بدون سائق (كراء سيارة حديثة ابتداءً من 450 درهم / اليوم)' }
+      { val: 'بدون سائق (كراء سيارة حسب الطلب/يوم)', label: 'بدون سائق (كراء سيارة حديثة حسب الطلب)' }
     ],
     labelNotes: 'ملاحظات أو طلبات خاصة',
     placeholderNotes: 'مثال: اسم الرياض، مناسبة عيد ميلاد، تفضيلات خاصة...',
@@ -655,7 +655,7 @@ export const CONTACT_PAGE_DATA: Record<string, ContactPageData> = {
     faqList: [
       {
         question: 'ما هي خيارات النقل المتاحة للرحلات والجولات؟',
-        answer: 'نوفر لكم خيارين متميزين: كراء سيارة حديثة بدون سائق ابتداءً من 450 درهم مغربي باليوم لقيادة حرة ومستقلة، أو سيارة مريحة مع سائق خاص محترف رهن إشارتكم طيلة مسار رحلتكم.',
+        answer: 'نوفر لكم خيارين متميزين: كراء سيارة حديثة بدون سائق حسب الطلب مغربي باليوم لقيادة حرة ومستقلة، أو سيارة مريحة مع سائق خاص محترف رهن إشارتكم طيلة مسار رحلتكم.',
         open: true
       },
       {
@@ -703,9 +703,9 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     heroEyebrow: 'CIRCUITS DÉSERT & EXPÉDITIONS MAROC DEPUIS MARRAKECH',
     heroTitle: 'Vivez la Magie du Voyage au Maroc',
     heroTitleEm: 'Votre Aventure Commence Ici !',
-    heroSubtitle: 'Circuits authentiques vers l\'Atlas, Merzouga, Essaouira et Agafay. Chauffeurs locaux certifiés, bivouacs nomades tout confort et formules de transport dès 450 DH/jour sans intermédiaire.',
+    heroSubtitle: 'Circuits authentiques vers l\'Atlas, Merzouga, Essaouira et Agafay. Chauffeurs locaux certifiés, bivouacs nomades tout confort et formules de transport sur devis direct sans intermédiaire.',
     btnExplore: 'Explorer nos Circuits',
-    btnTransport: 'Transport dès 450 DH / Jour',
+    btnTransport: 'Transport sur devis',
     scrollHint: 'Découvrir',
     trustItems: [
       { title: 'Chauffeurs & Guides Locaux', desc: 'Équipe 100% marocaine certifiée' },
@@ -715,7 +715,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     ],
     quickAnswerTag: 'GUIDE RAPIDE VOYAGEUR & CIRCUITS',
     quickAnswerQ: 'Quels sont nos circuits phares au départ de Marrakech ?',
-    quickAnswerA: 'Découvrez le Circuit 1 (Cascades d\'Ouzoud, Montagne Ayachi & Merzouga 4J), le Circuit 2 "Que du Plaisir" (Asni, piscine Agafay, activités & spectacle féérique 3J), et le Circuit 3 "Mer - Terre" (Essaouira, Taghazout, Agadir & Ouarzazate 4J). Transport au choix : véhicule sans chauffeur dès 450 DH/jour ou avec chauffeur privé dédié !',
+    quickAnswerA: 'Découvrez le Circuit 1 (Cascades d\'Ouzoud, Montagne Ayachi & Merzouga 4J), le Circuit 2 "Que du Plaisir" (Asni, piscine Agafay, activités & spectacle féérique 3J), et le Circuit 3 "Mer - Terre" (Essaouira, Taghazout, Agadir & Ouarzazate 4J). Transport au choix : véhicule sans chauffeur sur devis direct ou avec chauffeur privé dédié !',
     catalogTag: 'CATALOGUE DES CIRCUITS DÉPART MARRAKECH',
     catalogTitle: 'Nos Nouveaux Programmes &',
     catalogTitleEm: 'Circuits Recommandés',
@@ -743,7 +743,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
       { label: 'Hébergement Bivouac', val1: 'Optionnel (Dîner spectacle ou glamping)', val2: '1 nuit sous tente nomade', val3: '1 nuit en bivouac de luxe au cœur des dunes' },
       { label: 'Activités Phares', val1: 'Quad, Buggy, Piscine & Spectacle de feu', val2: 'Dromadaires, coucher de soleil, kasbahs', val3: 'Surf des sables, lever de soleil & chants Gnawa' },
       { label: 'Idéal Pour', val1: 'Escapades express, couples, familles', val2: 'Court séjour voulant dormir au désert', val3: 'L\'expérience authentique absolue du Sahara' },
-      { label: 'Tarif Indicatif Direct', val1: 'Dès 450 MAD / pers', val2: 'Dès 650 MAD / pers', val3: 'Dès 950 MAD / pers' }
+      { label: 'Tarif Indicatif Direct', val1: 'Dès Sur Devis / pers', val2: 'Dès 650 MAD / pers', val3: 'Dès 950 MAD / pers' }
     ],
     whyTag: 'POURQUOI CHOISIR MEDADE TRAVEL',
     whyTitle: 'La Différence d\'une Agence',
@@ -762,7 +762,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     expStats: [
       { num: '100%', label: 'Agence Locale Agréée' },
       { num: '4.9 / 5', label: 'Note Moyenne Clients' },
-      { num: '450 DH', label: 'Location dès / Jour' },
+      { num: 'Sur Devis', label: 'Location dès / Jour' },
       { num: '24/7', label: 'Support Voyage Direct' }
     ],
     expBtnWa: 'Organiser Mon Séjour sur WhatsApp',
@@ -781,7 +781,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     faqTitleEm: 'Avant de Partir',
     faqSubtitle: 'Des réponses claires pour préparer votre voyage ou circuit en toute sérénité.',
     faqItems: [
-      { question: 'Quelles sont vos formules de transport pour les circuits ?', answer: 'Nous vous offrons une flexibilité totale : vous pouvez opter pour la location d\'un véhicule récent sans chauffeur à partir de 450 DH (MAD) par jour pour voyager en toute liberté, ou bénéficier d\'un véhicule tout confort avec nos chauffeurs professionnels dédiés à votre entière disposition.', open: true },
+      { question: 'Quelles sont vos formules de transport pour les circuits ?', answer: 'Nous vous offrons une flexibilité totale : vous pouvez opter pour la location d\'un véhicule récent sans chauffeur à partir de Sur Devis (MAD) par jour pour voyager en toute liberté, ou bénéficier d\'un véhicule tout confort avec nos chauffeurs professionnels dédiés à votre entière disposition.', open: true },
       { question: 'Comment se passe la prise en charge à Marrakech ?', answer: 'Pour tous nos circuits, notre chauffeur privé ou navette vient vous chercher directement à votre hôtel ou au point accessible le plus proche de votre riad dans la médina de Marrakech. Nous vous contactons par WhatsApp la veille pour convenir de l\'heure exacte.', open: false },
       { question: 'Que comprend le circuit 2 "Que du Plaisir" ?', answer: 'Le circuit "Que du Plaisir" comprend 1 nuitée en pleine montagne d\'Atlas à Asni, 1 journée détente avec piscine panoramique et déjeuner à Agafay, 1h d\'activité au choix (dromadaire, quad ou buggy) face au coucher de soleil, grand dîner avec danseuse orientale et cracheur de feu, nuit sous tente de luxe à Agafay, puis hébergement en riad à Marrakech avec hammam traditionnel et massage.', open: false },
       { question: 'Les tentes des bivouacs disposent-elles de sanitaires privés ?', answer: 'Oui ! Dans nos formules de bivouacs au désert de Merzouga ainsi que dans nos camps partenaires à Agafay, les tentes sont spacieuses et équipées de lits de qualité hôtelière et de véritables salles de bain privatives avec douche chaude et toilettes.', open: false },
@@ -798,9 +798,9 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     heroEyebrow: 'MOROCCO TOURS & DESERT EXPEDITIONS FROM MARRAKECH',
     heroTitle: 'Experience the Magic of Morocco',
     heroTitleEm: 'Your Adventure Begins Here!',
-    heroSubtitle: 'Authentic expeditions across the Atlas Mountains, Merzouga dunes, Essaouira coast, and Agafay canyons. Certified local drivers, luxury nomad camps, and flexible transport from 450 MAD/day without middlemen.',
+    heroSubtitle: 'Authentic expeditions across the Atlas Mountains, Merzouga dunes, Essaouira coast, and Agafay canyons. Certified local drivers, luxury nomad camps, and flexible transport on direct quote without middlemen.',
     btnExplore: 'Explore Our Tours',
-    btnTransport: 'Transport from 450 MAD / Day',
+    btnTransport: 'Transport on quote',
     scrollHint: 'Discover',
     trustItems: [
       { title: 'Local Drivers & Guides', desc: '100% Certified Moroccan Team' },
@@ -810,7 +810,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     ],
     quickAnswerTag: 'TRAVEL GUIDE & QUICK INSIGHTS',
     quickAnswerQ: 'What are our premier tours departing from Marrakech?',
-    quickAnswerA: 'Discover Tour 1 (Ouzoud Falls, Mount Ayachi & Merzouga Dunes 4D), Tour 2 "Pure Pleasure" (Asni, Agafay pool, activities & dinner show 3D), and Tour 3 "Sea & Sand" (Essaouira, Taghazout, Agadir & Ouarzazate 4D). Choose your transport: self-drive from 450 MAD/day or dedicated private chauffeur at disposal!',
+    quickAnswerA: 'Discover Tour 1 (Ouzoud Falls, Mount Ayachi & Merzouga Dunes 4D), Tour 2 "Pure Pleasure" (Asni, Agafay pool, activities & dinner show 3D), and Tour 3 "Sea & Sand" (Essaouira, Taghazout, Agadir & Ouarzazate 4D). Choose your transport: self-drive on direct quote or dedicated private chauffeur at disposal!',
     catalogTag: 'MARRAKECH TOUR EXPEDITIONS CATALOG',
     catalogTitle: 'Our Recommended Signature Programs &',
     catalogTitleEm: 'Custom Itineraries',
@@ -838,7 +838,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
       { label: 'Camp Accommodation', val1: 'Optional (Dinner show or glamping)', val2: '1 night under nomadic tent', val3: '1 night in luxury camp inside deep dunes' },
       { label: 'Key Activities', val1: 'Quad, Buggy, Desert pool & Fire show', val2: 'Camel caravan, sunset, historic kasbahs', val3: 'Sandboarding, ridge sunrise & Gnawa music' },
       { label: 'Ideal For', val1: 'Quick escapes, couples, families', val2: 'Short-stay travellers seeking a desert night', val3: 'The ultimate, authentic Sahara adventure' },
-      { label: 'Indicative Direct Price', val1: 'From 450 MAD / person', val2: 'From 650 MAD / person', val3: 'From 950 MAD / person' }
+      { label: 'Indicative Direct Price', val1: 'From Sur Devis / person', val2: 'From 650 MAD / person', val3: 'From 950 MAD / person' }
     ],
     whyTag: 'WHY CHOOSE MEDADE TRAVEL',
     whyTitle: 'The Advantage of a',
@@ -857,7 +857,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     expStats: [
       { num: '100%', label: 'Licensed Local Agency' },
       { num: '4.9 / 5', label: 'Average Client Rating' },
-      { num: '450 MAD', label: 'Car Rental from / Day' },
+      { num: 'Sur Devis', label: 'Car Rental from / Day' },
       { num: '24/7', label: 'Live Travel Support' }
     ],
     expBtnWa: 'Plan My Trip on WhatsApp',
@@ -876,7 +876,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     faqTitleEm: 'Before Traveling',
     faqSubtitle: 'Clear answers to help you prepare your Morocco tour with total confidence.',
     faqItems: [
-      { question: 'What transport options do you offer for your tours?', answer: 'We provide total flexibility: you can rent a modern vehicle without driver starting from 450 MAD per day for complete independence, or enjoy our high-comfort fleet with dedicated professional drivers at your complete disposal.', open: true },
+      { question: 'What transport options do you offer for your tours?', answer: 'We provide total flexibility: you can rent a modern vehicle without driver starting on quote per day for complete independence, or enjoy our high-comfort fleet with dedicated professional drivers at your complete disposal.', open: true },
       { question: 'How does pick-up work in Marrakech?', answer: 'For all our tours, our driver picks you up right at your hotel lobby or the closest accessible point to your riad in the Medina. We message you on WhatsApp the evening before to confirm exact timings.', open: false },
       { question: 'What is included in Tour 2 "Pure Pleasure"?', answer: 'Tour 2 features 1 night in the Atlas mountains in Asni, 1 day pass with panoramic pool and lunch in Agafay, 1 hour sunset activity of choice (camel, quad or buggy), evening dinner show with belly dancer and fire eater, luxury glamping tent, and a central Marrakech riad with traditional hammam and massage.', open: false },
       { question: 'Do the desert camp tents have private bathrooms?', answer: 'Yes! In both our Merzouga desert camps and partner luxury camps in Agafay, tents are spacious and equipped with real hotel-grade beds and private ensuite bathrooms with hot showers and flush toilets.', open: false },
@@ -893,9 +893,9 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     heroEyebrow: 'جولات سياحية ورحلات صحراوية انطلاقاً من مراكش',
     heroTitle: 'عش سحر وسياحة المغرب الأصيل',
     heroTitleEm: 'مغامرتكم تبدأ من هنا !',
-    heroSubtitle: 'جولات أصيلة نحو جبال الأطلس، رمال مرزوكة، سواحل الصويرة وهضاب أغفاي. سائقون محليون معتمدون، مخيمات صحراوية فاخرة وخيارات نقل ابتداءً من 450 درهم/اليوم بدون وسيط.',
+    heroSubtitle: 'جولات أصيلة نحو جبال الأطلس، رمال مرزوكة، سواحل الصويرة وهضاب أغفاي. سائقون محليون معتمدون، مخيمات صحراوية فاخرة وخيارات نقل حسب الطلب بدون وسيط بدون وسيط.',
     btnExplore: 'استكشف جولاتنا السياحية',
-    btnTransport: 'كراء سيارات من 450 درهم / اليوم',
+    btnTransport: 'كراء سيارات من Sur Devis',
     scrollHint: 'اكتشف المزيد',
     trustItems: [
       { title: 'سائقون ومرشدون محليون', desc: 'فريق مغربي معتمد 100%' },
@@ -905,7 +905,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     ],
     quickAnswerTag: 'دليل المسافر وإرشادات الرحلات',
     quickAnswerQ: 'ما هي أبرز الجولات السياحية انطلاقاً من مراكش؟',
-    quickAnswerA: 'اكتشفوا الرحلة 1 (شلالات أوزود، جبل العياشي وكثبان مرزوكة 4 أيام)، الرحلة 2 "متعة لا تنتهي" (أسني، مسبح أغفاي، أنشطة وسهرة فنية 3 أيام)، والرحلة 3 "بين البحر والبر" (الصويرة، تغازوت، أكادير وورزازات 4 أيام). النقل باختياركم: كراء سيارة من 450 درهم/اليوم أو مع سائق خاص رهن إشارتكم!',
+    quickAnswerA: 'اكتشفوا الرحلة 1 (شلالات أوزود، جبل العياشي وكثبان مرزوكة 4 أيام)، الرحلة 2 "متعة لا تنتهي" (أسني، مسبح أغفاي، أنشطة وسهرة فنية 3 أيام)، والرحلة 3 "بين البحر والبر" (الصويرة، تغازوت، أكادير وورزازات 4 أيام). النقل باختياركم: كراء سيارة من Sur Devis أو مع سائق خاص رهن إشارتكم!',
     catalogTag: 'دليل الجولات السياحية انطلاقاً من مراكش',
     catalogTitle: 'برامجنا المميزة وجولاتنا',
     catalogTitleEm: 'الموصى بها بشدة',
@@ -933,7 +933,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
       { label: 'المبيت بالمخيم', val1: 'اختياري (سهرة عشاء أو تخييم)', val2: 'ليلة واحدة تحت الخيمة البدوية', val3: 'ليلة بمخيم فاخر في قلب الكثبان الذهبية' },
       { label: 'أبرز الأنشطة', val1: 'كواد، باغي، مسبح وسهرة النار', val2: 'قوافل الجمال، غروب الشمس والقصبات', val3: 'التزلج على الرمال، شروق الشمس وموسيقى كناوة' },
       { label: 'مثالي لـ', val1: 'الرحلات السريعة، الأزواج، العائلات', val2: 'لمن لديهم وقت قصير ويرغبون بالمبيت بالصحراء', val3: 'التجربة الصحراوية الكبرى والأصيلة بالكامل' },
-      { label: 'السعر المباشر التقريبي', val1: 'ابتداءً من 450 درهم / للشخص', val2: 'ابتداءً من 650 درهم / للشخص', val3: 'ابتداءً من 950 درهم / للشخص' }
+      { label: 'السعر المباشر التقريبي', val1: 'حسب الطلب / للشخص', val2: 'ابتداءً من 650 درهم / للشخص', val3: 'ابتداءً من 950 درهم / للشخص' }
     ],
     whyTag: 'لماذا تختارون مداد ترافيل',
     whyTitle: 'امتياز التعامل مع وكالة',
@@ -952,7 +952,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     expStats: [
       { num: '100%', label: 'وكالة محلية معتمدة' },
       { num: '4.9 / 5', label: 'متوسط تقييم المسافرين' },
-      { num: '450 درهم', label: 'كراء سيارات ابتداءً من / يوم' },
+      { num: 'Sur Devis', label: 'كراء سيارات ابتداءً من / يوم' },
       { num: '24/7', label: 'دعم سياحي مباشر' }
     ],
     expBtnWa: 'ترتيب رحلتي عبر واتساب',
@@ -971,7 +971,7 @@ export const HOME_PAGE_DATA: Record<string, HomePageData> = {
     faqTitleEm: 'قبل الانطلاق في الرحلة',
     faqSubtitle: 'إجابات واضحة ودقيقة لتجهيز رحلتكم أو جولتكم السياحية بكل طمأنينة وراحة بال.',
     faqItems: [
-      { question: 'ما هي صيغ النقل المتاحة للجولات السياحية؟', answer: 'نوفر لكم مرونة تامة: يمكنكم اختيار كراء سيارة حديثة بدون سائق ابتداءً من 450 درهم مغربي باليوم لتنقل حر ومستقل، أو الاستمتاع بسيارة مريحة مع سائق خاص محترف رهن إشارتكم طيلة أيام الرحلة.', open: true },
+      { question: 'ما هي صيغ النقل المتاحة للجولات السياحية؟', answer: 'نوفر لكم مرونة تامة: يمكنكم اختيار كراء سيارة حديثة بدون سائق حسب الطلب مغربي باليوم لتنقل حر ومستقل، أو الاستمتاع بسيارة مريحة مع سائق خاص محترف رهن إشارتكم طيلة أيام الرحلة.', open: true },
       { question: 'كيف تتم عملية الاستقبال من مراكش؟', answer: 'في جميع جولاتنا، يتكفل سائقنا الخاص أو حافلتنا السياحية بنقلكم مباشرة من فندقكم أو أقرب نقطة وصول لرياضكم بالمدينة العتيقة بمراكش. ونتواصل معكم مساء اليوم السابق عبر واتساب لتحديد التوقيت الدقيق.', open: false },
       { question: 'ما الذي تتضمنه الرحلة 2 "متعة لا تنتهي"؟', answer: 'تتضمن الرحلة 2 مبيتاً في جبال الأطلس بأسني، يوماً كاملاً بمسبح صحراء أغفاي مع وجبة غداء، ساعة نشاط من اختياركم (جمال أو كواد أو باغي) بالغروب، سهرة عشاء فنية مع راقصة شرقية وعرض النار، مبيتاً بخيمة فاخرة، ثم إقامة برياض بمراكش مع حمام ومساج.', open: false },
       { question: 'هل تتوفر خيام المخيمات الصحراوية على مرافق صحية خاصة؟', answer: 'نعم بكل تأكيد! سواء في مخيماتنا بصحراء مرزوكة أو مخيماتنا الشريكة بأغفاي، تتميز الخيام بأنها فسيحة ومجهزة بأسرة فندقية عالية الجودة وحمامات خاصة مع دوش ساخن ومرحاض.', open: false },
