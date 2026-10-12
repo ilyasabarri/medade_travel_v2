@@ -456,7 +456,7 @@ export class LanguageService {
     const d: Record<Language, any> = {
       fr: {
         eyebrow: 'NOS CIRCUITS & SÉJOURS PHARES',
-        title: 'Les 3 Circuits Phares au Maroc',
+        title: 'Les Circuits Phares au Maroc',
         subtitle: 'Sélectionnez un circuit pour explorer son itinéraire exclusif et réserver directement sans intermédiaire.',
         viewFull: 'Voir le programme complet →',
         transportLabel: 'Transport au choix :',
@@ -468,7 +468,7 @@ export class LanguageService {
       },
       en: {
         eyebrow: 'OUR SIGNATURE TOURS & JOURNEYS',
-        title: 'The 3 Signature Morocco Tours',
+        title: 'Signature Morocco Tours',
         subtitle: 'Select a tour to explore its detailed day-by-day itinerary and book directly without middleman.',
         viewFull: 'View full itinerary →',
         transportLabel: 'Transport choice:',
@@ -480,7 +480,7 @@ export class LanguageService {
       },
       ar: {
         eyebrow: 'الجولات والرحلات الرئيسية',
-        title: 'الجولات الثلاث الأكثر طلباً بالمغرب',
+        title: 'الجولات والمسارات السياحية بالمغرب',
         subtitle: 'اختر جولتك المفضلة واطلع على تفاصيل خط السير يوماً بيوم مع حجز مباشر عبر واتساب.',
         viewFull: 'عرض البرنامج الكامل ←',
         transportLabel: 'نقل مرن متاح :',
@@ -492,7 +492,7 @@ export class LanguageService {
       },
       es: {
         eyebrow: 'NUESTROS CIRCUITOS DESTACADOS',
-        title: 'Los 3 Circuitos Emblemáticos en Marruecos',
+        title: 'Circuitos Emblemáticos en Marruecos',
         subtitle: 'Seleccione un circuito para explorar su itinerario día a día y reservar directamente sin intermediarios.',
         viewFull: 'Ver itinerario completo →',
         transportLabel: 'Transporte a elegir:',
@@ -504,7 +504,7 @@ export class LanguageService {
       },
       it: {
         eyebrow: 'I NOSTRI TOUR DI PUNTA',
-        title: 'I 3 Tour Emblematici in Marocco',
+        title: 'I Tour Emblematici in Marocco',
         subtitle: 'Seleziona un tour per scoprire l’itinerario giorno per giorno e prenotare direttamente senza intermediari.',
         viewFull: 'Visualizza il programma completo →',
         transportLabel: 'Scelta del trasporto:',
@@ -516,7 +516,7 @@ export class LanguageService {
       },
       de: {
         eyebrow: 'UNSERE TOP-RUNDREISEN',
-        title: 'Die 3 Beliebtesten Rundreisen in Marokko',
+        title: 'Beliebte Rundreisen in Marokko',
         subtitle: 'Wählen Sie eine Rundreise, um den detaillierten Tagesablauf einzusehen und direkt ohne Zwischenhändler zu buchen.',
         viewFull: 'Vollständiges Programm ansehen →',
         transportLabel: 'Transport nach Wahl:',
@@ -528,7 +528,7 @@ export class LanguageService {
       },
       pt: {
         eyebrow: 'OS NOSSOS CIRCUITOS EXCLUSIVOS',
-        title: 'Os 3 Circuitos Emblemáticos em Marrocos',
+        title: 'Circuitos Emblemáticos em Marrocos',
         subtitle: 'Selecione um circuito para explorar o seu itinerário dia a dia e reservar diretamente sem intermediários.',
         viewFull: 'Ver o programa completo →',
         transportLabel: 'Transporte à escolha:',
@@ -540,7 +540,7 @@ export class LanguageService {
       },
       nl: {
         eyebrow: 'ONZE SIGNATURE RONDREIZEN',
-        title: 'De 3 Meest Populaire Rondreizen in Marokko',
+        title: 'Populaire Rondreizen in Marokko',
         subtitle: 'Kies een rondreis om het dag-tot-dag programma te bekijken en boek rechtstreeks zonder tussenpersonen.',
         viewFull: 'Bekijk het volledige programma →',
         transportLabel: 'Vervoer naar keuze:',

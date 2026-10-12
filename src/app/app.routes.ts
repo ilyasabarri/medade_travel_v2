@@ -5,7 +5,7 @@ import { CircuitsComponent } from './pages/circuits/circuits.component';
 import { ContactComponent } from './pages/contact/contact.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent, title: 'Medade Travel | 3 Circuits Phares au Maroc & Transport Direct' },
+  { path: '', component: HomeComponent, title: 'Medade Travel | Circuits Phares au Maroc & Transport Direct' },
   { path: 'circuits', redirectTo: '' },
   { path: 'destinations', redirectTo: '' },
   { path: 'contact', redirectTo: '' },
