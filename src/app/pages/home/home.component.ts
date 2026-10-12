@@ -17,11 +17,11 @@ export class HomeComponent implements OnInit {
   secondaryPhone = '+212 6 37 05 31 31';
   whatsappNumber = '212662636095';
 
-  activeCircuitId = 'circuit-merzouga';
+  activeCircuitId = 'circuit-1';
   expandedDayIndex: { [key: string]: number | null } = {
-    'circuit-merzouga': 0,
-    'circuit-agafay': 0,
-    'circuit-essaouira': 0
+    'circuit-1': 0,
+    'circuit-2': 0,
+    'circuit-3': 0
   };
 
   bookingForm = {
