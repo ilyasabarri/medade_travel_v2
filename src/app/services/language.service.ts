@@ -34,6 +34,9 @@ export interface CircuitDay {
   title: string;
   description: string;
   stops: string[];
+  imageUrl?: string;
+  activityLabel?: string;
+  activityBadge?: string;
 }
 
 export interface Circuit {

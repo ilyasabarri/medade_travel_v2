@@ -29,24 +29,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Départ de Marrakech → Cascades d\'Ouzoud (Déjeuner) → Nuitée à Midelt',
           description: 'Départ matinal de Marrakech en direction de Midelt en passant par les grandioses cascades d\'Ouzoud. Déjeuner traditionnel berbère au pied des cascades avec vue panoramique rafraîchissante. Poursuite de la route à travers les paysages du Moyen-Atlas et arrivée à Midelt en fin d\'après-midi. Dîner et nuitée à Midelt.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Cascades d\'Ouzoud & Pique-Nique Berbère',
           stops: ['Départ Marrakech', 'Cascades d\'Ouzoud', 'Déjeuner aux cascades', 'Moyen-Atlas', 'Passer la nuit à Midelt']
         },
         {
           dayNumber: 2,
           title: 'Petit-déjeuner → Départ en Pique-Nique à la Montagne Ayachi → Midelt',
           description: 'Après un savoureux petit-déjeuner, départ pour une journée d\'évasion montagnarde avec un grand pique-nique au pied du majestueux Jbel Ayachi. Passez toute la journée en pleine montagne du Haut-Atlas au milieu de paysages pastoraux préservés et d\'un air pur revigorant. Retour en fin d\'après-midi pour dormir à Midelt.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'Pique-Nique en Pleine Montagne du Jbel Ayachi',
           stops: ['Petit-déjeuner à l\'hôtel', 'Départ pique-nique Jbel Ayachi', 'Journée en pleine montagne', 'Haut-Atlas sauvage', 'Dormir à Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Désert de Merzouga : Coucher de Soleil à Dromadaire & Tente Berbère',
           description: 'Petit-déjeuner à Midelt puis départ en direction du désert saharien de Merzouga en longeant les magnifiques gorges et palmeraies du Ziz. Arrivée aux dunes majestueuses de l\'Erg Chebbi : caravane de dromadaires pour assister au magnifique coucher de soleil sur les crêtes dorées. Dîner traditionnel autour du feu et nuit féérique sous la tente berbère au désert.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Coucher de Soleil à Dromadaire & Nuit sous la Tente à Merzouga',
           stops: ['Vallée du Ziz & palmeraies', 'Désert de Merzouga', 'Coucher de soleil à dos de dromadaire', 'Nuit sous la tente berbère']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Gorges de Todra Tinghir (Déjeuner) → Ouarzazate → Marrakech',
           description: 'Petit-déjeuner au désert puis départ vers Marrakech. Déjeuner au cœur des vertigineuses Gorges de Todra à Tinghir. Arrêt à Ouarzazate avec visite des mythiques studios cinématographiques internationaux. Traversée du Haut-Atlas par le col du Tizi n\'Tichka et arrivée en soirée à Marrakech. Passer la nuit à Marrakech. Bon séjour !',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Gorges de Todra Tinghir & Studios de Cinéma Ouarzazate',
           stops: ['Gorges de Todra (Tinghir)', 'Déjeuner aux gorges', 'Ouarzazate (Studios de cinéma)', 'Col du Tichka', 'Passer la nuit à Marrakech']
         }
       ]
@@ -78,18 +86,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Passant la Nuit à Marrakech / Départ Matin → Moulay Brahim → Montagnes d\'Asni',
           description: 'Hébergement au centre de Marrakech. Le matin après le petit-déjeuner, départ en direction de Moulay Brahim et des contreforts de l\'Atlas. Poursuite vers la vallée d\'Asni. Dîner traditionnel savoureux et passer la nuit en pleine montagne d\'Atlas à Asni.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'Contreforts du Haut-Atlas & Nuitée Ressourçante à Asni',
           stops: ['Centre de Marrakech', 'Moulay Brahim', 'Haut-Atlas', 'Nuitée en pleine montagne à Asni']
         },
         {
           dayNumber: 2,
           title: 'Asni → Agafay : Piscine, Activité (Dromadaire/Quad/Buggy), Dîner Spectacle & Tente de Luxe',
           description: 'Après le petit-déjeuner, départ vers le désert minéral d\'Agafay. Profitez de la piscine en plein désert de Marrakech et d\'un excellent déjeuner. 1 heure d\'activité au choix : dromadaire, quad ou buggy pour assister au magnifique coucher de soleil. Dîner avec animation festive (danseuse orientale, cracheur de feu). Passer la nuit sous les tentes luxueuses au désert.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Piscine au Désert, Quad/Buggy & Dîner Spectacle Feu à Agafay',
           stops: ['Piscine en plein désert d\'Agafay', 'Déjeuner au désert', '1h Activité (Dromadaire, Quad ou Buggy)', 'Coucher de soleil', 'Dîner spectacle feu & danseuse', 'Nuit sous les tentes luxueuses']
         },
         {
           dayNumber: 3,
           title: 'Agafay (Lever de Soleil) → Riad au Centre de Marrakech : Journée Libre, Hammam & Massage',
           description: 'Assister au lever de soleil spectaculaire sur les canyons d\'Agafay, petit-déjeuner et départ. Arrivée au centre de Marrakech et hébergement dans un magnifique riad traditionnel. Journée libre avec rituel bien-être : séance de hammam traditionnel et massage relaxant. Bon séjour !',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Lever de Soleil Agafay, Riad Marrakech, Hammam & Massage',
           stops: ['Lever de soleil & petit-déjeuner', 'Départ d\'Agafay', 'Arrivée centre de Marrakech', 'Hébergement en riad', 'Journée libre hammam & massage']
         }
       ]
@@ -122,24 +136,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech → Essaouira : Anciens Quartiers Juifs, Cheval au Coucher de Soleil & Nuit Océane',
           description: 'Départ de Marrakech vers Essaouira. Arrivée à Essaouira : visite des anciens quartiers juifs (Mellah) et des monuments historiques. Déjeuner traditionnel. Balade à dos de cheval sur la plage et contemplation du coucher de soleil au bord de la mer. Passer la nuit à Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Mellah d\'Essaouira & Balade à Cheval au Bord de Mer au Coucher de Soleil',
           stops: ['Départ de Marrakech', 'Arrivée Essaouira', 'Visite anciens quartiers juifs & monuments', 'Déjeuner', 'Balade à dos de cheval', 'Coucher de soleil au bord de la mer', 'Passer la nuit à Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Déjeuner) → Agadir : Journée Solidaire Argan & Show Cosmétique',
           description: 'Petit-déjeuner puis départ par la route côtière vers Agadir. Déjeuner à Taghazout face aux spots de l\'océan. Poursuite vers Agadir pour une enrichissante journée de solidarité : visite des associations de femmes productrices d\'argan et produits cosmétiques avec participation au show de fabrication artisanale. Passer la nuit à Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Taghazout Océan & Découverte Solidaire de l\'Argan à Agadir',
           stops: ['Petit-déjeuner', 'Départ vers Agadir', 'Déjeuner à Taghazout', 'Journée de solidarité', 'Associations d\'argan & cosmétique', 'Participation au show', 'Passer la nuit à Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate : Studios Cinématographiques & Ancienne Kasbah de Glaoui',
           description: 'Petit-déjeuner puis départ vers Ouarzazate, la capitale du cinéma marocain. Visite des célèbres studios cinématographiques internationaux où ont été tournés les chefs-d\'œuvre du cinéma. Découverte de l\'impressionnante ancienne Kasbah de Glaoui. Passer la nuit à Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'Studios Cinématographiques & Kasbah Historique de Glaoui à Ouarzazate',
           stops: ['Petit-déjeuner', 'Départ vers Ouarzazate', 'Visite des studios cinématographiques', 'Ancienne Kasbah de Glaoui', 'Passer la nuit à Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marrakech : Traversée du Haut-Atlas & Journée Libre aux Programmes au Choix',
           description: 'Petit-déjeuner puis départ vers Marrakech à travers les majestueux paysages du col du Tizi n\'Tichka. Arrivée à Marrakech pour une agréable journée libre des programmes aux choix et facultatifs. Bon séjour !',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Col Panoramique du Tizi n\'Tichka & Retour Triomphal à Marrakech',
           stops: ['Petit-déjeuner', 'Départ vers Marrakech', 'Traversée du Haut-Atlas', 'Journée libre & programmes aux choix facultatifs']
         }
       ]
@@ -174,24 +196,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Departure from Marrakech → Ouzoud Waterfalls (Lunch) → Night in Midelt',
           description: 'Morning departure from Marrakech towards Midelt via the spectacular Ouzoud Waterfalls. Enjoy a traditional Berber lunch facing the falls. Continue through Middle Atlas scenery to arrive in Midelt in the late afternoon. Dinner and overnight in Midelt.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Ouzoud Waterfalls & Berber Panoramic Lunch',
           stops: ['Marrakech departure', 'Ouzoud Waterfalls', 'Lunch at the falls', 'Middle Atlas', 'Overnight in Midelt']
         },
         {
           dayNumber: 2,
           title: 'Breakfast → Scenic Picnic Excursion at Mount Ayachi → Midelt',
           description: 'After a hearty breakfast, set out for a mountain getaway with a scenic picnic at the foot of Mount Ayachi (Jbel Ayachi). Spend the day in the fresh mountain air surrounded by untouched landscapes. Return to Midelt for dinner and overnight.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'High Atlas Mountain Luxury Picnic at Mount Ayachi',
           stops: ['Hotel breakfast', 'Jbel Ayachi picnic excursion', 'Full day in high mountains', 'Preserved landscapes', 'Overnight in Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Merzouga Desert: Sunset Camel Ride & Berber Tent',
           description: 'Breakfast in Midelt, then head south towards the Sahara desert of Merzouga along the dramatic Ziz Gorges and palm oasis valleys. Arrive at Erg Chebbi dunes for a sunset camel caravan. Enjoy nomadic fireside music and sleep under a Berber tent.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Camel Trek Sunset & Starlit Berber Desert Camp in Merzouga',
           stops: ['Ziz Valley & palm groves', 'Merzouga desert', 'Sunset camel ride', 'Night under Berber tent']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Todra Gorges (Lunch) → Ouarzazate Film Studios → Marrakech',
           description: 'Desert breakfast, then depart towards Marrakech. Stop and lunch inside the vertical Todra Gorges in Tinghir. Continue to Ouarzazate to tour famous Hollywood movie studios. Cross Tizi n\'Tichka pass and arrive in Marrakech. Have a wonderful stay!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Todra Gorge Cliffs & International Movie Studios in Ouarzazate',
           stops: ['Todra Gorges (Tinghir)', 'Lunch at the gorges', 'Ouarzazate Cinema Studios', 'Tichka Pass', 'Overnight in Marrakech']
         }
       ]
@@ -223,18 +253,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech Center / Morning Departure → Moulay Brahim → Asni Mountains',
           description: 'Morning departure from Marrakech towards Moulay Brahim foothills. Enter the green valley of Asni under Mount Toubkal peaks. Enjoy traditional dinner and sleep surrounded by mountain serenity.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'High Atlas Foothills & Scenic Mountain Retreat in Asni',
           stops: ['Marrakech center', 'Moulay Brahim', 'High Atlas foothills', 'Overnight in Asni mountain']
         },
         {
           dayNumber: 2,
           title: 'Asni → Agafay Desert: Pool, Activity (Camel/Quad/Buggy), Dinner Show & Luxury Tent',
           description: 'Breakfast facing mountain peaks then depart to Agafay desert. Relax by the desert pool and enjoy a delicious lunch. In the late afternoon, enjoy 1 hour of your chosen activity (camel, quad, or buggy) during sunset. Gourmet dinner with belly dancing and fire show. Night under luxury desert tents.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Agafay Desert Pool, Quad/Buggy Sunset & Fire Show Dinner',
           stops: ['Agafay desert pool', 'Desert lunch', '1h Activity (Camel, Quad or Buggy)', 'Sunset', 'Fire show & belly dancer', 'Luxury tent overnight']
         },
         {
           dayNumber: 3,
           title: 'Agafay Sunrise → Marrakech Riad: Free Day, Hammam & Relaxing Massage',
           description: 'Watch the golden sunrise over Agafay canyons, enjoy breakfast and depart. Arrive at central Marrakech riad. Free day with full wellness ritual: authentic Moroccan hammam and relaxing massage. Enjoy your stay!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Agafay Sunrise, Luxury Marrakech Riad, Traditional Hammam & Massage',
           stops: ['Desert sunrise & breakfast', 'Marrakech center', 'Charming Riad', 'Hammam & Massage', 'Free relaxing day']
         }
       ]
@@ -267,24 +303,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech → Essaouira: Jewish Quarter, Seaside Lunch & Sunset Horseback Ride',
           description: 'Morning drive to Atlantic gem Essaouira (Mogador). Visit the historic Mellah and fortress ramparts. Fresh fish lunch at the harbor. Gallop or stroll on horseback on the beach as the sun sets over the ocean. Overnight in Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Historic Essaouira Mellah & Sunset Beach Horse Riding',
           stops: ['Marrakech departure', 'Essaouira Medina', 'Old Jewish Mellah', 'Port lunch', 'Beach horseback riding', 'Ocean sunset', 'Overnight in Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Lunch) → Agadir: Argan Solidarity Day & Show',
           description: 'Breakfast and scenic coastal drive to Taghazout. Relaxing lunch overlooking world-class surf breaks. Continue to Agadir for a solidarity day: visit women\'s argan and cosmetic cooperatives and participate in traditional craft demonstrations. Overnight in Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Taghazout Oceanfront Lunch & Women\'s Argan Cooperative in Agadir',
           stops: ['Atlantic coast drive', 'Taghazout lunch', 'Solidarity day', 'Argan & cosmetic cooperatives', 'Craft show', 'Overnight in Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate: Cinema Studios & Ancient Glaoui Kasbah',
           description: 'Breakfast and depart through the Souss valley to Hollywood of Morocco, Ouarzazate. Visit renowned film studios where international blockbusters were created. Tour the grand historic Glaoui Kasbah. Dinner and overnight in Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'International Cinema Studios & Historic Kasbah Glaoui in Ouarzazate',
           stops: ['Drive to Ouarzazate', 'International film studios', 'Ancient Glaoui Kasbah', 'Overnight in Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marrakech: High Atlas Crossing & Free Leisure Time',
           description: 'Breakfast then cross High Atlas peaks through Tizi n\'Tichka pass towards Marrakech. Arrive in Marrakech for a free leisure day with optional programs and shopping in the souks. Have a wonderful stay!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Panoramic Tizi n\'Tichka Mountain Pass & Arrival in Marrakech',
           stops: ['Tizi n\'Tichka pass', 'Marrakech arrival', 'Free leisure day', 'Optional activities']
         }
       ]
@@ -319,24 +363,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'الانطلاق من مراكش ← شلالات أوزود (غداء) ← المبيت بميدلت',
           description: 'انطلاق صباحي من مراكش باتجاه ميدلت عبر شلالات أوزود الرائعة. غداء أمازيغي أمام الشلالات، ثم مواصلة الطريق عبر مناظر الأطلس المتوسط وصولاً إلى ميدلت. عشاء ومبيت بميدلت.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'شلالات أوزود الشامخة وغداء بربري أصيل',
           stops: ['الانطلاق من مراكش', 'شلالات أوزود', 'غداء أمام الشلالات', 'الأطلس المتوسط', 'المبيت بميدلت']
         },
         {
           dayNumber: 2,
           title: 'إفطار الصباح ← نزهة غداء بجبل العياشي (الأطلس الكبير) ← ميدلت',
           description: 'بعد إفطار الصباح، انطلاق في يوم استجمام في الطبيعة مع نزهة غداء عند سفح جبل العياشي الشامخ. قضاء يوم كامل في الهواء النقي وسط الطبيعة العذراء. عودة مساءً والمبيت بميدلت.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'نزهة جبلية فاخرة في أعالي جبل العياشي',
           stops: ['إفطار بالفندق', 'نزهة جبل العياشي', 'يوم كامل في الجبل', 'طبيعة الأطلس العذراء', 'المبيت بميدلت']
         },
         {
           dayNumber: 3,
           title: 'ميدلت ← صحراء مرزوكة: غروب الشمس على ظهور الجمال والخيمة البربرية',
           description: 'إفطار بميدلت ثم التوجه إلى صحراء مرزوكة مروراً بوادي زيز وواحات تافيلالت. ركوب الجمال لمشاهدة الغروب الأسطوري فوق كثبان عرق الشبي. عشاء تقليدي وموسيقى صحراوية ومبيت تحت الخيمة البربرية.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'رحلة الجمال عند الغروب ومبيت تحت النجوم بمرزوكة',
           stops: ['وادي زيز والواحات', 'صحراء مرزوكة', 'غروب الشمس على الجمال', 'المبيت بالخيمة البربرية']
         },
         {
           dayNumber: 4,
           title: 'مرزوكة ← مضايق تودغى (غداء) ← استوديوهات ورزازات ← مراكش',
           description: 'إفطار في الصحراء ثم الانطلاق نحو مراكش. توقف وغداء في قلب مضايق تودغى الشاهقة بتنغير. التوقف بورزازات وزيارة استوديوهات السينما العالمية. عبور ممر تيشكا والوصول مساءً إلى مراكش للمبيت. إقامة سعيدة!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'مضائق تودغى العالية واستوديوهات السينما العالمية بورزازات',
           stops: ['مضايق تودغى بتنغير', 'غداء بالمضايق', 'استوديوهات ورزازات', 'ممر تيشكا', 'المبيت بمراكش']
         }
       ]
@@ -368,18 +420,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'وسط مراكش / انطلاق صباحي ← مولاي إبراهيم ← جبال أسني',
           description: 'إقامة بمراكش. الانطلاق صباحاً بعد الإفطار نحو ضريح ومرتفعات مولاي إبراهيم ووادي أسني الأخضر. عشاء محلي ومبيت هادئ في جبال الأطلس بأسني.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'سفوح الأطلس الكبير ومبيت هادئ في قرى أسني',
           stops: ['وسط مراكش', 'مولاي إبراهيم', 'جبال الأطلس', 'المبيت بأسني في الجبل']
         },
         {
           dayNumber: 2,
           title: 'أسني ← صحراء أغفاي: مسبح، أنشطة الغروب، عشاء فني وخيمة فاخرة',
           description: 'بعد الإفطار، الانطلاق نحو صحراء أغفاي. الاستمتاع بالمسبح والغداء وسط الصحراء. بعد الظهر، ساعة نشاط باختياركم (جمال أو كواد أو باغي) لمشاهدة الغروب. سهرة عشاء مع راقصة شرقية ونافخ النار، ومبيت تحت الخيام الفاخرة.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'مسبح صحراوي، كواد أو باغي، وسهرة عشاء مع عروض النار بأكفاي',
           stops: ['مسبح صحراء أغفاي', 'غداء بالصحراء', 'ساعة نشاط (جمال/كواد/باغي)', 'غروب الشمس', 'سهرة العشاء والنار', 'المبيت بخيمة فاخرة']
         },
         {
           dayNumber: 3,
           title: 'أغفاي (شروق الشمس) ← رياض بمراكش: يوم حر، حمام ومساج',
           description: 'مشاهدة شروق الشمس فوق الكثبان، إفطار صباحي والعودة إلى مراكش. النزول برياض ساحر في المدينة العتيقة. يوم حر للاسترخاء مع حمام مغربي أصيل ومساج بزيت الأركان. إقامة سعيدة!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'شروق الشمس الساحر بأكفاي، رياض بمراكش، حمام تقليدي ومساج',
           stops: ['شروق الشمس والإفطار', 'وسط مراكش', 'رياض فاخر', 'حمام مغربي ومساج', 'يوم استرخاء حر']
         }
       ]
@@ -412,24 +470,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'مراكش ← الصويرة: الأحياء التاريخية، غداء بحري وركوب الخيل عند الغروب',
           description: 'الانطلاق من مراكش نحو مدينة الصويرة (موغادور). زيارة حي الملاح التاريخي والأسوار البرتغالية. غداء سمك طازج، ثم جولة على ظهر الخيل على شاطئ المحيط لمشاهدة غروب الشمس الساحر. المبيت بالصويرة.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'معالم الصويرة التاريخية وركوب الخيل على الشاطئ وقت الغروب',
           stops: ['الانطلاق من مراكش', 'مدينة الصويرة', 'حي الملاح التاريخي', 'غداء بالميناء', 'ركوب الخيل بالشاطئ', 'غروب المحيط', 'المبيت بالصويرة']
         },
         {
           dayNumber: 2,
           title: 'الصويرة ← تغازوت (غداء) ← أكادير: يوم تضامني مع تعاونيات الأركان',
           description: 'إفطار ثم انطلاق عبر الطريق الساحلي. غداء بتغازوت أمام أشهر شواطئ ركوب الأمواج. مواصلة الطريق إلى أكادير ليوم تضامني مميز: زيارة تعاونيات الأركان ومستحضرات التجميل والمشاركة في العرض الحرفي. المبيت بأكادير.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'غداء على شاطئ تغازوت وزيارة تضامنية لتعاونيات الأركان بأكادير',
           stops: ['طريق الساحل الأطلسي', 'غداء بتغازوت', 'يوم تضامني', 'تعاونيات الأركان', 'المشاركة بالعرض', 'المبيت بأكادير']
         },
         {
           dayNumber: 3,
           title: 'أكادير ← ورزازات: استوديوهات السينما وقصبة الكلاوي العريقة',
           description: 'إفطار ثم السفر نحو عاصمة السينما العالمية ورزازات. زيارة استوديوهات التصوير الشهيرة واستكشاف قصبة الكلاوي التاريخية الرائعة. عشاء ومبيت بورزازات.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'استوديوهات السينما العالمية وقصبة الكلاوي التاريخية بورزازات',
           stops: ['الطريق نحو ورزازات', 'استوديوهات السينما', 'قصبة الكلاوي العريقة', 'المبيت بورزازات']
         },
         {
           dayNumber: 4,
           title: 'ورزازات ← مراكش: ممر تيشكا ويوم حر للأنشطة الاختيارية',
           description: 'إفطار ثم العودة إلى مراكش عبر المناظر الخلابة لممر تيزي نتيشكا بالأطلس الكبير. الوصول إلى مراكش لقضاء يوم حر مع أنشطة وبرامج اختيارية حسب رغبتكم. إقامة سعيدة!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'منعرجات تيزي نتيشكا البانورامية والعودة إلى مراكش',
           stops: ['ممر تيزي نتيشكا', 'الوصول لمراكش', 'يوم حر للتسوق والراحة', 'أنشطة اختيارية']
         }
       ]
@@ -464,24 +530,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Salida de Marrakech → Cascadas de Ouzoud (Almuerzo) → Noche en Midelt',
           description: 'Salida temprana de Marrakech hacia Midelt pasando por las grandiosas cascadas de Ouzoud. Almuerzo tradicional bereber frente a las cascadas. Continuación por los paisajes del Medio Atlas y llegada a Midelt al final de la tarde. Cena y alojamiento en Midelt.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Cascadas de Ouzoud y Almuerzo Panorámico',
           stops: ['Salida de Marrakech', 'Cascadas de Ouzoud', 'Almuerzo junto a las cascadas', 'Medio Atlas', 'Noche en Midelt']
         },
         {
           dayNumber: 2,
           title: 'Desayuno → Pícnic en la Montaña Ayachi → Midelt',
           description: 'Tras un rico desayuno, salida para una jornada de evasión montañosa con pícnic al pie del majestuoso Jbel Ayachi. Pase todo el día en plena naturaleza del Alto Atlas con aire puro. Regreso por la tarde para dormir en Midelt.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'Pícnic Exclusivo en la Montaña Jbel Ayachi',
           stops: ['Desayuno en el hotel', 'Excursión pícnic Jbel Ayachi', 'Día completo en alta montaña', 'Naturaleza virgen del Atlas', 'Noche en Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Desierto de Merzouga: Atardecer en Camello y Jaima Bereber',
           description: 'Desayuno en Midelt y viaje al desierto del Sahara en Merzouga a lo largo de las gargantas y palmerales del Ziz. Llegada a las dunas de Erg Chebbi: caravana de camellos para ver la puesta de sol. Cena tradicional y noche mágica en jaima bereber.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Paseo en Dromedario y Noche Estrellada en Merzouga',
           stops: ['Valle del Ziz y palmerales', 'Desierto de Merzouga', 'Atardecer en dromedario', 'Noche en jaima bereber']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Gargantas del Todra (Almuerzo) → Estudios de Ouarzazate → Marrakech',
           description: 'Desayuno en el desierto y rumbo a Marrakech. Almuerzo dentro de las verticales Gargantas del Todra en Tinghir. Parada en Ouarzazate para visitar los estudios de cine. Cruce del Alto Atlas por el paso de Tizi n\'Tichka y llegada a Marrakech. ¡Feliz estancia!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Gargantas del Todra y Estudios de Cine de Ouarzazate',
           stops: ['Gargantas del Todra', 'Almuerzo en las gargantas', 'Estudios de Cine Ouarzazate', 'Paso de Tichka', 'Noche en Marrakech']
         }
       ]
@@ -513,18 +587,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Salida de Marrakech → Moulay Brahim → Montañas de Asni',
           description: 'Salida de Marrakech tras el desayuno hacia Moulay Brahim y las estribaciones del Atlas. Llegada al valle de Asni. Cena tradicional y noche tranquila en plena montaña del Atlas.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'Valle del Alto Atlas y Descanso en las Montañas de Asni',
           stops: ['Centro de Marrakech', 'Moulay Brahim', 'Alto Atlas', 'Noche en la montaña de Asni']
         },
         {
           dayNumber: 2,
           title: 'Asni → Desierto de Agafay: Piscina, Actividades, Cena Espectáculo y Jaima de Lujo',
           description: 'Desayuno frente a las cumbres y salida hacia el desierto mineral de Agafay. Disfrute de la piscina panorámica y de un sabroso almuerzo. 1 hora de actividad a elegir (camello, quad o buggy) al atardecer. Cena con bailarina del vientre y tragafuegos. Noche en jaimas de lujo.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Piscina en Agafay, Safari Quad/Buggy y Cena Espectáculo de Fuego',
           stops: ['Piscina en el desierto', 'Almuerzo en Agafay', '1h Actividad (Camello/Quad/Buggy)', 'Puesta de sol', 'Cena espectáculo y fuego', 'Noche en jaima de lujo']
         },
         {
           dayNumber: 3,
           title: 'Agafay (Amanecer) → Riad en Marrakech: Día Libre, Hammam y Masaje',
           description: 'Amanecer sobre los cañones de Agafay, desayuno y regreso a Marrakech. Alojamiento en riad tradicional en el corazón de la medina. Día libre con ritual de bienestar: hammam y masaje relajante. ¡Feliz estancia!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Amanecer en Agafay, Riad en Marrakech, Hammam y Masaje Relajante',
           stops: ['Amanecer y desayuno', 'Salida de Agafay', 'Llegada a Marrakech', 'Riad con encanto', 'Día libre con hammam y masaje']
         }
       ]
@@ -557,24 +637,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech → Essaouira: Barrio Judío, Caballo al Atardecer y Noche Oceánica',
           description: 'Salida de Marrakech hacia Essaouira. Visita del Mellah y los monumentos históricos. Almuerzo tradicional marinero. Paseo a caballo por la playa mientras se oculta el sol en el océano. Noche en Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Essaouira Histórica y Paseo a Caballo al Atardecer en la Playa',
           stops: ['Salida de Marrakech', 'Medina de Essaouira', 'Barrio judío Mellah', 'Almuerzo en el puerto', 'Paseo a caballo', 'Atardecer en el mar', 'Noche en Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Almuerzo) → Agadir: Jornada Solidaria y Cooperativas',
           description: 'Desayuno y ruta panorámica por la costa hacia Agadir. Almuerzo en Taghazout frente a las olas. Continuación a Agadir para una jornada solidaria: cooperativas de argán y show de cosmética natural. Noche en Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Costa de Taghazout y Cooperativa Solidaria de Argán en Agadir',
           stops: ['Carretera de la costa', 'Almuerzo en Taghazout', 'Jornada solidaria', 'Cooperativas de argán', 'Demostración artesanal', 'Noche en Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate: Estudios Cinematográficos y Kasbah de Glaoui',
           description: 'Desayuno y salida hacia Ouarzazate, la capital del cine. Visita a los famosos estudios de grabación internacionales y exploración de la antigua Kasbah de Glaoui. Cena y noche en Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'Estudios Internacionales de Cine y Kasbah Histórica Glaoui en Ouarzazate',
           stops: ['Rumbo a Ouarzazate', 'Estudios de cine', 'Antigua Kasbah de Glaoui', 'Noche en Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marrakech: Cruce del Alto Atlas y Día Libre',
           description: 'Desayuno y regreso a Marrakech a través del impresionante paso de Tizi n\'Tichka en el Alto Atlas. Llegada a Marrakech para disfrutar de un día libre con programas a su elección. ¡Feliz estancia!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Paso de Montaña Tizi n\'Tichka y Regreso a Marrakech',
           stops: ['Paso de Tizi n\'Tichka', 'Llegada a Marrakech', 'Día libre y souks', 'Programas opcionales']
         }
       ]
@@ -609,24 +697,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Partenza da Marrakech → Cascate di Ouzoud (Pranzo) → Notte a Midelt',
           description: 'Partenza mattutina da Marrakech verso Midelt passando per le magnifiche cascate di Ouzoud. Pranzo tradizionale berbero con vista rinfrescante. Proseguimento attraverso i paesaggi del Medio Atlante e arrivo a Midelt nel tardo pomeriggio. Cena e notte a Midelt.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Cascate di Ouzoud e Pranzo Tradizionale',
           stops: ['Partenza Marrakech', 'Cascate di Ouzoud', 'Pranzo alle cascate', 'Medio Atlante', 'Pernottamento a Midelt']
         },
         {
           dayNumber: 2,
           title: 'Colazione → Picnic in Montagna al Jbel Ayachi → Midelt',
           description: 'Dopo un\'ottima colazione, escursione in montagna con picnic ai piedi del maestoso Jbel Ayachi. Giornata all\'aria aperta e natura incontaminata dell\'Alto Atlante. Rientro a Midelt per cena e notte.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'Picnic Panoramico in Montagna al Jbel Ayachi',
           stops: ['Colazione in hotel', 'Picnic Jbel Ayachi', 'Giornata in montagna', 'Alto Atlante', 'Pernottamento a Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Deserto di Merzouga: Tramonto in Dromedario e Tenda Berbera',
           description: 'Colazione a Midelt e partenza verso il Sahara di Merzouga costeggiando le spettacolari gole e palmeti dello Ziz. Arrivo alle dune dell\'Erg Chebbi: carovana di dromedari al tramonto, cena attorno al fuoco e notte magica sotto la tenda berbera.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Carovana di Dromedari al Tramonto e Bivacco a Merzouga',
           stops: ['Valle dello Ziz', 'Deserto di Merzouga', 'Tramonto in dromedario', 'Notte in tenda berbera']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Gole del Todra (Pranzo) → Studi di Ouarzazate → Marrakech',
           description: 'Colazione nel deserto e partenza per Marrakech. Pranzo nelle ripide Gole del Todra a Tinghir. Sosta a Ouarzazate per visitare i celebri studi cinematografici. Valico dell\'Alto Atlante al Tizi n\'Tichka e arrivo a Marrakech. Buon soggiorno!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Spettacolari Gole del Todra e Studi di Ouarzazate',
           stops: ['Gole del Todra', 'Pranzo nelle gole', 'Studi cinematografici Ouarzazate', 'Passo del Tichka', 'Notte a Marrakech']
         }
       ]
@@ -658,18 +754,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Partenza da Marrakech → Moulay Brahim → Montagne di Asni',
           description: 'Partenza mattutina da Marrakech verso Moulay Brahim e le vette dell\'Atlante. Arrivo nella verde valle di Asni. Cena tipica e pernottamento nella quiete della montagna.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'Vetta dell\'Alto Atlante e Notte Rilassante ad Asni',
           stops: ['Centro di Marrakech', 'Moulay Brahim', 'Alto Atlante', 'Notte in montagna ad Asni']
         },
         {
           dayNumber: 2,
           title: 'Asni → Deserto di Agafay: Piscina, Attività, Spettacolo e Tenda di Lusso',
           description: 'Colazione e partenza verso il deserto di Agafay. Relax a bordo piscina e ottimo pranzo. 1 ora di attività a scelta (dromedario, quad o buggy) al tramonto. Cena animata con danzatrice e mangiafuoco. Notte nelle tende di lusso.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Piscina nel Deserto, Quad/Buggy e Cena con Spettacolo del Fuoco ad Agafay',
           stops: ['Piscina nel deserto', 'Pranzo ad Agafay', '1h Attività (Dromedario/Quad/Buggy)', 'Tramonto', 'Cena spettacolo', 'Notte in tenda di lusso']
         },
         {
           dayNumber: 3,
           title: 'Agafay (Alba) → Riad a Marrakech: Giornata Libera, Hammam e Massaggio',
           description: 'Alba sui canyon di Agafay, colazione e rientro a Marrakech. Alloggio in splendido riad tradizionale. Giornata libera con rituale di benessere: hammam e massaggio all\'olio di argan. Buon soggiorno!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Alba ad Agafay, Riad a Marrakech, Hammam e Massaggio Benessere',
           stops: ['Alba e colazione', 'Partenza da Agafay', 'Riad a Marrakech', 'Hammam tradizionale e massaggio', 'Giornata libera']
         }
       ]
@@ -702,24 +804,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech → Essaouira: Quartieri Storici, Cavallo al Tramonto e Notte Oceanica',
           description: 'Partenza per Essaouira (Mogador). Visita della medina e del Mellah. Pranzo con pesce fresco. Cavalcata sulla spiaggia ammirando il tramonto sull\'oceano. Pernottamento a Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Essaouira Storica e Passeggiata a Cavallo sulla Spiaggia al Tramonto',
           stops: ['Partenza Marrakech', 'Medina Essaouira', 'Mellah storico', 'Pranzo al porto', 'Passeggiata a cavallo', 'Tramonto sull\'oceano', 'Notte a Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Pranzo) → Agadir: Giornata Solidale Argan',
           description: 'Colazione e percorso panoramico costiero verso Agadir. Pranzo a Taghazout davanti agli spot di surf. Pomeriggio dedicato alla solidarietà tra cooperative di argan. Notte ad Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Taghazout sulla Costa e Cooperativa Solidale dell\'Argan ad Agadir',
           stops: ['Strada costiera', 'Pranzo a Taghazout', 'Giornata solidale', 'Cooperative di argan', 'Show artigianale', 'Notte ad Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate: Studi Cinematografici e Kasbah di Glaoui',
           description: 'Colazione e viaggio verso la capitale del cinema Ouarzazate. Visita ai teatri di posa di fama mondiale e alla maestosa Kasbah di Glaoui. Cena e notte a Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'Studi Cinematografici Internazionali e Kasbah di Glaoui a Ouarzazate',
           stops: ['Verso Ouarzazate', 'Studi cinematografici', 'Antica Kasbah di Glaoui', 'Notte a Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marrakech: Alto Atlante e Giornata Libera',
           description: 'Colazione e rientro a Marrakech attraversando il suggestivo passo del Tizi n\'Tichka nell\'Alto Atlante. Giornata libera a Marrakech per souk e relax. Buon soggiorno!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Passo Panoramico del Tizi n\'Tichka e Rientro a Marrakech',
           stops: ['Valico Tizi n\'Tichka', 'Arrivo a Marrakech', 'Giornata libera e souk', 'Attività facoltative']
         }
       ]
@@ -754,24 +864,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakesch → Ouzoud-Wasserfälle (Mittagessen) → Übernachtung Midelt',
           description: 'Frühmorgendliche Abfahrt von Marrakesch über die gigantischen Ouzoud-Wasserfälle. Berber-Mittagessen mit erfrischender Aussicht. Fahrt durch das Mittlere Atlasgebirge nach Midelt. Abendessen und Übernachtung.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Ouzoud-Wasserfälle & Berber-Mittagessen',
           stops: ['Abfahrt Marrakesch', 'Ouzoud-Wasserfälle', 'Mittagessen', 'Mittlerer Atlas', 'Übernachtung Midelt']
         },
         {
           dayNumber: 2,
           title: 'Frühstück → Picknick-Ausflug am Jbel Ayachi → Midelt',
           description: 'Nach einem reichhaltigen Frühstück unternehmen Sie einen ganztägigen Naturausflug mit Picknick am Fuße des mächtigen Jbel Ayachi. Reine Bergluft und unberührte Natur. Rückfahrt nach Midelt zur Übernachtung.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'Exklusives Berg-Picknick am Jbel Ayachi',
           stops: ['Hotel-Frühstück', 'Picknick-Exkursion Jbel Ayachi', 'Ganzer Tag in den Bergen', 'Hoher Atlas', 'Übernachtung Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Wüste Merzouga: Kamelritt & Nacht im Berberzelt',
           description: 'Frühstück in Midelt und Fahrt zur Sahara von Merzouga entlang des Ziz-Tals und der Oasen. Ankunft an den Erg-Chebbi-Dünen: Kamelkarawane zum Sonnenuntergang, Festmahl am Lagerfeuer und Nacht im Berberzelt.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Kamel-Sonnenuntergang & Nacht im Beduinenzelt Merzouga',
           stops: ['Ziz-Tal & Oasen', 'Merzouga-Wüste', 'Sonnenuntergang auf Kamelen', 'Nacht im Berberzelt']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Todra-Schlucht (Mittagessen) → Filmstudios Ouarzazate → Marrakesch',
           description: 'Wüstenfrühstück und Fahrt Richtung Marrakesch. Mittagessen in der steilen Todra-Schlucht bei Tinghir. Stopp in Ouarzazate zur Besichtigung der Hollywood-Filmstudios. Überquerung des Tizi n\'Tichka-Passes nach Marrakesch. Schöne Reise!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Todra-Schlucht & Filmstudios in Ouarzazate',
           stops: ['Todra-Schlucht', 'Mittagessen in der Schlucht', 'Filmstudios Ouarzazate', 'Tichka-Pass', 'Übernachtung Marrakesch']
         }
       ]
@@ -803,18 +921,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakesch Zentrum / Abfahrt am Morgen → Moulay Brahim → Asni-Berge',
           description: 'Morgendliche Abfahrt von Marrakesch nach Moulay Brahim und in die Ausläufer des Hohen Atlas. Fahrt in das grüne Asni-Tal. Traditionelles Abendessen und Übernachtung in den ruhigen Bergen.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'Hoher Atlas & Erholsamer Bergaufenthalt in Asni',
           stops: ['Marrakesch Zentrum', 'Moulay Brahim', 'Hoher Atlas', 'Übernachtung in den Asni-Bergen']
         },
         {
           dayNumber: 2,
           title: 'Asni → Wüste Agafay: Pool, Aktivitäten, Dinnershow & Luxuszelt',
           description: 'Frühstück mit Blick auf die Berggipfel und Fahrt in die Agafay-Wüste. Entspannung am Pool und Mittagessen. 1 Stunde Aktivität (Kamel, Quad oder Buggy) zum Sonnenuntergang. Show-Dinner und Nacht im Luxuszelt.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Wüstenpool, Quad/Buggy & Feuershow-Dinner in Agafay',
           stops: ['Wüstenpool Agafay', 'Mittagessen', '1h Aktivität (Kamel/Quad/Buggy)', 'Sonnenuntergang', 'Feuershow & Dinner', 'Übernachtung im Luxuszelt']
         },
         {
           dayNumber: 3,
           title: 'Agafay (Sonnenaufgang) → Riad Marrakesch: Freier Tag, Hammam & Massage',
           description: 'Sonnenaufgang über den Canyons von Agafay, Frühstück und Fahrt nach Marrakesch. Bezug eines stilvollen Riads. Freier Tag mit Wellness-Ritual: marokkanisches Hammam und Massage. Schöne Reise!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Agafay-Sonnenaufgang, Marrakesch-Riad, Hammam & Wellnessmassage',
           stops: ['Sonnenaufgang & Frühstück', 'Abfahrt Agafay', 'Riad Marrakesch', 'Hammam & Massage', 'Freier Tag']
         }
       ]
@@ -847,24 +971,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakesch → Essaouira: Jüdisches Viertel, Reiten am Strand & Nacht am Meer',
           description: 'Fahrt zur Atlantikperle Essaouira. Besichtigung des Mellah und der Festungsanlagen. Fischessen am Hafen. Galopp oder Spazierritt am Strand bei Sonnenuntergang. Übernachtung in Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Historisches Essaouira & Strandausritt zum Sonnenuntergang',
           stops: ['Abfahrt Marrakesch', 'Medina Essaouira', 'Jüdisches Mellah', 'Hafen-Mittagessen', 'Reiten am Strand', 'Sonnenuntergang am Meer', 'Nacht in Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Mittagessen) → Agadir: Argan-Kooperativen',
           description: 'Küstenfahrt nach Taghazout zum Mittagessen am Meer. Weiterfahrt nach Agadir zum Besuch von Frauen-Arganölkooperativen mit Vorführung traditioneller Herstellung. Übernachtung in Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Taghazout Ozeanblick & Argan-Frauenkooperative in Agadir',
           stops: ['Atlantikküstenstraße', 'Mittagessen Taghazout', 'Solidaritätstag', 'Argan-Kooperativen', 'Handwerks-Show', 'Übernachtung Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate: Filmstudios & Historische Glaoui-Kasbah',
           description: 'Fahrt nach Ouarzazate, Marokkos Filmhauptstadt. Besichtigung berühmter Filmstudios und der historischen Glaoui-Kasbah. Abendessen und Übernachtung in Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'Internationale Filmstudios & Kasbah von Glaoui in Ouarzazate',
           stops: ['Fahrt nach Ouarzazate', 'Internationale Filmstudios', 'Glaoui-Kasbah', 'Übernachtung Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marrakesch: Hoher Atlas & Freier Tag für Souks',
           description: 'Rückfahrt über den spektakulären Tizi n\'Tichka-Pass im Hohen Atlas nach Marrakesch. Zeit zur freien Verfügung für Einkäufe in den Souks. Schöne Reise!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Spektakulärer Tizi n\'Tichka-Pass & Rückfahrt nach Marrakesch',
           stops: ['Tizi n\'Tichka-Pass', 'Ankunft Marrakesch', 'Freie Zeit & Souks', 'Optionale Ausflüge']
         }
       ]
@@ -899,24 +1031,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Partida de Marraquexe → Cascatas de Ouzoud (Almoço) → Noite em Midelt',
           description: 'Partida matinal de Marraquexe em direção a Midelt passando pelas grandiosas cascatas de Ouzoud. Almoço berbere em frente às cascatas. Travessia do Médio Atlas e chegada a Midelt ao final da tarde. Jantar e pernoite em Midelt.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Cascatas de Ouzoud & Almoço Típico',
           stops: ['Partida Marraquexe', 'Cascatas de Ouzoud', 'Almoço nas cascatas', 'Médio Atlas', 'Noite em Midelt']
         },
         {
           dayNumber: 2,
           title: 'Pequeno-almoço → Piquenique na Montanha Ayachi → Midelt',
           description: 'Após o pequeno-almoço, excursão à montanha com piquenique aos pés do imponente Jbel Ayachi. Dia em plena natureza pura do Alto Atlas. Regresso a Midelt para jantar e dormir.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'Piquenique nas Alturas da Montanha Jbel Ayachi',
           stops: ['Pequeno-almoço no hotel', 'Excursão piquenique Jbel Ayachi', 'Dia em alta montanha', 'Alto Atlas puro', 'Noite em Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Deserto de Merzouga: Pôr do Sol de Camelo e Tenda Berbere',
           description: 'Partida para o deserto do Saara em Merzouga ao longo das gargantas e palmeirais do Ziz. Chegada às dunas de Erg Chebbi: caravana de camelos ao pôr do sol, jantar ao redor da fogueira e noite mágica em tenda berbere.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Passeio de Dromedário ao Pôr do Sol e Noite em Merzouga',
           stops: ['Vale do Ziz', 'Deserto de Merzouga', 'Pôr do sol de camelo', 'Noite em tenda berbere']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Gargantas do Todra (Almoço) → Estúdios de Ouarzazate → Marraquexe',
           description: 'Pequeno-almoço no deserto e viagem rumo a Marraquexe. Almoço nas impressionantes Gargantas do Todra em Tinghir. Paragem em Ouarzazate para visitar os estúdios de cinema. Travessia do Alto Atlas pelo passo Tizi n\'Tichka e chegada a Marraquexe. Boa viagem!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Gargantas de Todra & Estúdios de Cinema de Ouarzazate',
           stops: ['Gargantas do Todra', 'Almoço nas gargantas', 'Estúdios de Cinema Ouarzazate', 'Passo Tichka', 'Noite em Marraquexe']
         }
       ]
@@ -948,18 +1088,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Partida de Marraquexe → Moulay Brahim → Montanhas de Asni',
           description: 'Partida matinal de Marraquexe rumo a Moulay Brahim e aos contrafortes do Atlas. Chegada ao vale verdejante de Asni. Jantar tradicional e pernoite na serenidade da montanha.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'Encostas do Alto Atlas e Serenidade em Asni',
           stops: ['Centro de Marraquexe', 'Moulay Brahim', 'Alto Atlas', 'Noite na montanha de Asni']
         },
         {
           dayNumber: 2,
           title: 'Asni → Deserto de Agafay: Piscina, Atividades, Jantar Espetáculo e Tenda de Luxo',
           description: 'Pequeno-almoço e partida para o deserto mineral de Agafay. Relaxe junto à piscina e desfrute de um almoço saboroso. 1 hora de atividade (camelo, moto-quatro ou buggy) ao entardecer. Jantar animado e noite sob tendas de luxo.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Piscina no Deserto de Agafay, Quad/Buggy e Espetáculo de Fogo',
           stops: ['Piscina no deserto', 'Almoço em Agafay', '1h Atividade (Camelo/Moto-quatro/Buggy)', 'Pôr do sol', 'Jantar espetáculo e fogo', 'Noite em tenda de luxo']
         },
         {
           dayNumber: 3,
           title: 'Agafay (Nascer do Sol) → Riad em Marraquexe: Dia Livre, Hammam e Massagem',
           description: 'Nascer do sol sobre os desfiladeiros de Agafay, pequeno-almoço e regresso a Marraquexe. Instalação num riad tradicional. Dia livre de bem-estar com hammam marroquino e massagem relaxante. Boa viagem!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Amanhecer em Agafay, Riad em Marraquexe, Banho Turco e Massagem',
           stops: ['Nascer do sol e pequeno-almoço', 'Partida de Agafay', 'Riad em Marraquexe', 'Hammam tradicional e massagem', 'Dia livre']
         }
       ]
@@ -992,24 +1138,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marraquexe → Essaouira: Bairros Históricos, Cavalo na Praia e Noite Oceânica',
           description: 'Partida para Essaouira (Mogador). Visita da medina e do Mellah. Almoço de peixe fresco. Passeio a cavalo na praia ao pôr do sol sobre o oceano. Noite em Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Mellah de Essaouira e Passeio a Cavalo na Praia ao Pôr do Sol',
           stops: ['Partida Marraquexe', 'Medina de Essaouira', 'Mellah judeu', 'Almoço no porto', 'Passeio a cavalo', 'Pôr do sol oceânico', 'Noite em Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Almoço) → Agadir: Cooperativas de Argão e Solidariedade',
           description: 'Percurso panorâmico ao longo da costa. Almoço em Taghazout de frente para o mar. Continuação até Agadir para visita a cooperativas de argão e demonstração artesanal. Noite em Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Oceano de Taghazout e Cooperativa Solidária de Argão em Agadir',
           stops: ['Estrada da costa', 'Almoço em Taghazout', 'Jornada solidária', 'Cooperativas de argão', 'Demonstração artesanal', 'Noite em Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate: Estúdios de Cinema e Kasbah de Glaoui',
           description: 'Partida em direção a Ouarzazate, a capital do cinema em Marrocos. Visita aos estúdios internacionais de filmagem e à imponente Kasbah de Glaoui. Jantar e noite em Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'Estúdios de Cinema Internacionais e Kasbah de Glaoui em Ouarzazate',
           stops: ['Rumo a Ouarzazate', 'Estúdios de cinema', 'Antiga Kasbah de Glaoui', 'Noite em Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marraquexe: Alto Atlas e Dia Livre',
           description: 'Regresso a Marraquexe através do imponente passo de Tizi n\'Tichka no Alto Atlas. Dia livre em Marraquexe para passear pelos souks e relaxar. Boa viagem!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Passo Cénico de Tizi n\'Tichka e Chegada a Marraquexe',
           stops: ['Passo Tizi n\'Tichka', 'Chegada a Marraquexe', 'Dia livre nos souks', 'Atividades opcionais']
         }
       ]
@@ -1044,24 +1198,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Vertrek Marrakech → Ouzoud-watervallen (Lunch) → Overnachting Midelt',
           description: 'Vroeg vertrek vanuit Marrakech richting Midelt via de imposante Ouzoud-watervallen. Traditionele Berberse lunch met uitzicht op het water. Rit door de Midden-Atlas naar Midelt voor diner en overnachting.',
+          imageUrl: 'assets/ouzoud-waterfalls.jpeg',
+          activityLabel: 'Ouzoud Watervallen & Panoramische Lunch',
           stops: ['Vertrek Marrakech', 'Ouzoud-watervallen', 'Lunch aan watervallen', 'Midden-Atlas', 'Overnachting Midelt']
         },
         {
           dayNumber: 2,
           title: 'Ontbijt → Picknick-excursie Jbel Ayachi → Midelt',
           description: 'Na het ontbijt vertrek voor een bergexcursie met picknick aan de voet van de majestueuze Jbel Ayachi. Een hele dag in de frisse berglucht van de Hoge Atlas. Terugkeer naar Midelt voor de nacht.',
+          imageUrl: 'assets/tours/c1-d2-ayachi.jpg',
+          activityLabel: 'Luxe Bergpicknick aan de Voet van de Jbel Ayachi',
           stops: ['Hotelontbijt', 'Picknick-excursie Jbel Ayachi', 'Bergtocht', 'Ongerepte Hoge Atlas', 'Overnachting Midelt']
         },
         {
           dayNumber: 3,
           title: 'Midelt → Merzouga-woestijn: Zonsondergang op Kamelen & Berbertent',
           description: 'Ontbijt en rit naar de Sahara van Merzouga langs de Ziz-kloof en oases. Aankomst bij de Erg Chebbi-duinen: kamelentocht bij zonsondergang, diner bij het kampvuur en overnachting in een Berbertent.',
+          imageUrl: 'assets/merzouga-dunes.jpeg',
+          activityLabel: 'Kamelentocht bij Zonsondergang & Woestijnkamp Merzouga',
           stops: ['Ziz-vallei & oases', 'Merzouga-woestijn', 'Zonsondergang op kamelen', 'Nacht in Berbertent']
         },
         {
           dayNumber: 4,
           title: 'Merzouga → Todra-kloof (Lunch) → Filmstudio\'s Ouarzazate → Marrakech',
           description: 'Woestijnontbijt en vertrek richting Marrakech. Lunch tussen de steile rotswanden van de Todra-kloof. Bezoek aan de filmstudio\'s in Ouarzazate. Rit over de Tizi n\'Tichka-pas naar Marrakech. Goede reis!',
+          imageUrl: 'assets/tours/c1-d4-todra.jpg',
+          activityLabel: 'Todrakloof Tinghir & Filmstudio\'s van Ouarzazate',
           stops: ['Todra-kloof', 'Lunch in de kloof', 'Filmstudio\'s Ouarzazate', 'Tichka-pas', 'Overnachting Marrakech']
         }
       ]
@@ -1093,18 +1255,24 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech Centrum / Ochtendvertrek → Moulay Brahim → Asni-bergen',
           description: 'Ochtendvertrek vanuit Marrakech naar Moulay Brahim en de uitlopers van de Atlas. Rit naar de groene Asni-vallei. Traditioneel diner en overnachting in de bergrust.',
+          imageUrl: 'assets/atlas-mountains-villages.jpeg',
+          activityLabel: 'Hoge Atlas en Authentieke Bergnacht in Asni',
           stops: ['Centrum Marrakech', 'Moulay Brahim', 'Hoge Atlas', 'Nacht in de Asni-bergen']
         },
         {
           dayNumber: 2,
           title: 'Asni → Agafay-woestijn: Zwembad, Activiteiten, Dinershow & Luxetent',
           description: 'Ontbijt en vertrek naar de Agafay-woestijn. Ontspanning aan het zwembad en lunch. 1 uur activiteit (kameel, quad of buggy) bij zonsondergang. Dinershow en overnachting in een luxetent.',
+          imageUrl: 'assets/tours/c2-d2-agafay.jpg',
+          activityLabel: 'Woestijnzwembad, Quad/Buggy & Spectaculair Vuurshow Diner in Agafay',
           stops: ['Woestijnzwembad Agafay', 'Lunch in het kamp', '1u Activiteit (Kameel/Quad/Buggy)', 'Zonsondergang', 'Dinershow & vuur', 'Nacht in luxetent']
         },
         {
           dayNumber: 3,
           title: 'Agafay (Zonsopkomst) → Riad Marrakech: Vrije Dag, Hammam & Massage',
           description: 'Zonsopkomst boven de canyons van Agafay, ontbijt en rit naar Marrakech. Inchecken in een traditionele riad. Vrije dag met wellness: hammam en arganoliemassage. Goede reis!',
+          imageUrl: 'assets/tours/c2-d3-hammam.jpg',
+          activityLabel: 'Zonsopgang Agafay, Riad in Marrakech, Hammam & Ontspannende Massage',
           stops: ['Zonsopkomst & ontbijt', 'Vertrek Agafay', 'Riad in Marrakech', 'Hammam & massage', 'Vrije ontspanningsdag']
         }
       ]
@@ -1137,24 +1305,32 @@ export const ALL_CIRCUITS_DATA: Record<Language, Circuit[]> = {
           dayNumber: 1,
           title: 'Marrakech → Essaouira: Joodse Wijk, Paardrijden bij Zonsondergang & Zee',
           description: 'Rit naar kustparel Essaouira (Mogador). Bezoek aan de Mellah en de verdedigingswallen. Verse vislunch. Paardrijden over het strand bij zonsondergang. Overnachting in Essaouira.',
+          imageUrl: 'assets/tours/c3-d1-essaouira-horse.jpg',
+          activityLabel: 'Historisch Essaouira & Paardrijden op het Strand bij Zonsondergang',
           stops: ['Vertrek Marrakech', 'Medina Essaouira', 'Joodse Mellah', 'Havenlunch', 'Paardrijden op strand', 'Zonsondergang op zee', 'Nacht in Essaouira']
         },
         {
           dayNumber: 2,
           title: 'Essaouira → Taghazout (Lunch) → Agadir: Argan-coöperaties',
           description: 'Kustroute naar Taghazout voor lunch met uitzicht op de golven. Verder naar Agadir voor een bezoek aan argan-coöperaties met ambachtelijke demonstratie. Overnachting in Agadir.',
+          imageUrl: 'assets/taghazout-morocco.jpeg',
+          activityLabel: 'Taghazout aan Zee & Bezoek aan de Vrouwen-Argancoöperatie in Agadir',
           stops: ['Kustweg', 'Lunch in Taghazout', 'Solidariteitsdag', 'Argan-coöperaties', 'Ambachtelijke show', 'Nacht in Agadir']
         },
         {
           dayNumber: 3,
           title: 'Agadir → Ouarzazate: Filmstudio\'s & Historische Glaoui-kasbah',
           description: 'Vertrek naar filmhoofdstad Ouarzazate. Bezoek aan gerenommeerde filmstudio\'s en de imposante Glaoui-kasbah. Diner en overnachting in Ouarzazate.',
+          imageUrl: 'assets/tours/c3-d3-kasbah.jpg',
+          activityLabel: 'Internationale Filmstudio\'s & Historische Kasbah Glaoui in Ouarzazate',
           stops: ['Richting Ouarzazate', 'Filmstudio\'s', 'Historische Glaoui-kasbah', 'Nacht in Ouarzazate']
         },
         {
           dayNumber: 4,
           title: 'Ouarzazate → Marrakech: Hoge Atlas & Vrije Tijd voor Souks',
           description: 'Terugreis over de spectaculaire Tizi n\'Tichka-pas in de Hoge Atlas naar Marrakech. Vrije tijd in Marrakech voor inkopen in de souks. Goede reis!',
+          imageUrl: 'assets/tours/c3-d4-tizi-tichka.jpg',
+          activityLabel: 'Panoramische Tizi n\'Tichka Bergpas & Terugkeer naar Marrakech',
           stops: ['Tizi n\'Tichka-pas', 'Aankomst Marrakech', 'Vrije tijd & souks', 'Optionele activiteiten']
         }
       ]

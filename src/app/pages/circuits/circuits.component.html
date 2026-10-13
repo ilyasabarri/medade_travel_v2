@@ -95,6 +95,9 @@
               <div class="day-badge-col">
                 <span class="day-number">{{ langService.circuitsPage.dayPrefix }} {{ day.dayNumber }}</span>
               </div>
+              <div class="day-header-thumb-wrap" *ngIf="day.imageUrl">
+                <img [src]="day.imageUrl" [alt]="day.activityLabel || day.title" class="day-header-thumb" loading="lazy">
+              </div>
               <div class="day-title-col">
                 <h4 class="day-title-text">{{ day.title }}</h4>
               </div>
@@ -104,6 +107,22 @@
             </div>
 
             <div class="day-accordion-body" *ngIf="expandedDayIndex === idx">
+              
+              <!-- Featured Main Activity Photo & Badge -->
+              <div class="day-activity-showcase" *ngIf="day.imageUrl">
+                <div class="day-activity-img-wrap">
+                  <img [src]="day.imageUrl" [alt]="day.activityLabel || day.title" class="day-activity-photo" loading="lazy">
+                  <div class="day-activity-overlay">
+                    <span class="day-activity-badge">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                      <span>{{ day.activityLabel || day.title }}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               <p class="day-desc-text">{{ day.description }}</p>
               
               <div class="stops-box">
