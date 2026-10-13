@@ -22,9 +22,9 @@ export class AppComponent {
   languages: LanguageMeta[] = SUPPORTED_LANGUAGES;
 
   // Direct phone & WhatsApp coordinates (NO emails)
-  primaryPhone = '+212 6 62 63 60 95';
-  secondaryPhone = '+212 6 37 05 31 31';
-  whatsappNumber = '212662636095';
+  primaryPhone = '+212 6 37 05 31 31';
+  secondaryPhone = '+212 6 37 17 09 09';
+  whatsappNumber = '212637053131';
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
