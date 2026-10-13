@@ -662,7 +662,7 @@ body.rtl-mode .day-badge-num {
    -------------------------------------------------------------------------- */
 .events-section,
 .experiences-section {
-  background: var(--sand-cream);
+  background: var(--sand-warm);
   padding: 100px 0;
 }
 
@@ -827,7 +827,7 @@ body.rtl-mode .story-floating-tag {
    5. SHOWCASE ACTIVITÉS & LOISIRS AU DÉSERT (3D COVERFLOW PERSPECTIVE SLIDER)
    -------------------------------------------------------------------------- */
 .activities-section {
-  background: var(--sand-warm);
+  background: var(--sand-cream);
   padding: 100px 0;
   position: relative;
   overflow: hidden;
@@ -1437,7 +1437,7 @@ body.rtl-mode .slider-nav-btn.next-btn:hover {
    5. TRANSPORT & MOBILITY OPTIONS
    -------------------------------------------------------------------------- */
 .transport-section {
-  background: var(--sand-warm);
+  background: var(--sand-cream);
   padding: 100px 0;
 }
 
@@ -1584,7 +1584,7 @@ body.rtl-mode .transport-title {
    6. DIRECT BOOKING & CONTACT SECTION (STRICTLY 3 OPTIONS, NO EMAILS)
    -------------------------------------------------------------------------- */
 .booking-section {
-  background: var(--sand-cream);
+  background: var(--sand-warm);
   padding: 100px 0;
 }
 
