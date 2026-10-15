@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { 
@@ -17,7 +17,8 @@ import {
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('heroVideo') heroVideoRef!: ElementRef<HTMLVideoElement>;
   langService = inject(LanguageService);
 
   primaryPhone = '+212 6 37 05 31 31';
@@ -50,6 +51,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.syncFormDefaults();
+  }
+
+  ngAfterViewInit() {
+    this.playHeroVideo();
+  }
+
+  private playHeroVideo(): void {
+    const video = this.heroVideoRef?.nativeElement;
+    if (video) {
+      video.muted = true;
+      video.volume = 0;
+      video.play().catch(() => {
+        // Fallback: try again after a short delay
+        setTimeout(() => video.play().catch(() => {}), 500);
+      });
+    }
   }
 
   ngOnDestroy() {
