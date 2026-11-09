@@ -195,35 +195,58 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isPaused = false;
   }
 
+  private lastNavTime = 0;
+  private isSwiping = false;
+
   nextActivity() {
+    const now = Date.now();
+    if (now - this.lastNavTime < 280) return;
+    this.lastNavTime = now;
     const total = this.activities.length;
     if (total === 0) return;
     this.activeActivityIndex = (this.activeActivityIndex + 1) % total;
   }
 
   prevActivity() {
+    const now = Date.now();
+    if (now - this.lastNavTime < 280) return;
+    this.lastNavTime = now;
     const total = this.activities.length;
     if (total === 0) return;
     this.activeActivityIndex = (this.activeActivityIndex - 1 + total) % total;
   }
 
   goToActivity(idx: number) {
+    if (this.isSwiping) return;
+    const now = Date.now();
+    if (now - this.lastNavTime < 280) return;
+    this.lastNavTime = now;
     this.activeActivityIndex = idx;
   }
 
   onTouchStart(e: TouchEvent) {
     if (e.touches && e.touches.length > 0) {
       this.touchStartX = e.touches[0].clientX;
+      this.touchEndX = e.touches[0].clientX;
+      this.isSwiping = false;
     }
   }
 
   onTouchMove(e: TouchEvent) {
     if (e.touches && e.touches.length > 0) {
       this.touchEndX = e.touches[0].clientX;
+      if (Math.abs(this.touchStartX - this.touchEndX) > 10) {
+        this.isSwiping = true;
+      }
     }
   }
 
   onTouchEnd() {
+    if (!this.isSwiping) {
+      this.touchStartX = 0;
+      this.touchEndX = 0;
+      return;
+    }
     const diff = this.touchStartX - this.touchEndX;
     const isRtl = this.langService.isRtl();
     // Swiping threshold 40px
@@ -246,6 +269,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.touchStartX = 0;
     this.touchEndX = 0;
+    setTimeout(() => {
+      this.isSwiping = false;
+    }, 150);
   }
 
   // Booking / Inquiries via WhatsApp

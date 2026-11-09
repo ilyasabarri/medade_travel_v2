@@ -337,7 +337,9 @@
       <div class="slider-stage-container">
         
         <button class="slider-nav-btn prev-btn" 
-                (click)="prevActivity()" 
+                (click)="prevActivity(); $event.stopPropagation()" 
+                (touchstart)="$event.stopPropagation()"
+                (touchend)="$event.stopPropagation()"
                 aria-label="Activité précédente">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M15 18l-6-6 6-6"/>
@@ -404,7 +406,9 @@
         </div>
 
         <button class="slider-nav-btn next-btn" 
-                (click)="nextActivity()" 
+                (click)="nextActivity(); $event.stopPropagation()" 
+                (touchstart)="$event.stopPropagation()"
+                (touchend)="$event.stopPropagation()"
                 aria-label="Activité suivante">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M9 18l6-6-6-6"/>
@@ -414,11 +418,13 @@
       </div>
 
       <!-- Slider Thumbnails Deck -->
-      <div class="slider-thumbnails-row">
+      <div class="slider-thumbnails-row"
+           (touchstart)="$event.stopPropagation()"
+           (touchend)="$event.stopPropagation()">
         <button *ngFor="let act of activities; let idx = index"
                 class="thumb-nav-item"
                 [class.active]="idx === activeActivityIndex"
-                (click)="goToActivity(idx)">
+                (click)="goToActivity(idx); $event.stopPropagation()">
           <div class="thumb-img-wrapper">
             <img [src]="act.imageUrl" [alt]="act.title" class="thumb-img">
           </div>
