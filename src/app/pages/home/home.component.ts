@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   primaryPhone = '+212 6 37 05 31 31';
   secondaryPhone = '+212 6 37 17 09 09';
   whatsappNumber = '212637053131';
+  instagramUrl = 'https://www.instagram.com/medadetravel/';
 
   activeCircuitId = 'circuit-1';
   expandedDayIndex: { [key: string]: number | null } = {

@@ -183,6 +183,6 @@ export class ContactComponent implements OnInit {
   }
 
   openInstagram() {
-    window.open('https://www.instagram.com/medadetravel', '_blank');
+    window.open('https://www.instagram.com/medadetravel/', '_blank');
   }
 }

@@ -38,7 +38,7 @@
         <h3 class="card-title">{{ contactPage.method3.title }}</h3>
         <p class="card-desc">{{ contactPage.method3.desc }}</p>
         <div class="card-phone-number">{{ contactPage.method3.handle }}</div>
-        <button class="btn btn--primary w-full">
+        <button class="btn btn--primary w-full" (click)="openInstagram(); $event.stopPropagation()">
           <span>{{ contactPage.method3.btn }}</span>
         </button>
       </div>

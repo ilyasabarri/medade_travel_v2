@@ -672,6 +672,11 @@
             <a [href]="'tel:' + secondaryPhone.replace(' ', '').replace(' ', '').replace(' ', '')" class="desk-phone-val phone-isolated" dir="ltr">{{ secondaryPhone }}</a>
           </div>
 
+          <div class="desk-phone-item">
+            <span class="desk-phone-label">Instagram :</span>
+            <a [href]="instagramUrl" target="_blank" rel="noopener noreferrer" class="desk-phone-val phone-isolated" dir="ltr">&#64;medadetravel</a>
+          </div>
+
           <div class="desk-wa-btn-wrap">
             <button class="btn btn--outline-dark w-full" (click)="openDirectWhatsApp()">
               {{ langService.ui.btnDiscussWhatsApp }}

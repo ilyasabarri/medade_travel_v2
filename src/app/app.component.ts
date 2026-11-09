@@ -21,10 +21,11 @@ export class AppComponent {
 
   languages: LanguageMeta[] = SUPPORTED_LANGUAGES;
 
-  // Direct phone & WhatsApp coordinates (NO emails)
+  // Direct phone, WhatsApp & Instagram coordinates (NO emails)
   primaryPhone = '+212 6 37 05 31 31';
   secondaryPhone = '+212 6 37 17 09 09';
   whatsappNumber = '212637053131';
+  instagramUrl = 'https://www.instagram.com/medadetravel/';
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
